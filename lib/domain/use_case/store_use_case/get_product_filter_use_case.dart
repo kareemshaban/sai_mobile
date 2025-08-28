@@ -1,0 +1,16 @@
+import 'package:dartz/dartz.dart';
+import 'package:new_sai/data/network/failure.dart';
+import 'package:new_sai/domain/entity/store_entity/product_filter_entity.dart';
+import 'package:new_sai/domain/repository/store_repository.dart';
+import 'package:new_sai/domain/use_case/base_use_case.dart';
+
+class GetProductFilterUseCase
+    extends BaseUseCase<dynamic, ProductFilterEntity> {
+  final StoreRepository _storeRepository;
+  GetProductFilterUseCase(this._storeRepository);
+
+  @override
+  Future<Either<Failure, ProductFilterEntity>> execute(params) async {
+    return await _storeRepository.getProductFilter();
+  }
+}

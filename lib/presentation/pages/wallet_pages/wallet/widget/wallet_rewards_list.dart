@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:new_sai/app/extensions.dart';
+import 'package:new_sai/presentation/pages/wallet_pages/wallet/getx/wallet_controller.dart';
+import 'package:new_sai/presentation/resources/font_manger.dart';
+import 'package:new_sai/presentation/resources/string_manger.dart';
+import 'package:new_sai/presentation/widgets/app_loader.dart';
+
+import 'record_item.dart';
+
+class WalletRewardsList extends GetView<WalletController> {
+  const WalletRewardsList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Obx(
+        () => controller.loadingBounce
+            ? const Center(child: AppLoader())
+            : controller.bounces.isEmpty
+                ? Center(
+                    child: Text(
+                      AppStrings.noDataFound,
+                      style: Get.textTheme.titleMedium!.copyWith(
+                        fontSize: AppSize.s16(context),
+                      ),
+                    ),
+                  )
+                : Column(
+                    children: [
+                      Expanded(
+                        child: ListView.separated(
+                          itemBuilder: (context, index) =>
+                              RecordItem(model: controller.bounces[index]),
+                          separatorBuilder: (context, index) =>
+                              17.verticalSpace(),
+                          itemCount: controller.bounces.length,
+                        ),
+                      ),
+                      if (controller.loadingBouncePagination)
+                        const Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Center(child: AppLoader()),
+                        )
+                    ],
+                  ),
+      ),
+    );
+  }
+}

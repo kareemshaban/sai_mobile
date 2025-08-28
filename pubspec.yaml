@@ -1,0 +1,165 @@
+name: new_sai
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.1+20
+
+environment:
+  sdk: ^3.5.4
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+  dio: ^5.8.0+1
+  json_annotation: ^4.9.0
+  dartz: ^0.10.1
+  pretty_dio_logger: ^1.4.0
+  get_it: ^8.0.2
+  shared_preferences: ^2.3.3
+  internet_connection_checker: ^1.0.0+1
+  flutter_svg: ^2.0.15
+  cached_network_image: ^3.4.1
+  easy_localization: ^3.0.7
+  permission_handler: ^11.3.1
+  get: ^4.6.6
+  fl_country_code_picker: ^0.1.9+1
+  pinput: ^5.0.0
+  flutter_carousel_widget: ^3.1.0
+  flutter_story_presenter: ^1.0.4
+  camerawesome: ^2.5.0
+  photo_manager: ^3.6.3
+  image_picker: ^1.1.2
+  skeletonizer: ^1.4.2
+  dropdown_button2: ^2.3.9
+  url_launcher: ^6.3.1
+  lottie: ^3.2.0
+  zego_express_engine: ^3.17.1
+  zego_zim: ^2.17.1+1
+  flutter_svgaplayer3: any
+  flutter_cache_manager: ^3.4.1
+  simple_ripple_animation: ^0.1.0
+  on_audio_query_forked: ^2.9.1
+  hive: ^2.2.3
+  path_provider: ^2.1.5
+  just_audio: ^0.9.43
+  x_overlay: ^1.0.0
+  animate_do: ^3.3.4
+  collection: ^1.18.0
+  smooth_page_indicator: ^1.2.0+3
+  record: ^6.0.0
+  flutter_widget_from_html_core: ^0.15.2
+  pull_to_refresh_flutter3: ^2.0.2
+  file_picker: ^8.3.3
+  open_filex: ^4.6.0
+  pusher_channels_flutter: ^2.4.0
+  appinio_social_share:
+    path: packages/appinio_social_share-0.3.2
+  get_thumbnail_video: ^0.7.3
+  geolocator: ^13.0.2
+  geocoding: ^3.0.0
+  firebase_core: ^3.15.0
+  firebase_messaging: ^15.2.8
+  flutter_local_notifications: ^18.0.1
+  app_links: ^6.4.0
+  flutter_linkify: ^6.0.0
+  package_info_plus: ^8.3.0
+  better_player_plus: ^1.0.8
+  visibility_detector: ^0.4.0+2
+  share_plus: ^10.1.4
+  detectable_text_field: ^3.0.2
+  gif: ^2.3.0
+  flutter_media_metadata: ^1.0.0+1
+  on_audio_query_android: any
+
+
+  http: ^1.4.0
+  webview_flutter:
+    path: packages/webview_flutter-4.9.0
+dependency_overrides:
+    webview_flutter_android:
+      path: packages/webview_flutter_android-3.16.9
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.13
+  json_serializable: ^6.9.0
+  hive_generator: ^2.0.1
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^4.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/
+    - assets/icons/
+    - assets/images/
+    - assets/translations/
+    - assets/lottie_files/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+   - family: Tajawal
+     fonts:
+       - asset: assets/fonts/Tajawal-Bold.ttf
+         weight: 700
+       - asset: assets/fonts/Tajawal-Light.ttf
+         weight: 300
+       - asset: assets/fonts/Tajawal-Medium.ttf
+         weight: 500
+       - asset: assets/fonts/Tajawal-Regular.ttf
+         weight: 400
+#       - asset: assets/fonts/Tajawal-SemiBold.ttf
+#         weight: 600
+
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package

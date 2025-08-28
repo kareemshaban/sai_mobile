@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "276993027563",
+    "project_id": "arab-live-271b4",
+    "storage_bucket": "arab-live-271b4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276993027563:android:ad20bfceee862a41f67dae",
+        "android_client_info": {
+          "package_name": "com.sai.live"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtZmp1yG6TqRcavoXvZ1BcAW5umNqaXXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

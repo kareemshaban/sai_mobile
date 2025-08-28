@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SAI</string>
+    <string name="facebook_app_id">1289403992150474</string>
+    <string name="fb_login_protocol_scheme">fb1289403992150474</string>
+    <string name="facebook_client_token">d75f0c1fd11ec0237cc88e727f454f15</string>
+</resources>
