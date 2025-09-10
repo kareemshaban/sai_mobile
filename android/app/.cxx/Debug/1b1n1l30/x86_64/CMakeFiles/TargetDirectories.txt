@@ -1,0 +1,2 @@
+D:/Sai/sai_application/new_sai/android/app/.cxx/Debug/1b1n1l30/x86_64/CMakeFiles/edit_cache.dir
+D:/Sai/sai_application/new_sai/android/app/.cxx/Debug/1b1n1l30/x86_64/CMakeFiles/rebuild_cache.dir
