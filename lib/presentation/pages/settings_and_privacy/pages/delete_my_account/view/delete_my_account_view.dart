@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/extensions.dart';
 import 'package:new_sai/presentation/pages/settings_and_privacy/pages/delete_my_account/getx/delete_my_account_controller.dart';
+import 'package:new_sai/presentation/pages/settings_and_privacy/pages/delete_my_account/widget/confirm_delete_account.dart';
 import 'package:new_sai/presentation/resources/font_manger.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
 import 'package:new_sai/presentation/widgets/app_back_button.dart';
@@ -68,7 +69,13 @@ class DeleteMyAccountView extends GetView<DeleteMyAccountController> {
               child: AppButton(
                 title: AppStrings.next,
                 width: .7.w(context),
-                onTap: controller.deleteAccount,
+                onTap: () => {
+                  Get.dialog(
+                      ConfirmDeleteAccount()
+                  )
+                },
+                backgroundColor: Colors.red ,
+                textStyle: TextStyle(color: Colors.white)
               ),
             )
           ],

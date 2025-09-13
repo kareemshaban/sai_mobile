@@ -17,6 +17,7 @@ class ReportAProblemView extends GetView<ReportAProblemController> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 60,
+        title: Text(AppStrings.reportAProblem) ,
         leading: const AppBackButton(),
       ),
       body: Padding(

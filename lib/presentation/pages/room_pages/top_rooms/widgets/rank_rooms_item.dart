@@ -90,55 +90,61 @@ class RankRoomsItem extends StatelessWidget {
           });
         }
       },
-      child: SizedBox(
-        width: 110,
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                AppImage(
-                  image: image,
-                  width: 55,
-                  height: 55,
-                  isCircle: true,
-                  fit: BoxFit.cover,
-                ),
-                if (profileFrame != null)
-                  PrivilegeDataView(
-                    url: profileFrame!,
-                    width: 65,
-                    height: 65,
-                  ),
-              ],
-            ),
-            4.verticalSpace(),
-            Text(
-              name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Get.textTheme.bodyLarge!.copyWith(
-                fontSize: AppSize.s14(context),
+      child: Container(
+
+        child: SizedBox(
+          width: MediaQuery.widthOf(context) / 4,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  image != '' ?  AppImage(
+                    image: image,
+                    width: 55,
+                    height: 55,
+                    isCircle: true,
+                    fit: BoxFit.cover,
+                  ) : Image(image: AssetImage('assets/images/user.png') , width: 55, height: 55, fit: BoxFit.cover,),
+                  if (profileFrame != null)
+                    PrivilegeDataView(
+                      url: profileFrame!,
+                      width: 65,
+                      height: 65,
+                    ),
+                ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  num.parse(total).formatCurrencyWithoutSymbol,
-                  style: Get.textTheme.titleMedium!.copyWith(
-                    fontSize: AppSize.s12(context),
+              1.verticalSpace(),
+              Text(
+                name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Get.textTheme.bodyLarge!.copyWith(
+                  fontSize: AppSize.s16(context),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    num.parse(total).formatCurrencyWithoutSymbol,
+                    style: Get.textTheme.titleMedium!.copyWith(
+                      fontSize: AppSize.s14(context),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                    ),
                   ),
-                ),
-                4.horizontalSpace(),
-                const AppIcon(
-                  icon: IconsAssets.coins2,
-                  width: 14,
-                  height: 14,
-                ),
-              ],
-            ),
-          ],
+                  4.horizontalSpace(),
+                  const AppIcon(
+                    icon: IconsAssets.coins2,
+                    width: 20,
+                    height: 20,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

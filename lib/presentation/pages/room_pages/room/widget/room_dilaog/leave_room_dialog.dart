@@ -30,7 +30,7 @@ class LeaveRoomDialog extends GetView<RoomController> {
               children: [
                 XOverlayButton(
                   controller: AppRoutes.overlayController,
-                  iconSize: const Size(150, 150),
+                  iconSize: const Size(70, 70),
                   dataQuery: () {
                     return XOverlayData();
                   },
@@ -81,12 +81,12 @@ class LeaveRoomDialog extends GetView<RoomController> {
                     width: 90,
                     height: 90,
                     decoration: const BoxDecoration(
-                      color: ColorManager.primary,
+                      color: ColorManager.white,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
                       Icons.logout,
-                      color: ColorManager.white,
+                      color: ColorManager.red,
                       size: 40,
                     ),
                   ),

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/extensions.dart';
+import 'package:new_sai/presentation/pages/settings_and_privacy/getx/settings_and_privacy_controller.dart';
+import 'package:new_sai/presentation/pages/settings_and_privacy/pages/delete_my_account/getx/delete_my_account_controller.dart';
 import 'package:new_sai/presentation/pages/settings_and_privacy/pages/unique_personal_id/getx/unique_personal_id_controller.dart';
 import 'package:new_sai/presentation/resources/color_manger.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
 import 'package:new_sai/presentation/widgets/app_button.dart';
 
-class BuySettingsProductDialog extends GetView<UniquePersonalIdController> {
-  final int productId;
-  final num goldValue;
-  const BuySettingsProductDialog({
-    required this.goldValue,
-    required this.productId,
+class ConfirmLogoutDialog extends GetView<SettingsAndPrivacyController> {
+  const ConfirmLogoutDialog({
     super.key,
   });
 
@@ -30,9 +28,7 @@ class BuySettingsProductDialog extends GetView<UniquePersonalIdController> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              AppStrings.areYouSureToBuyThisProductFor(
-                goldValue.formatCurrencyWithoutSymbol,
-              ),
+              AppStrings.confirmLogout ,
               style: TextStyle(fontSize: 16.0 , color: Colors.black , fontWeight: FontWeight.bold ),
             ),
             20.verticalSpace(),
@@ -48,8 +44,8 @@ class BuySettingsProductDialog extends GetView<UniquePersonalIdController> {
                 10.horizontalSpace(),
                 Expanded(
                   child: AppButton(
-                    title: AppStrings.buy,
-                    onTap: () => controller.buyProduct(productId),
+                    title: AppStrings.accept,
+                    onTap: () => controller.logout(),
                   ),
                 ),
               ],

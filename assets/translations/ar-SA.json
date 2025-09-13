@@ -483,5 +483,10 @@
   "newFollowers" : "المتابعون الجدد",
   "sar" : "ر.س",
   "youHaveExceededYourWithdrawalBalance" : "لقد تجاوزت رصيد السحب الخاص بك.",
-  "appName" : "ساي"
+  "appName" : "ساي",
+  "confirmDeleteAccount": "هل تريد تأكيد حذف الحساب ؟",
+  "confirmLogout" : "هل تريد فعلا تسجيل الخروج وإنهاء الجسلة الحالية",
+  "empty": "فارغ",
+  "noData": "لا يوجد بيانات لعرضها",
+  "roomTheme": "خلفية الغرفة"
 }

@@ -229,7 +229,7 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       width: 1.w(context),
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
         color: ColorManager.white,
         borderRadius: BorderRadius.only(
@@ -253,7 +253,7 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
                 : friends.isEmpty
                     ? const SizedBox()
                     : SizedBox(
-                        height: 75,
+                        height: 100,
                         child: ListView.separated(
                           controller: scrollController,
                           scrollDirection: Axis.horizontal,
@@ -267,23 +267,23 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
                               onTap: () =>
                                   sendMessageToFriend(friends[index].friendId),
                               child: SizedBox(
-                                width: 70,
-                                height: 70,
+                                width: 50,
+                                height: 50,
                                 child: Column(
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(110),
                                       child: Image.network(
                                         friends[index].profileImg,
-                                        width: 55,
-                                        height: 55,
+                                        width: 45,
+                                        height: 45,
                                         fit: BoxFit.cover,
                                         errorBuilder:
                                             (context, error, stackTrace) =>
                                                 const AppImage(
                                           image: Constants.userErrorWidget,
-                                          width: 55,
-                                          height: 55,
+                                          width: 40,
+                                          height: 40,
                                           isCircle: true,
                                           fit: BoxFit.cover,
                                         ),
@@ -321,15 +321,15 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
                   onTap: socialList[index].onTap,
                   child: SizedBox(
                     width: 55,
-                    height: 75,
+                    height: 65,
                     child: Column(
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(110),
                           child: Image.asset(
                             socialList[index].image,
-                            width: 50,
-                            height: 50,
+                            width: 40,
+                            height: 40,
                             fit: BoxFit.cover,
                             color: socialList[index].color,
                           ),

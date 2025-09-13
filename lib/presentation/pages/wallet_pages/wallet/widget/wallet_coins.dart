@@ -19,14 +19,14 @@ class WalletCoins extends StatelessWidget {
         children: [
           CoinsCard(),
           50.verticalSpace(),
-          Text(
-            AppStrings.record,
-            style: Get.textTheme.titleMedium!.copyWith(
-              fontSize: AppSize.s15(context),
-            ),
-          ),
-          20.verticalSpace(),
-          const WalletCoinsList(),
+          // Text(
+          //   AppStrings.record,
+          //   style: Get.textTheme.titleMedium!.copyWith(
+          //     fontSize: AppSize.s15(context),
+          //   ),
+          // ),
+          // 20.verticalSpace(),
+          // const WalletCoinsList(),
         ],
       ),
     );

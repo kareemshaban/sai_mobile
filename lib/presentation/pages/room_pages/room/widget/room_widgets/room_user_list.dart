@@ -173,8 +173,9 @@ class RoomUserList extends GetView<RoomController> {
                         const Icon(
                           Icons.person,
                           color: ColorManager.white,
-                          size: 13,
+                          size: 18,
                         ),
+                        SizedBox(height: 5.0,),
                         Text(
                           "${controller.users.length}",
                           style: Get.textTheme.bodySmall!.copyWith(

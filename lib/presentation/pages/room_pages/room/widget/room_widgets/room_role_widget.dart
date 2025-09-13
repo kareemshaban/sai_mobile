@@ -27,8 +27,8 @@ class RoomRoleWidget extends GetView<RoomController> {
                 },
       child: Obx(
         () => Container(
-          width: 45,
-          height: 45,
+          width: 35,
+          height: 35,
           padding: EdgeInsets.all(controller.room.role == "owner" ? 5 : 0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,

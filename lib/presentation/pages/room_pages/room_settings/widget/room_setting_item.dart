@@ -38,7 +38,7 @@ class RoomSettingItem extends StatelessWidget {
             Text(
               title,
               style: Get.textTheme.titleSmall!.copyWith(
-                fontSize: AppSize.s20(context),
+                fontSize: AppSize.s18(context),
               ),
             ),
             10.horizontalSpace(),
@@ -76,7 +76,7 @@ class RoomSettingItem extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Get.textTheme.headlineSmall!.copyWith(
-                    fontSize: AppSize.s20(context),
+                    fontSize: AppSize.s16(context),
                   ),
                 ),
               ),

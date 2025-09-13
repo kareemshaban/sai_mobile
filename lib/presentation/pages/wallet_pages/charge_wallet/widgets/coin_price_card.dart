@@ -13,7 +13,7 @@ class CoinPriceCard extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: SizedBox(
-        height: 100,
+        height: 80,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -23,15 +23,15 @@ class CoinPriceCard extends StatelessWidget {
                   margin: const EdgeInsetsDirectional.only(end: 10),
                   child: const AppIcon(
                     icon: IconsAssets.coins,
-                    width: 20,
-                    height: 20,
+                    width: 25,
+                    height: 25,
                   ),
                 ),
                 Text(
                   unit.goldValue,
                   style: Get.textTheme.titleLarge!.copyWith(
                     fontWeight: FontWeightManger.semiBold,
-                    fontSize: AppSize.s15(context),
+                    fontSize: AppSize.s18(context),
                   ),
                 ),
               ],
@@ -40,13 +40,14 @@ class CoinPriceCard extends StatelessWidget {
               textDirection: TextDirection.ltr,
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20)),
+                    color: Colors.amber.withAlpha(200),
+                    borderRadius: BorderRadius.circular(15)),
                 padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
-                child: Text("${unit.unitValue} SAR"),
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+                child: Text("${unit.unitValue} SAR" , style: TextStyle(color: Colors.black , fontSize: 16.0),),
               ),
-            )
+            ),
+
           ],
         ),
       ),

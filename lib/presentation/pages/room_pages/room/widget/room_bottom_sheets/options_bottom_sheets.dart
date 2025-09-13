@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/extensions.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/getx/room_controller.dart';
+import 'package:new_sai/presentation/pages/room_pages/room/widget/room_bottom_sheets/my_theme_bottom_sheet.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_bottom_sheets/raise_hand_request_bottom_sheet.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_dilaog/request_mic_dialog.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_dilaog/set_room_lock_dialog.dart';
@@ -104,6 +105,15 @@ class OptionsBottomSheets extends GetView<RoomController> {
                   onTap: () {
                     Get.back();
                     Get.bottomSheet(const RaiseHandRequestBottomSheet());
+                  },
+                ),
+              if (controller.isOwner())
+                RoomOptionItem(
+                  title: AppStrings.roomTheme,
+                  icon: Icons.image,
+                  onTap: () {
+                    Get.back();
+                    Get.bottomSheet( MyThemesBottomSheet(roomID: controller.roomId));
                   },
                 ),
             ],

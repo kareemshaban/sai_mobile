@@ -32,6 +32,9 @@ class AddMusicViewState extends State<AddMusicView> {
   final List<RoomSongModel> songs = [];
 
   bool _hasPermission = false;
+  bool isAllChecked = false;
+
+  List<SongModel> _allSongs = [];
 
   @override
   void initState() {
@@ -48,10 +51,10 @@ class AddMusicViewState extends State<AddMusicView> {
     _hasPermission
         ? setState(() {})
         : Get.dialog(
-            AppPermissionDialog(
-              message: AppStrings.youMustEnablePermissionToAccessAudioFiles,
-            ),
-          );
+      AppPermissionDialog(
+        message: AppStrings.youMustEnablePermissionToAccessAudioFiles,
+      ),
+    );
   }
 
   onAddItemTOList(SongModel item) async {
@@ -94,7 +97,32 @@ class AddMusicViewState extends State<AddMusicView> {
         image: image,
       ));
     }
-    setState(() {});
+
+    // Update isAllChecked based on new selection
+    setState(() {
+      isAllChecked = songs.length == _allSongs.length && _allSongs.isNotEmpty;
+    });
+  }
+
+  void toggleSelectAll(bool? value) async {
+    setState(() {
+      isAllChecked = value ?? false;
+      songs.clear();
+      if (isAllChecked) {
+        // Select all songs
+        for (var song in _allSongs) {
+          final itemDuration = Duration(milliseconds: song.duration ?? 0);
+          songs.add(
+            RoomSongModel(
+              name: song.title,
+              duration: itemDuration.inSeconds,
+              path: song.data,
+              image: null, // Skip artwork query here for performance
+            ),
+          );
+        }
+      }
+    });
   }
 
   @override
@@ -103,116 +131,140 @@ class AddMusicViewState extends State<AddMusicView> {
       appBar: AppBar(
         leading: const AppBackButton(),
         leadingWidth: 60,
-        title: Text(AppStrings.addMusic),
+        title: const Text('Add Music'),
+        actions: [
+          Row(
+            children: [
+              const Text('All'),
+              Checkbox(
+                value: isAllChecked,
+                onChanged: toggleSelectAll,
+              ),
+              const SizedBox(width: 8), // spacing from right edge
+            ],
+          ),
+        ],
       ),
       body: Center(
         child: !_hasPermission
             ? noAccessToLibraryWidget()
             : FutureBuilder<List<SongModel>>(
-                future: _audioQuery.querySongs(
-                  sortType: SongSortType.DATE_ADDED,
-                  orderType: OrderType.DESC_OR_GREATER,
-                  uriType: UriType.EXTERNAL,
-                  ignoreCase: true,
+          future: _audioQuery.querySongs(
+            sortType: SongSortType.DATE_ADDED,
+            orderType: OrderType.DESC_OR_GREATER,
+            uriType: UriType.EXTERNAL,
+            ignoreCase: true,
+          ),
+          builder: (context, item) {
+            if (item.hasError) {
+              return const SizedBox();
+            }
+            if (item.data == null) {
+              return const AppLoader();
+            }
+            if (item.data!.isEmpty) {
+              return Text(
+                AppStrings.noDataFound,
+                style: Get.textTheme.titleMedium!.copyWith(
+                  fontSize: AppSize.s16(context),
                 ),
-                builder: (context, item) {
-                  if (item.hasError) {
-                    return const SizedBox();
-                  }
-                  if (item.data == null) {
-                    return const AppLoader();
-                  }
-                  if (item.data!.isEmpty) {
-                    return Text(
-                      AppStrings.noDataFound,
-                      style: Get.textTheme.titleMedium!.copyWith(
-                        fontSize: AppSize.s16(context),
-                      ),
-                    );
-                  }
+              );
+            }
 
-                  return ListView.builder(
-                    itemCount: item.data!.length,
-                    padding: const EdgeInsets.only(bottom: 50),
-                    itemBuilder: (context, index) {
-                      final itemDuration = Duration(
-                        milliseconds: item.data![index].duration ?? 0,
-                      );
-                      return ListTile(
-                        title: Text(
-                          item.data![index].title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Get.textTheme.titleLarge!.copyWith(
-                            fontSize: AppSize.s16(context),
-                          ),
-                        ),
-                        subtitle: itemDuration.inSeconds != 0
-                            ? Text(
-                                durationText(itemDuration),
-                                style: Get.textTheme.titleMedium!.copyWith(
-                                  fontSize: AppSize.s14(context),
-                                ),
-                              )
-                            : null,
-                        leading: FutureBuilder(
-                          future: _audioQuery.queryArtwork(
-                            item.data![index].id,
-                            ArtworkType.AUDIO,
-                            size: 200,
-                            quality: 100,
-                            format: ArtworkFormat.PNG,
-                          ),
-                          builder: (context, item) {
-                            if (item.data != null && item.data!.isNotEmpty) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.memory(
-                                  item.data!,
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                  errorBuilder:
-                                      (context, exception, stackTrace) {
-                                    return const AppImage(
-                                      image: Constants.musicIcon,
-                                      width: 50,
-                                      height: 50,
-                                    );
-                                  },
-                                ),
+            // Store the full list of songs for use in "Select All"
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (_allSongs != item.data!) {
+                setState(() {
+                  _allSongs = item.data!;
+                  // Update isAllChecked whenever songs or _allSongs change
+                  isAllChecked =
+                      songs.length == _allSongs.length && _allSongs.isNotEmpty;
+                });
+              }
+            });
+
+            return ListView.builder(
+              itemCount: item.data!.length,
+              padding: const EdgeInsets.only(bottom: 50),
+              itemBuilder: (context, index) {
+                final song = item.data![index];
+                final itemDuration = Duration(milliseconds: song.duration ?? 0);
+                final isSelected =
+                songs.any((element) => element.path == song.data);
+
+                return ListTile(
+                  title: Text(
+                    song.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Get.textTheme.titleLarge!.copyWith(
+                      fontSize: AppSize.s16(context),
+                    ),
+                  ),
+                  subtitle: itemDuration.inSeconds != 0
+                      ? Text(
+                    durationText(itemDuration),
+                    style: Get.textTheme.titleMedium!.copyWith(
+                      fontSize: AppSize.s14(context),
+                    ),
+                  )
+                      : null,
+                  leading: FutureBuilder(
+                    future: _audioQuery.queryArtwork(
+                      song.id,
+                      ArtworkType.AUDIO,
+                      size: 200,
+                      quality: 100,
+                      format: ArtworkFormat.PNG,
+                    ),
+                    builder: (context, art) {
+                      if (art.data != null && art.data!.isNotEmpty) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.memory(
+                            art.data!,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, exception, stackTrace) {
+                              return const AppImage(
+                                image: Constants.musicIcon,
+                                width: 50,
+                                height: 50,
                               );
-                            }
-                            return const AppImage(
-                              image: Constants.musicIcon,
-                              width: 50,
-                              height: 50,
-                              radius: 10,
-                            );
-                          },
-                        ),
-                        trailing: SizedBox(
-                          width: 25,
-                          height: 25,
-                          child: Checkbox(
-                            value: songs.any((element) =>
-                                element.path == item.data![index].data),
-                            onChanged: (value) async {
-                              await onAddItemTOList(item.data![index]);
                             },
                           ),
-                        ),
-                        onLongPress: () async {
-                          await onAddItemTOList(item.data![index]);
-                        },
-                        onTap: () async {
-                          await onAddItemTOList(item.data![index]);
-                        },
+                        );
+                      }
+                      return const AppImage(
+                        image: Constants.musicIcon,
+                        width: 50,
+                        height: 50,
+                        radius: 10,
                       );
                     },
-                  );
-                },
-              ),
+                  ),
+                  trailing: SizedBox(
+                    width: 25,
+                    height: 25,
+                    child: Checkbox(
+                      value: isSelected,
+                      onChanged: (value) async {
+                        await onAddItemTOList(song);
+                      },
+                    ),
+                  ),
+                  onLongPress: () async {
+                    await onAddItemTOList(song);
+                  },
+                  onTap: () async {
+                    await onAddItemTOList(song);
+                  },
+                );
+              },
+            );
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AppButton(

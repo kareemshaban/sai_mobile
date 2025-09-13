@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/extensions.dart';
 import 'package:new_sai/presentation/pages/settings_and_privacy/getx/settings_and_privacy_controller.dart';
+import 'package:new_sai/presentation/pages/settings_and_privacy/widget/confirm_logout_dialog.dart';
 import 'package:new_sai/presentation/pages/settings_and_privacy/widget/setting_item.dart';
 import 'package:new_sai/presentation/resources/assets_manger.dart';
 import 'package:new_sai/presentation/resources/color_manger.dart';
@@ -140,7 +141,13 @@ class SettingsAndPrivacyView extends GetView<SettingsAndPrivacyController> {
               child: SettingItem(
                 icon: IconsAssets.logout,
                 title: AppStrings.logout,
-                onTap: controller.logout,
+                color: ColorManager.red,
+                weight: FontWeight.bold ,
+                onTap: () => {
+                  Get.dialog(
+                      ConfirmLogoutDialog()
+                  )
+                },
               ),
             ),
           ],

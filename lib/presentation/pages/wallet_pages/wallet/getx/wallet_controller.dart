@@ -118,7 +118,7 @@ class WalletController extends GetxController
 
   @override
   void onInit() async {
-    tabController = TabController(length: 1, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
     bounceScrollController.addListener(() async {
       if (bounceScrollController.offset ==
           bounceScrollController.position.maxScrollExtent) {

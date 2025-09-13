@@ -21,24 +21,20 @@ class CreateStoryButton extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 65,
-            width: 65,
+            height: 55,
+            width: 55,
             decoration: BoxDecoration(
               color: ColorManager.lightGreyColor.withOpacity(.8),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.add,
-              color: ColorManager.textGrey4,
+              color: ColorManager.primary,
+
             ),
           ),
           1.verticalSpace(),
-          Text(
-            AppStrings.create,
-            style: Get.textTheme.titleMedium!.copyWith(
-              fontSize: AppSize.s15(context),
-            ),
-          )
+
         ],
       ),
     );

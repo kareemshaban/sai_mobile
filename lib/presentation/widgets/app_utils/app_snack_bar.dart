@@ -16,7 +16,7 @@ showSnackBarWidget({
         message,
         style: Get.textTheme.bodyMedium!.copyWith(
           color: textColor,
-          fontSize: 16,
+          fontSize: 14,
         ),
       ),
       duration: Duration(seconds: second ?? 3),

@@ -26,7 +26,7 @@ class EditProfileView extends GetView<EditProfileController> {
         appBar: AppBar(
           leadingWidth: 60,
           leading: const AppBackButton(),
-          title: Text(AppStrings.editProfile),
+          title: Text(AppStrings.editProfile , style: TextStyle(fontSize: 16),),
           actions: [
             if (controller.loading)
               const Center(

@@ -54,7 +54,7 @@ dependencies:
   camerawesome: ^2.5.0
   photo_manager: ^3.6.3
   image_picker: ^1.1.2
-  skeletonizer: ^1.4.2
+  skeletonizer: ^2.1.0+1
   dropdown_button2: ^2.3.9
   url_launcher: ^6.3.1
   lottie: ^3.2.0
@@ -100,6 +100,7 @@ dependencies:
   http: ^1.4.0
   webview_flutter:
     path: packages/webview_flutter-4.9.0
+  wakelock_plus: ^1.3.2
 dependency_overrides:
     webview_flutter_android:
       path: packages/webview_flutter_android-3.16.9

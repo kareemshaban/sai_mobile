@@ -93,6 +93,7 @@ class RoomSettingsView extends GetView<RoomSettingsController> {
                                   value: e,
                                   child: Text(
                                     e.toString(),
+                                    style: TextStyle(fontSize: 16.0),
                                   ),
                                 ),
                               )

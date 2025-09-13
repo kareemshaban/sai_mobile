@@ -1024,4 +1024,11 @@ class AppStrings {
   static String get youHaveExceededYourWithdrawalBalance =>
       "youHaveExceededYourWithdrawalBalance".tr();
   static String get appName => "appName".tr();
+
+  static String get confirmDeleteAccount => "confirmDeleteAccount".tr();
+  static String get confirmLogout => "confirmLogout".tr();
+
+  static String get empty => "empty".tr();
+  static String get noData => "noData".tr();
+  static String get roomTheme => "roomTheme".tr();
 }

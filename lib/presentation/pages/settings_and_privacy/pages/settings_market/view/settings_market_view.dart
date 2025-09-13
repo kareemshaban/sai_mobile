@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:new_sai/app/extensions.dart';
 import 'package:new_sai/presentation/pages/settings_and_privacy/pages/settings_market/getx/settings_market_controller.dart';
 import 'package:new_sai/presentation/resources/assets_manger.dart';
+import 'package:new_sai/presentation/resources/color_manger.dart';
 import 'package:new_sai/presentation/resources/font_manger.dart';
 import 'package:new_sai/presentation/resources/routes_manger.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
@@ -26,15 +27,18 @@ class SettingsMarketView extends GetView<SettingsMarketController> {
                 controller
                     .appController.user.goldValue.formatCurrencyWithoutSymbol,
                 style: Get.textTheme.displayLarge!.copyWith(
-                  fontSize: AppSize.s16(context),
+                  fontSize: AppSize.s18(context),
                 ),
               ),
             ),
             5.horizontalSpace(),
-            const AppIcon(
-              icon: IconsAssets.coins,
-              width: 17,
-              height: 17,
+           const Padding(
+              padding: EdgeInsets.only(bottom: 5.0),
+              child:  AppIcon(
+                icon: IconsAssets.coins,
+                width: 20,
+                height: 20,
+              ),
             ),
             16.horizontalSpace(),
           ],
@@ -46,7 +50,7 @@ class SettingsMarketView extends GetView<SettingsMarketController> {
                 : GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
+                      crossAxisCount: 2,
                       childAspectRatio: 1.1,
                       mainAxisSpacing: 10,
                     ),
@@ -58,23 +62,31 @@ class SettingsMarketView extends GetView<SettingsMarketController> {
                           AppRoutes.uniquePersonalIDRoute,
                           arguments: controller.cat[index],
                         ),
-                        child: Column(
-                          children: [
-                            AppImage(
-                              image: controller.cat[index].categoryIcon,
-                              width: 60,
-                              height: 60,
-                              radius: 10,
-                            ),
-                            4.verticalSpace(),
-                            Text(
-                              controller.cat[index].name,
-                              textAlign: TextAlign.center,
-                              style: Get.textTheme.titleLarge!.copyWith(
-                                fontSize: AppSize.s16(context),
+                        child: Container(
+                          decoration: BoxDecoration(color: Colors.white54 , borderRadius: BorderRadius.circular(15.0) ,
+                              border: Border.all(color: Colors.grey.withAlpha(70) , width: 3.0) ),
+                          margin: EdgeInsets.all(5.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AppImage(
+                                image: controller.cat[index].categoryIcon,
+                                width: 60,
+                                height: 60,
+                                radius: 10,
                               ),
-                            )
-                          ],
+                              4.verticalSpace(),
+                              Text(
+                                controller.cat[index].name,
+                                textAlign: TextAlign.center,
+                                style: Get.textTheme.titleLarge!.copyWith(
+                                  fontSize: AppSize.s16(context),
+                                ),
+                                maxLines: 1, // Limits to one line
+                                overflow: TextOverflow.ellipsis, // Adds "..." on overflow
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },

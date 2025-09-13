@@ -54,16 +54,21 @@ class UniqueIdItem extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       width: 1.w(context),
-                      margin: const EdgeInsets.only(bottom: 20),
+                      margin: const EdgeInsets.only(bottom: 0),
                       padding: const EdgeInsets.symmetric(vertical: 6),
-                      color: ColorManager.yellowColor3,
+                      decoration: BoxDecoration(
+                          color: ColorManager.iconGreyColor.withAlpha(150),
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0) , bottomRight: Radius.circular(10.0))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const AppIcon(
-                            icon: IconsAssets.coins,
-                            width: 20,
-                            height: 20,
+                          const Padding(
+                            padding:  EdgeInsets.only(bottom: 8.0),
+                            child:  AppIcon(
+                              icon: IconsAssets.coins,
+                              width: 20,
+                              height: 20,
+                            ),
                           ),
                           8.horizontalSpace(),
                           Text(
@@ -73,7 +78,7 @@ class UniqueIdItem extends StatelessWidget {
                                     ? AppStrings.purchased
                                     : model
                                         .goldPrice.formatCurrencyWithoutSymbol,
-                            style: Get.textTheme.titleMedium!,
+                            style: TextStyle(fontSize: 18.0 , color: Colors.white),
                           ),
                         ],
                       ),
@@ -84,7 +89,7 @@ class UniqueIdItem extends StatelessWidget {
                     child: InkWell(
                       onTap: () => Get.to(RoomImageView(image: model.image)),
                       child: Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.only(top: 5.0 , bottom: 5.0 , left: 10.0 , right: 10.0),
                         decoration: BoxDecoration(
                           color: ColorManager.black.withOpacity(.4),
                           borderRadius: BorderRadius.circular(10),
@@ -92,6 +97,7 @@ class UniqueIdItem extends StatelessWidget {
                         child: const Icon(
                           Icons.visibility_outlined,
                           color: ColorManager.white,
+                          size: 20.0,
                         ),
                       ),
                     ),

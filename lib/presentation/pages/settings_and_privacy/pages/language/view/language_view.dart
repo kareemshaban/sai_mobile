@@ -33,6 +33,11 @@ class LanguageView extends GetView<LanguageController> {
                   ),
                 ),
               ),
+              Container(
+                height: 1, // Thickness of the line
+                width: double.infinity, // Full width of parent
+                color: Colors.grey, // Color of the line
+              ),
               RadioListTile(
                 value: "english",
                 groupValue: controller.language,

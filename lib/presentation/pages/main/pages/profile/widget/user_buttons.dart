@@ -19,22 +19,35 @@ class UserButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AppButton(
-          title: AppStrings.editProfile,
           radius: 10,
-          textStyle: Get.textTheme.titleSmall!.copyWith(
-            fontSize: AppSize.s11(context),
-          ),
+          title: "",
           onTap: () => Get.toNamed(AppRoutes.editProfileRoute),
           backgroundColor: ColorManager.lightGreyColor,
+          widget:  Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(AppStrings.editProfile, style: TextStyle(fontSize: AppSize.s11(context),
+                  fontWeight: FontWeight.bold , color: Colors.black),),
+              SizedBox(width: 5.0,),
+              Icon(Icons.edit , color: Colors.black,),
+            ],
+          ),
         ),
         12.horizontalSpace(),
         AppButton(
-          title: AppStrings.shareProfile,
+          title: "",
           radius: 10,
-          textStyle: Get.textTheme.titleSmall!.copyWith(
-            fontSize: AppSize.s11(context),
-          ),
+
           backgroundColor: ColorManager.lightGreyColor,
+          widget:  Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          Text(AppStrings.shareProfile, style: TextStyle(fontSize: AppSize.s11(context),
+          fontWeight: FontWeight.bold , color: Colors.black),),
+          SizedBox(width: 5.0,),
+          Icon(Icons.share , color: Colors.black,),
+          ],
+          ),
           onTap: () {
             final link =
                 "Checkout this profile in SAI app ${DynamicLinkHandler.createProfileLink(id: Get.find<AppController>().user.id)}";

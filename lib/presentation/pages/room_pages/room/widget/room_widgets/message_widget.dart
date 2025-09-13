@@ -104,8 +104,8 @@ class MessageWidget extends StatelessWidget {
                       if (user != null)
                         PrivilegeDataView(
                           url: user.privileges.data.profileFrame.file,
-                          width: 50,
-                          height: 50,
+                          width: 40,
+                          height: 40,
                         )
                     ],
                   ),

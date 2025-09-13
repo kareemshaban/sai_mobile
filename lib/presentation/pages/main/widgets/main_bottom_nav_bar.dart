@@ -27,8 +27,8 @@ class MainBottomNavBar extends GetView<MainController> {
               padding:const EdgeInsets.symmetric(vertical: 3.0),
               child: AppIcon(
                 icon: IconsAssets.store,
-                width: 30,
-                height: 30,
+                width: 20 ,
+                height: 20,
                 color: controller.currentIndex == 2
                     ? ColorManager.white
                     : controller.currentIndex == 0
@@ -43,8 +43,8 @@ class MainBottomNavBar extends GetView<MainController> {
               padding:const EdgeInsets.symmetric(vertical: 3.0),
               child: AppIcon(
                 icon: IconsAssets.chat,
-                width: 30,
-                height: 30,
+                width: 20,
+                height: 20,
                 color: controller.currentIndex == 2
                     ? ColorManager.white
                     : controller.currentIndex == 1
@@ -59,8 +59,8 @@ class MainBottomNavBar extends GetView<MainController> {
               padding:const EdgeInsets.symmetric(vertical: 3.0),
               child: AppIcon(
                 icon: IconsAssets.reels,
-                width: 30,
-                height: 30,
+                width: 20,
+                height: 20,
                 color: controller.currentIndex == 2
                     ? ColorManager.primary
                     : ColorManager.black,
@@ -75,8 +75,8 @@ class MainBottomNavBar extends GetView<MainController> {
                   padding:const EdgeInsets.symmetric(vertical: 3.0),
                   child: AppIcon(
                     icon: IconsAssets.income,
-                    width: 30,
-                    height: 30,
+                    width: 20,
+                    height: 20,
                     color: controller.currentIndex == 2
                         ? ColorManager.white
                         : controller.currentIndex == 3
@@ -107,8 +107,8 @@ class MainBottomNavBar extends GetView<MainController> {
               padding:const EdgeInsets.symmetric(vertical: 3.0),
               child: AppIcon(
                 icon: IconsAssets.user,
-                width: 30,
-                height: 30,
+                width: 20,
+                height: 20,
                 color: controller.currentIndex == 2
                     ? ColorManager.white
                     : controller.currentIndex == 4

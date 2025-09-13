@@ -22,7 +22,7 @@ class ReelsView extends GetView<ReelsController> {
           ? Container(
               width: 1.w(context),
               height: 1.h(context),
-              color: ColorManager.black,
+              color: ColorManager.white,
               child: const Center(
                 child: AppLoader(
                   color: ColorManager.white,

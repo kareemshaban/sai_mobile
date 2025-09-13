@@ -43,8 +43,8 @@ class ChargeWalletView extends GetView<ChargeWalletController> {
                               margin: const EdgeInsetsDirectional.only(end: 10),
                               child: const AppIcon(
                                 icon: IconsAssets.coins,
-                                width: 20,
-                                height: 20,
+                                width: 25,
+                                height: 25,
                               ),
                             ),
                             // Text('asdads',style: TextStyle(color: Colors.amber),),
@@ -53,7 +53,7 @@ class ChargeWalletView extends GetView<ChargeWalletController> {
                                   .formatCurrency(context),
                               style: Get.textTheme.titleLarge!.copyWith(
                                 fontWeight: FontWeightManger.semiBold,
-                                fontSize: AppSize.s15(context),
+                                fontSize: AppSize.s18(context),
                               ),
                             ),
                           ],

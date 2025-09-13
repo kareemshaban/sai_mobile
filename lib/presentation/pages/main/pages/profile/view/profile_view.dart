@@ -63,6 +63,8 @@ class ProfileView extends GetView<ProfileController> {
                                           controller.userStoryController,
                                       stories: controller.userStories,
                                     ),
+
+
                                   6.verticalSpace(),
                                 ],
                               ),

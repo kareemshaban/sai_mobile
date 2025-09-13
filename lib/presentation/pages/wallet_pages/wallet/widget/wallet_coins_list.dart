@@ -13,39 +13,40 @@ class WalletCoinsList extends GetView<WalletController> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Obx(
-        () => controller.loadingGift
-            ? const Center(child: AppLoader())
-            : controller.gifts.isEmpty
-                ? Center(
-                    child: Text(
-                      AppStrings.noDataFound,
-                      style: Get.textTheme.titleMedium!.copyWith(
-                        fontSize: AppSize.s16(context),
+    return Obx(
+      () => controller.loadingGift
+          ? const Center(child: AppLoader())
+          : controller.gifts.isEmpty
+              ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    AppStrings.noDataFound,
+                    style: Get.textTheme.titleMedium!.copyWith(
+                      fontSize: AppSize.s16(context),
+                    ),
+                  ),
+                ],
+              )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                        itemBuilder: (context, index) => RecordItem(
+                          model: controller.gifts[index],
+                        ),
+                        separatorBuilder: (context, index) =>
+                            17.verticalSpace(),
+                        itemCount: controller.gifts.length,
                       ),
                     ),
-                  )
-                : Column(
-                    children: [
-                      Expanded(
-                        child: ListView.separated(
-                          itemBuilder: (context, index) => RecordItem(
-                            model: controller.gifts[index],
-                          ),
-                          separatorBuilder: (context, index) =>
-                              17.verticalSpace(),
-                          itemCount: controller.gifts.length,
-                        ),
-                      ),
-                      if (controller.loadingGiftPagination)
-                        const Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Center(child: AppLoader()),
-                        )
-                    ],
-                  ),
-      ),
+                    if (controller.loadingGiftPagination)
+                      const Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Center(child: AppLoader()),
+                      )
+                  ],
+                ),
     );
   }
 }

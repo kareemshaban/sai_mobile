@@ -483,5 +483,10 @@
   "newFollowers" : "New Followers",
   "sar" : "SAR",
   "youHaveExceededYourWithdrawalBalance" : "You have exceeded your withdrawal balance.",
-  "appName" : "SAI"
+  "appName" : "SAI",
+  "confirmDeleteAccount": "Are You Sure , you need to delete your account ?",
+  "confirmLogout": "Are You Sure , you need to end your current session !",
+  "empty": "Empty",
+  "noData": "No Data To Load",
+  "roomTheme": "Room Theme"
 }

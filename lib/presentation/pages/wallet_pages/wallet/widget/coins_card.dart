@@ -16,22 +16,23 @@ class CoinsCard extends GetView<WalletController> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.95,
+      aspectRatio: 1.8,
       child: Container(
+
         width: 1.w(context),
-        height: 194,
+        height: 250,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage('assets/images/Gold-bag.png'))  ,
           borderRadius: BorderRadius.circular(10),
-          gradient: ColorManager.walletGradientColor,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               AppStrings.coins,
               style: Get.textTheme.bodyMedium!.copyWith(
-                fontSize: AppSize.s20(context),
+                fontSize: AppSize.s30(context),
               ),
             ),
             10.verticalSpace(),
@@ -47,14 +48,14 @@ class CoinsCard extends GetView<WalletController> {
                           "",
                       //  '${controller.appController.user.goldValue} ',
                       style: Get.textTheme.bodyMedium!.copyWith(
-                        fontSize: AppSize.s16(context),
+                        fontSize: AppSize.s30(context),
                       ),
                     ),
                     const WidgetSpan(
                       child: AppIcon(
                         icon: IconsAssets.coins,
-                        width: 15,
-                        height: 15,
+                        width: 30,
+                        height: 30,
                       ),
                     ),
                   ],
@@ -62,15 +63,19 @@ class CoinsCard extends GetView<WalletController> {
               );
             }),
             const Spacer(),
-            InkWell(
-              onTap: () {
-                Get.toNamed(AppRoutes.chargeWalletRoute);
-              },
-              child: Center(
+            Container(
+              width: 150,
+              height: 40,
+              decoration: BoxDecoration( color: ColorManager.black.withAlpha(100), borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              alignment: Alignment.center,
+              child: InkWell(
+                onTap: () {
+                  Get.toNamed(AppRoutes.chargeWalletRoute);
+                },
                 child: Text(
                   AppStrings.recharge,
                   style: Get.textTheme.bodyMedium!.copyWith(
-                    fontSize: AppSize.s16(context),
+                    fontSize: AppSize.s18(context),
                   ),
                 ),
               ),

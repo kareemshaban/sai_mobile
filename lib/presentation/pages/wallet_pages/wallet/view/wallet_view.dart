@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/presentation/pages/wallet_pages/wallet/getx/wallet_controller.dart';
 import 'package:new_sai/presentation/pages/wallet_pages/wallet/widget/wallet_coins.dart';
+import 'package:new_sai/presentation/pages/wallet_pages/wallet/widget/wallet_coins_list.dart';
 import 'package:new_sai/presentation/pages/wallet_pages/wallet/widget/wallet_rewards.dart';
 import 'package:new_sai/presentation/pages/wallet_pages/wallet/widget/wallet_tab_bar.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
@@ -27,6 +28,7 @@ class WalletView extends GetView<WalletController> {
         children: const [
        //   WalletRewards(),
           WalletCoins(),
+          WalletCoinsList(),
         ],
       ),
     );

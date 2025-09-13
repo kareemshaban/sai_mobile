@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -58,21 +59,22 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                                     children: [
                                       const AppIcon(
                                         icon: IconsAssets.jeweled,
-                                        width: 22,
-                                        height: 22,
+                                        width: 20,
+                                        height: 20,
                                       ),
                                       11.horizontalSpace(),
                                       Text(
                                         AppStrings.store,
                                         style:
                                             Get.textTheme.titleMedium!.copyWith(
-                                          fontSize: AppSize.s22(context),
+                                          fontSize: AppSize.s16(context),
                                         ),
                                       ),
                                       const Spacer(),
                                       const Icon(
                                         Icons.arrow_forward_ios,
                                         color: ColorManager.iconGreyColor,
+                                        size: 16.0,
                                       ),
                                     ],
                                   ),
@@ -86,21 +88,22 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                                       children: [
                                         const AppIcon(
                                           icon: IconsAssets.wallet,
-                                          width: 22,
-                                          height: 22,
+                                          width: 16,
+                                          height: 16,
                                         ),
                                         11.horizontalSpace(),
                                         Text(
                                           AppStrings.wallet,
                                           style: Get.textTheme.titleMedium!
                                               .copyWith(
-                                            fontSize: AppSize.s22(context),
+                                            fontSize: AppSize.s16(context),
                                           ),
                                         ),
                                         const Spacer(),
                                         const Icon(
                                           Icons.arrow_forward_ios,
                                           color: ColorManager.iconGreyColor,
+                                          size: 16.0,
                                         ),
                                       ],
                                     ),
@@ -112,21 +115,22 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                                       children: [
                                         const AppIcon(
                                           icon: IconsAssets.withdraw,
-                                          width: 22,
-                                          height: 22,
+                                          width: 16,
+                                          height: 16,
                                         ),
                                         11.horizontalSpace(),
                                         Text(
                                           AppStrings.withdraw,
                                           style: Get.textTheme.titleMedium!
                                               .copyWith(
-                                            fontSize: AppSize.s22(context),
+                                            fontSize: AppSize.s16(context),
                                           ),
                                         ),
                                         const Spacer(),
                                         const Icon(
                                           Icons.arrow_forward_ios,
                                           color: ColorManager.iconGreyColor,
+                                          size: 16.0,
                                         ),
                                       ],
                                     ),
@@ -139,21 +143,22 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                                     children: [
                                       const AppIcon(
                                         icon: IconsAssets.setting,
-                                        width: 22,
-                                        height: 22,
+                                        width: 16,
+                                        height: 16,
                                       ),
                                       11.horizontalSpace(),
                                       Text(
                                         AppStrings.settingsAndPrivacy,
                                         style:
                                             Get.textTheme.titleMedium!.copyWith(
-                                          fontSize: AppSize.s22(context),
+                                          fontSize: AppSize.s16(context),
                                         ),
                                       ),
                                       const Spacer(),
                                       const Icon(
                                         Icons.arrow_forward_ios,
                                         color: ColorManager.iconGreyColor,
+                                        size: 16.0,
                                       ),
                                     ],
                                   ),
@@ -187,7 +192,7 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                                 child: const Icon(
                                   Icons.notifications,
                                   color: ColorManager.white,
-                                  size: 35,
+                                  size: 28,
                                 ),
                               ),
                             ),
@@ -284,10 +289,13 @@ Obx(() => Container(
                             ),
                           ),
                           5.horizontalSpace(),
-                          const Icon(
-                            Icons.copy,
-                            color: ColorManager.textGrey3,
-                            size: 20,
+                          Container(
+                            margin: EdgeInsets.only(bottom: 5.0),
+                            child: Icon(
+                              Icons.copy,
+                              color: ColorManager.textGrey3,
+                              size: 20,
+                            ),
                           ),
                           if (controller
                               .appController.user.badges.isNotEmpty) ...[
@@ -304,11 +312,21 @@ Obx(() => Container(
                       ),
                     ),
                     5.verticalSpace(),
-                    Text(
-                      controller.appController.user.country.name,
-                      style: Get.textTheme.titleMedium!.copyWith(
-                        fontSize: AppSize.s14(context),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          controller.appController.user.country.name,
+                          style: Get.textTheme.titleMedium!.copyWith(
+                            fontSize: AppSize.s18(context),
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        SizedBox(width: 10.0,),
+                        Image(image: CachedNetworkImageProvider(controller.appController.user.country.flag) , width: 30,),
+
+
+                      ],
                     ),
                   ],
                 ),

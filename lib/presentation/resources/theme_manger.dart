@@ -143,7 +143,7 @@ ThemeData getApplicationTheme(BuildContext context) => ThemeData(
         type: BottomNavigationBarType.fixed,
       ),
       dividerTheme: const DividerThemeData(color: ColorManager.dividerColor),
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelPadding: EdgeInsets.zero,
         dividerColor: Colors.transparent,
         indicatorSize: TabBarIndicatorSize.tab,

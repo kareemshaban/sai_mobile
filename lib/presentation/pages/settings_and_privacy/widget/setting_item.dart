@@ -11,6 +11,8 @@ class SettingItem extends StatelessWidget {
   final String? icon;
   final IconData? iconData;
   final String? value;
+  final Color? color ;
+  final FontWeight? weight ;
   final void Function()? onTap;
   final bool isSwitch;
   final bool withColor;
@@ -25,6 +27,8 @@ class SettingItem extends StatelessWidget {
     this.iconData,
     this.withColor = true,
     this.switchValue = true,
+    this.color,
+    this.weight
   });
 
   @override
@@ -38,7 +42,7 @@ class SettingItem extends StatelessWidget {
               icon: icon!,
               width: 20,
               height: 20,
-              color: withColor ? ColorManager.iconGreyColor : null,
+              color: color ?? ( withColor ? ColorManager.iconGreyColor : null),
             ),
             7.horizontalSpace(),
           ],
@@ -46,26 +50,36 @@ class SettingItem extends StatelessWidget {
             Icon(
               iconData!,
               size: 25,
-              color: ColorManager.iconGreyColor,
+              color:  color ??  ColorManager.iconGreyColor,
             ),
             7.horizontalSpace(),
           ],
-          Text(
-            title,
-            style: Get.textTheme.titleMedium!.copyWith(
-              fontSize: AppSize.s20(context),
-            ),
+           Text(
+              title,
+              style: Get.textTheme.titleMedium!.copyWith(
+                fontSize: AppSize.s18(context),
+                color: color ?? Colors.black,
+                fontWeight: weight
+              ),
           ),
           if (value != null) ...[
             7.horizontalSpace(),
             Flexible(
               fit: FlexFit.tight,
-              child: Text(
-                value!,
-                textAlign: TextAlign.end,
-                style: Get.textTheme.headlineSmall!.copyWith(
-                  fontSize: AppSize.s20(context),
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Directionality(
+                    textDirection: TextDirection.ltr, // App is RTL
+                    child: Text(
+                      value!,
+                      textAlign: TextAlign.end,
+                      style: Get.textTheme.headlineSmall!.copyWith(
+                        fontSize: AppSize.s18(context),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ] else

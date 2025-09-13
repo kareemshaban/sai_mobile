@@ -108,7 +108,7 @@ class RoomAppBar extends GetView<RoomController> {
             child: const Icon(
               Icons.flag,
               color: ColorManager.red,
-              size: 25,
+              size: 22,
             ),
           ),
         10.horizontalSpace(),
@@ -914,7 +914,7 @@ class RoomAppBar extends GetView<RoomController> {
           child: const Icon(
             Icons.games_rounded,
             color: ColorManager.white,
-            size: 25,
+            size: 22,
           ),
         ),
         //   ),
@@ -934,7 +934,7 @@ class RoomAppBar extends GetView<RoomController> {
           child: const Icon(
             Icons.reply,
             color: ColorManager.white,
-            size: 25,
+            size: 22,
           ),
         ),
         10.horizontalSpace(),
@@ -943,7 +943,7 @@ class RoomAppBar extends GetView<RoomController> {
           child: const Icon(
             Icons.power_settings_new,
             color: ColorManager.white,
-            size: 25,
+            size: 22,
           ),
         ),
       ],

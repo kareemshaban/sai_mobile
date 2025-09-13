@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/app_controller.dart';
 import 'package:new_sai/app/app_validation.dart';
@@ -14,9 +15,11 @@ import 'package:new_sai/presentation/resources/routes_manger.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
 import 'package:new_sai/presentation/widgets/app_utils/app_snack_bar.dart';
 
-class CashWithdrawalController extends GetxController {
+class CashWithdrawalController extends GetxController with  GetSingleTickerProviderStateMixin{
+
   final formKey = GlobalKey<FormState>();
   final scrollController = ScrollController();
+  late TabController tabController;
   final appController = Get.find<AppController>();
   final goldValueController = TextEditingController();
   final GetMyRedeemsRecordUseCase _getMyRedeemsRecordUseCase =
@@ -109,6 +112,7 @@ class CashWithdrawalController extends GetxController {
 
   @override
   void onInit() async {
+    tabController = TabController(length: 2, vsync: this);
     scrollController.addListener(() async {
       if (scrollController.offset ==
           scrollController.position.maxScrollExtent) {

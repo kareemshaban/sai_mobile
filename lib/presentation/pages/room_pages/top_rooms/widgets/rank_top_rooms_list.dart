@@ -10,6 +10,7 @@ import 'package:new_sai/presentation/resources/assets_manger.dart';
 import 'package:new_sai/presentation/resources/color_manger.dart';
 import 'package:new_sai/presentation/resources/font_manger.dart';
 import 'package:new_sai/presentation/resources/routes_manger.dart';
+import 'package:new_sai/presentation/resources/string_manger.dart';
 import 'package:new_sai/presentation/widgets/app_icon.dart';
 import 'package:new_sai/presentation/widgets/app_image.dart';
 import 'package:new_sai/presentation/widgets/privilege_data_view.dart';
@@ -35,7 +36,7 @@ class RankTopRoomsList extends GetView<TopRoomsController> {
               topRight: Radius.circular(30),
             ),
           ),
-          child: ListView.separated(
+          child: controller.users.length  > 0 ?ListView.separated(
             itemBuilder: (context, index) {
               if (controller.filterValue == "topRooms") {
                 return RoomItemWidget(
@@ -163,6 +164,8 @@ class RankTopRoomsList extends GetView<TopRoomsController> {
             },
             separatorBuilder: (context, index) => 15.verticalSpace(),
             itemCount: controller.users.length,
+          ) : Center(
+            child: Text(AppStrings.noData   ),
           ),
         ),
       ),
