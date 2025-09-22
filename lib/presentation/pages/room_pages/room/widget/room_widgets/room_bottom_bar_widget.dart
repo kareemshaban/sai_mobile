@@ -14,10 +14,13 @@ import 'package:new_sai/presentation/widgets/app_loader.dart';
 
 class RoomBottomBarWidget extends GetView<RoomController> {
   final bool isLoading;
+
+
   const RoomBottomBarWidget({this.isLoading = false, super.key});
 
   @override
   Widget build(BuildContext context) {
+    FocusNode _focusNode = FocusNode();
     return Obx(
       () => Column(
         mainAxisSize: MainAxisSize.min,
@@ -70,74 +73,21 @@ class RoomBottomBarWidget extends GetView<RoomController> {
           ),
           controller.enableScroll
               ? Container(
-                  color: ColorManager.white,
-                  padding:  EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom+10,top: 10,left: 10,right: 10),
+                  color:  ColorManager.white,
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.viewInsetsOf(context).bottom + 7,
+                      top: 7,
+                      left: 7,
+                      right: 7),
                   child: Row(
                     children: [
-                      controller.loadingSendMessage
-                          ? const Center(
-                              child: AppLoader(),
-                            )
-                          : InkWell(
-                              onTap: controller.sendMessage,
-                              child: const AppIcon(
-                                icon: IconsAssets.sendButton,
-                                width: 30,
-                                height: 30,
-                                color: ColorManager.primary,
-                              ),
-                            ),
-                      Expanded(
-                        child: DetectableTextField(
-                          style: Get.textTheme.labelLarge!.copyWith(
-                            fontSize: AppSize.s15(context),
-                          ),
-                          controller: controller.messageController,
-                          focusNode: controller.focusNode,
-                          textInputAction: TextInputAction.next,
-                          minLines: 1,
-                          maxLines: 1,
-                          maxLength: 130,
-                          onSubmitted: (value) => controller.sendMessage(),
-                          decoration: InputDecoration(
-                            counterText: '',
-                            suffixIcon: InkWell(
-                              onTap: controller.toggleTag,
-                              child: const Icon(
-                                Icons.alternate_email,
-                              ),
-                            ),
-                            fillColor: ColorManager.white,
-                            filled: true,
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.transparent,
-                              ),
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.transparent,
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.transparent,
-                              ),
-                            ),
-                            hintText: AppStrings.saySomthing,
-                            helperStyle: Get.textTheme.labelMedium!.copyWith(
-                              color: ColorManager.textGrey2,
-                            ),
-                          ),
-                        ),
-                      ),
                       if (controller.messageImage.isNotEmpty)
                         Stack(
                           clipBehavior: Clip.none,
                           children: [
                             Container(
-                              width: 50,
-                              height: 50,
+                              width: 20,
+                              height: 20,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 image: DecorationImage(
@@ -175,10 +125,70 @@ class RoomBottomBarWidget extends GetView<RoomController> {
                           onTap: controller.onPickMessageImage,
                           child: const AppIcon(
                             icon: IconsAssets.gallery,
-                            width: 30,
-                            height: 30,
+                            width: 20,
+                            height: 20,
                           ),
                         ),
+                      5.horizontalSpace(),
+                      Expanded(
+                        child: SizedBox(
+                          height: 30.0,
+                          child: DetectableTextField(
+                            style: Get.textTheme.labelLarge!.copyWith(
+                              fontSize: AppSize.s14(context),
+                              color: Colors.black,
+                            ),
+                            controller: controller.messageController,
+                            focusNode: controller.focusNode,
+                            textInputAction: TextInputAction.next,
+                            minLines: 1,
+                            maxLines: 1,
+                            maxLength: 130,
+                            onSubmitted: (value) {
+                              controller.sendMessage() ;
+                            },
+                            decoration: InputDecoration(
+                              counterText: '',
+                              fillColor:
+                                  ColorManager.lightGreyColor,
+                              filled: true,
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ColorManager.transparent,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ColorManager.transparent,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ColorManager.transparent,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              hintText: AppStrings.saySomthing,
+                              helperStyle: Get.textTheme.labelMedium!.copyWith(
+                                color: ColorManager.textGrey2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      5.horizontalSpace(),
+                      InkWell(
+                        onTap: controller.toggleTag,
+                        child: const Icon(
+                          Icons.alternate_email,
+                          size: 20.0,
+                        ),
+                      ),
                     ],
                   ),
                 )

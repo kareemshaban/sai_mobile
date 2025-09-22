@@ -45,8 +45,8 @@ class ReelsToolsWidget extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              width: 45,
-              height: 45,
+              width: 40,
+              height: 40,
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -56,15 +56,15 @@ class ReelsToolsWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(90),
                       child: Image.network(
                         model.user.logo,
-                        width: 45,
-                        height: 45,
+                        width: 40,
+                        height: 40,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             const AppImage(
                           image: Constants.userErrorWidget,
                           fit: BoxFit.cover,
-                          width: 45,
-                          height: 45,
+                          width: 25,
+                          height: 25,
                         ),
                       ),
                     ),
@@ -86,7 +86,7 @@ class ReelsToolsWidget extends StatelessWidget {
                           child: const Icon(
                             Icons.add,
                             color: ColorManager.white,
-                            size: 18,
+                            size: 15,
                           ),
                         ),
                       ),
@@ -94,13 +94,13 @@ class ReelsToolsWidget extends StatelessWidget {
                 ],
               ),
             ),
-            15.verticalSpace(),
+            20.verticalSpace(),
             InkWell(
               onTap: onTapLike,
               child: Icon(
                 Icons.favorite,
                 color: model.isLike ? ColorManager.red : ColorManager.white,
-                size: 40,
+                size: 25,
               ),
             ),
             1.verticalSpace(),
@@ -115,8 +115,8 @@ class ReelsToolsWidget extends StatelessWidget {
               onTap: onTapComment,
               child: const AppIcon(
                 icon: IconsAssets.commentFill,
-                width: 35,
-                height: 35,
+                width: 25,
+                height: 25,
                 color: ColorManager.white,
               ),
             ),
@@ -133,7 +133,7 @@ class ReelsToolsWidget extends StatelessWidget {
               child: Icon(
                 model.isSave ? Icons.bookmark : Icons.bookmark_add_outlined,
                 color: Colors.white,
-                size: 40,
+                size: 25,
               ),
             ),
             1.verticalSpace(),
@@ -154,7 +154,7 @@ class ReelsToolsWidget extends StatelessWidget {
               child: const Icon(
                 Icons.reply,
                 color: Colors.white,
-                size: 40,
+                size: 25,
               ),
             ),
             1.verticalSpace(),
@@ -168,7 +168,7 @@ class ReelsToolsWidget extends StatelessWidget {
             const Icon(
               Icons.play_circle_outline,
               color: Colors.white,
-              size: 40,
+              size: 25,
             ),
             1.verticalSpace(),
             Text(
@@ -184,7 +184,7 @@ class ReelsToolsWidget extends StatelessWidget {
                 child: const Icon(
                   Icons.delete_forever_outlined,
                   color: ColorManager.white,
-                  size: 40,
+                  size: 25,
                 ),
               ),
             ],

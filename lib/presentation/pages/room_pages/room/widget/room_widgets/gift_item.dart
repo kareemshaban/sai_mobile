@@ -37,10 +37,10 @@ class GiftItem extends StatelessWidget {
             AppImage(
               image: gift.giftImg,
               width: 38,
-              height: 38,
+              height: 45,
               fit: BoxFit.contain,
             ),
-            7.verticalSpace(),
+            4.verticalSpace(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

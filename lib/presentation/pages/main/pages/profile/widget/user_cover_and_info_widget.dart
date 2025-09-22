@@ -46,189 +46,32 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          PopupMenuButton(
-                            itemBuilder: (BuildContext context) {
-                              return [
-                                PopupMenuItem(
-                                  child: Row(
-                                    children: [
-                                      const AppIcon(
-                                        icon: IconsAssets.jeweled,
-                                        width: 20,
-                                        height: 20,
-                                      ),
-                                      11.horizontalSpace(),
-                                      Text(
-                                        AppStrings.store,
-                                        style:
-                                            Get.textTheme.titleMedium!.copyWith(
-                                          fontSize: AppSize.s16(context),
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      const Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: ColorManager.iconGreyColor,
-                                        size: 16.0,
-                                      ),
-                                    ],
-                                  ),
-                                  onTap: () => Get.toNamed(
-                                      AppRoutes.settingsMarketRoute),
-                                ),
-                                if (controller.appController
-                                    .isGoldReddemeActive()) ...[
-                                  PopupMenuItem(
-                                    child: Row(
-                                      children: [
-                                        const AppIcon(
-                                          icon: IconsAssets.wallet,
-                                          width: 16,
-                                          height: 16,
-                                        ),
-                                        11.horizontalSpace(),
-                                        Text(
-                                          AppStrings.wallet,
-                                          style: Get.textTheme.titleMedium!
-                                              .copyWith(
-                                            fontSize: AppSize.s16(context),
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        const Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: ColorManager.iconGreyColor,
-                                          size: 16.0,
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () =>
-                                        Get.toNamed(AppRoutes.walletRoute),
-                                  ),
-                                  PopupMenuItem(
-                                    child: Row(
-                                      children: [
-                                        const AppIcon(
-                                          icon: IconsAssets.withdraw,
-                                          width: 16,
-                                          height: 16,
-                                        ),
-                                        11.horizontalSpace(),
-                                        Text(
-                                          AppStrings.withdraw,
-                                          style: Get.textTheme.titleMedium!
-                                              .copyWith(
-                                            fontSize: AppSize.s16(context),
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        const Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: ColorManager.iconGreyColor,
-                                          size: 16.0,
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () => Get.toNamed(
-                                        AppRoutes.cashWithdrawalRoute),
-                                  ),
-                                ],
-                                PopupMenuItem(
-                                  child: Row(
-                                    children: [
-                                      const AppIcon(
-                                        icon: IconsAssets.setting,
-                                        width: 16,
-                                        height: 16,
-                                      ),
-                                      11.horizontalSpace(),
-                                      Text(
-                                        AppStrings.settingsAndPrivacy,
-                                        style:
-                                            Get.textTheme.titleMedium!.copyWith(
-                                          fontSize: AppSize.s16(context),
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      const Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: ColorManager.iconGreyColor,
-                                        size: 16.0,
-                                      ),
-                                    ],
-                                  ),
-                                  onTap: () => Get.toNamed(
-                                      AppRoutes.settingsAndPrivacyRoute),
-                                ),
-                              ];
-                            },
-                            position: PopupMenuPosition.under,
-                            child: const AppIcon(
-                              icon: IconsAssets.menu,
-                              color: ColorManager.white,
-                            ),
-                          ),
-                          Directionality(
-                            textDirection: TextDirection.ltr,
-                            child: InkWell(
-                              onTap: () =>
-                                  Get.toNamed(AppRoutes.notificationsRoute),
-                              child: Badge.count(
-                                count: controller.notificationCount,
-                                backgroundColor: ColorManager.red,
-                                isLabelVisible:
-                                    controller.notificationCount != 0,
-                                largeSize: 20,
-                                textColor: ColorManager.white,
-                                alignment: AlignmentDirectional.topEnd,
-                                textStyle: Get.textTheme.bodySmall!.copyWith(
-                                  fontSize: AppSize.s14(context),
-                                ),
-                                child: const Icon(
-                                  Icons.notifications,
-                                  color: ColorManager.white,
-                                  size: 28,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-               
                     Stack(
                       alignment: Alignment.center,
                       clipBehavior: Clip.none,
                       children: [
-Obx(() => Container(
-  width: 100,
-  height: 100,
-  decoration: const BoxDecoration(
-    shape: BoxShape.circle,
-  ),
-  child: GestureDetector(
-    onTap: () {
-    },
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(200),
-      child: 
-            AppImage(
-            withCache: false,
-            image:  controller.appController.user.profileImg,
-            width: 100,
-            height: 100,
-            isCircle: true,
-          fit: BoxFit.cover,
-      ),
-    ),
-  ),
-)),
-
+                        Obx(() => Container(
+                              width: 100,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(200),
+                                  child: AppImage(
+                                    withCache: false,
+                                    image: controller
+                                        .appController.user.profileImg,
+                                    width: 100,
+                                    height: 100,
+                                    isCircle: true,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            )),
                         PrivilegeDataView(
                           url: controller.appController.user.privileges.data
                               .profileFrame.file,
@@ -318,14 +161,17 @@ Obx(() => Container(
                         Text(
                           controller.appController.user.country.name,
                           style: Get.textTheme.titleMedium!.copyWith(
-                            fontSize: AppSize.s18(context),
-                            fontWeight: FontWeight.bold
-                          ),
+                              fontSize: AppSize.s18(context),
+                              fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: 10.0,),
-                        Image(image: CachedNetworkImageProvider(controller.appController.user.country.flag) , width: 30,),
-
-
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        Image(
+                          image: CachedNetworkImageProvider(
+                              controller.appController.user.country.flag),
+                          width: 30,
+                        ),
                       ],
                     ),
                   ],

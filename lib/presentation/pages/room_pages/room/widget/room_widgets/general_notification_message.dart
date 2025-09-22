@@ -34,7 +34,7 @@ class GeneralNotificationMessage extends StatelessWidget {
   Widget generalNotification(BuildContext context) {
     return Container(
       constraints: BoxConstraints(maxWidth: 0.75.w(context)),
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         color: ColorManager.white.withOpacity(.13),

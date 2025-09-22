@@ -15,6 +15,7 @@ import 'package:new_sai/presentation/resources/font_manger.dart';
 import 'package:new_sai/presentation/widgets/app_back_button.dart';
 import 'package:new_sai/presentation/widgets/app_image.dart';
 import 'package:new_sai/presentation/widgets/reels_widget.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class UsersAndSavedReelsView extends GetView<UsersAndSavedReelsController> {

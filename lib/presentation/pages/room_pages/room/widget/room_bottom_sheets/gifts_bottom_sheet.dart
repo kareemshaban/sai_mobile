@@ -53,7 +53,7 @@ class GiftsBottomSheet extends GetView<RoomController> {
                     ),
                   ],
                 ),
-                15.verticalSpace(),
+                10.verticalSpace(),
                 SizedBox(
                   height: 20,
                   child: ListView.separated(
@@ -67,7 +67,13 @@ class GiftsBottomSheet extends GetView<RoomController> {
                     itemCount: controller.giftsCategories.length,
                   ),
                 ),
-                15.verticalSpace(),
+                5.verticalSpace(),
+                Container(
+                  color: Colors.grey,
+                  width: double.infinity,
+                  height: 1.0,
+                ),
+                10.verticalSpace(),
                 Expanded(
                   child: GridView.builder(
                     gridDelegate:

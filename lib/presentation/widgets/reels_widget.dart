@@ -36,7 +36,7 @@ class _ReelsWidgetState extends State<ReelsWidget> {
         looping: true,
         autoDispose: true,
         autoPlay: false,
-        fit: BoxFit.contain,
+        fit: BoxFit.cover,
         aspectRatio: 1080 / 1920,
         controlsConfiguration: BetterPlayerControlsConfiguration(
           enableAudioTracks: false,

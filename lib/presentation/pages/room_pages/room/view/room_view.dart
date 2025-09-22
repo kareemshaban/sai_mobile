@@ -27,6 +27,9 @@ class RoomView extends GetView<RoomController> {
 
   @override
   Widget build(BuildContext context) {
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+    double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+
     print("controller.loadingJoinRoom");
     print(controller.loadingJoinRoom);
     print("controller.isPlayingGame.value");
@@ -134,9 +137,11 @@ class RoomView extends GetView<RoomController> {
                                           ],
                                         ),
                                       ),
-                                      10.verticalSpace(),
-                                      const RoomMessageList(),
-                                      10.verticalSpace(),
+                                      if (!isKeyboardOpen)...[
+                                        10.verticalSpace(),
+                                        const RoomMessageList(true),
+                                        10.verticalSpace(),
+                                      ]
                                     ],
                                   ),
                                   if (controller.enableScroll)
@@ -182,11 +187,21 @@ class RoomView extends GetView<RoomController> {
                         ),
                       ),
                     ),
-                    if (controller.isPlayingGame.value) const GamePageInRoom()
+                    if (controller.isPlayingGame.value) const GamePageInRoom(),
+                    if (isKeyboardOpen)
+                      Padding(
+                        padding: EdgeInsets.only(bottom: keyboardHeight + 68),
+                        child: Container(
+                          color: ColorManager.darkGreyColor,
+                          padding: const EdgeInsets.only(top: 50),
+                          child:  const RoomMessageList(true),
+                        ),
+                      ),
                   ],
                 );
               } else {
                 return Stack(
+                  alignment: AlignmentDirectional.center,
                   children: [
                     if (controller.room.backgroundTheme.isNotEmpty) ...[
                       AppImage(
@@ -210,7 +225,6 @@ class RoomView extends GetView<RoomController> {
                             "assets/images/default_wallpaper.jpg",
                             fit: BoxFit.cover,
                           )),
-
                     SingleChildScrollView(
                       controller: controller.scrollController,
                       physics: controller.enableScroll
@@ -253,9 +267,11 @@ class RoomView extends GetView<RoomController> {
                                         ),
                                         child: RoomSeatList(),
                                       ),
-                                      10.verticalSpace(),
-                                      const RoomMessageList(),
-                                      10.verticalSpace(),
+                                      if (!isKeyboardOpen) ...[
+                                        10.verticalSpace(),
+                                        const RoomMessageList(true),
+                                        10.verticalSpace(),
+                                      ]
                                     ],
                                   ),
                                   if (controller.enableScroll)
@@ -298,7 +314,16 @@ class RoomView extends GetView<RoomController> {
                         start: 20,
                         child: RoomMusicPlayer(),
                       ),
-                    if (controller.isPlayingGame.value) GamePageInRoom()
+                    if (controller.isPlayingGame.value) GamePageInRoom(),
+                    if (isKeyboardOpen)
+                      Padding(
+                        padding: EdgeInsets.only(bottom: keyboardHeight + 53),
+                        child: Container(
+                          color: ColorManager.darkGreyColor.withValues(alpha: 0.5),
+                          padding: const EdgeInsets.only(top: 55),
+                          child:  const RoomMessageList(true),
+                        ),
+                      ),
                     // GamePage(
                     //   gameUrl: controller.gameItems[0].game.url,
                     //   gameResponse: controller.gameResponse.value!,
@@ -309,7 +334,7 @@ class RoomView extends GetView<RoomController> {
             },
           ),
           floatingActionButton: controller.isPlayingGame.value
-              ? SizedBox()
+              ? const SizedBox()
               : const RoomFloatingButtons(),
         ),
       ),

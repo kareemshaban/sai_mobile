@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/getx/room_controller.dart';
 
 class RoomMessageList extends GetView<RoomController> {
-  const RoomMessageList({super.key});
+  final bool isScrolled ;
+  const RoomMessageList(this.isScrolled, {super.key ,});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +40,7 @@ class RoomMessageList extends GetView<RoomController> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 reverse: true,
                 controller: controller.scrollController2,
-                physics: controller.enableScroll
-                    ? const NeverScrollableScrollPhysics()
-                    : null,
+                physics: isScrolled ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(
@@ -56,7 +55,7 @@ class RoomMessageList extends GetView<RoomController> {
           ),
           SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            physics: const NeverScrollableScrollPhysics(),
+            physics: isScrolled ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
             child: Obx(
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

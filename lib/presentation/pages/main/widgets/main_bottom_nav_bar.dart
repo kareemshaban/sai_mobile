@@ -57,8 +57,16 @@ class MainBottomNavBar extends GetView<MainController> {
           BottomNavigationBarItem(
             icon: Padding(
               padding:const EdgeInsets.symmetric(vertical: 3.0),
-              child: AppIcon(
-                icon: IconsAssets.reels,
+              child: controller.currentIndex == 2 ?  
+              Container(
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white,
+                ),
+                  child: const Icon(Icons.add , size: 25,)
+              ) :  AppIcon(
+                icon:  IconsAssets.reels,
                 width: 20,
                 height: 20,
                 color: controller.currentIndex == 2

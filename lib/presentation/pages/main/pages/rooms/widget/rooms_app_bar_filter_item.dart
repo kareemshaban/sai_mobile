@@ -22,32 +22,25 @@ class RoomsAppBarFilterItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: SizedBox(
-        height: 60,
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: Get.textTheme.titleSmall!.copyWith(
-                fontSize: AppSize.s22(context),
-                color: color ?? (isActive ? null : ColorManager.textGrey),
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: Get.textTheme.titleSmall!.copyWith(
+              fontSize: AppSize.s22(context),
+              color: color ?? (isActive ? null : ColorManager.textGrey),
             ),
-            AnimatedOpacity(
-              opacity: isActive ? 1 : 0,
-              duration: const Duration(milliseconds: 300),
-              child: Transform.rotate(
-                angle: 2.37,
-                child: AppIcon(
-                  icon: IconsAssets.line,
-                  color: color ?? ColorManager.black,
-                  width: 25,
-                  height: 25,
-                ),
-              ),
+          ),
+          Container(
+            height: 3.0,
+            width: 15.0,
+            decoration: BoxDecoration(
+              color: isActive ? Colors.white : Colors.transparent,
+              borderRadius: BorderRadius.circular(5)
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

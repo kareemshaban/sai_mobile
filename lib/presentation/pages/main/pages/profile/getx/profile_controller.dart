@@ -377,5 +377,33 @@ class ProfileController extends GetxController
       await getAllInit();
     }
     super.onInit();
+    scrollController.addListener(_scrollListener);
+  }
+
+  void onInitScroll() {
+    super.onInit();
+
+    scrollController.addListener(_scrollListener);
+    tabController = TabController(length: 2, vsync: this);
+  }
+  final isTitleVisible = false.obs;
+
+  void _scrollListener() {
+    if (scrollController.offset > 200) {
+      if (!isTitleVisible.value) {
+        isTitleVisible.value = true;
+      }
+    } else {
+      if (isTitleVisible.value) {
+        isTitleVisible.value = false;
+      }
+    }
+  }
+
+  @override
+  void onClose() {
+    scrollController.removeListener(_scrollListener);
+    scrollController.dispose();
+    super.onClose();
   }
 }

@@ -10,7 +10,7 @@ import 'package:new_sai/presentation/resources/font_manger.dart';
 import 'package:new_sai/presentation/resources/routes_manger.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
 import 'package:new_sai/presentation/widgets/app_button.dart';
-import 'package:new_sai/presentation/widgets/app_loader.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ReelsView extends GetView<ReelsController> {
   const ReelsView({super.key});
@@ -19,14 +19,199 @@ class ReelsView extends GetView<ReelsController> {
   Widget build(BuildContext context) {
     return Obx(
       () => controller.loadingGetReels
-          ? Container(
-              width: 1.w(context),
-              height: 1.h(context),
-              color: ColorManager.white,
-              child: const Center(
-                child: AppLoader(
-                  color: ColorManager.white,
-                ),
+          ? Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 50.0, horizontal: 20.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Shimmer.fromColors(
+                          baseColor: ColorManager.lightGreyColor,
+                          highlightColor: Colors.white,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(100.0),
+                                color: Colors.white),
+                            height: 40,
+                            width: 40,
+                          )),
+                      const Spacer(),
+                      Shimmer.fromColors(
+                          baseColor: ColorManager.lightGreyColor,
+                          highlightColor: Colors.white,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.white),
+                            height: 10,
+                            width: 30,
+                          )),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      Shimmer.fromColors(
+                          baseColor: ColorManager.lightGreyColor,
+                          highlightColor: Colors.white,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.white),
+                            height: 10,
+                            width: 30,
+                          )),
+                      const Spacer(),
+                      Shimmer.fromColors(
+                          baseColor: ColorManager.lightGreyColor,
+                          highlightColor: Colors.white,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(100.0),
+                                color: Colors.white),
+                            height: 40,
+                            width: 40,
+                          )),
+                    ],
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
+                          Shimmer.fromColors(
+                              baseColor: ColorManager.lightGreyColor,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white),
+                                height: 150.0,
+                                width: 270,
+                              )),
+                        ],
+                      ),
+                      const SizedBox(width: 10.0,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Shimmer.fromColors(
+                              baseColor: ColorManager.lightGreyColor,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    color: Colors.white),
+                                height: 40,
+                                width: 40,
+                              )),
+                          const SizedBox(height: 10.0,),
+                          Shimmer.fromColors(
+                              baseColor: ColorManager.lightGreyColor,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    color: Colors.white),
+                                height: 40,
+                                width: 40,
+                              )),
+                          const SizedBox(height: 10.0,),
+                          Shimmer.fromColors(
+                              baseColor: ColorManager.lightGreyColor,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    color: Colors.white),
+                                height: 40,
+                                width: 40,
+                              )),
+                          const SizedBox(height: 10.0,),
+                          Shimmer.fromColors(
+                              baseColor: ColorManager.lightGreyColor,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    color: Colors.white),
+                                height: 40,
+                                width: 40,
+                              )),
+                          const SizedBox(height: 10.0,),
+                          Shimmer.fromColors(
+                              baseColor: ColorManager.lightGreyColor,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    color: Colors.white),
+                                height: 40,
+                                width: 40,
+                              )),
+                          const SizedBox(height: 10.0,),
+                          Shimmer.fromColors(
+                              baseColor: ColorManager.lightGreyColor,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    color: Colors.white),
+                                height: 40,
+                                width: 40,
+                              )),
+                          const SizedBox(height: 10.0,),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30.0,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Shimmer.fromColors(
+                              baseColor: ColorManager.lightGreyColor,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white),
+                                height: 10,
+                                width: 40,
+                              )),
+                          const SizedBox(height: 10.0,),
+                          Shimmer.fromColors(
+                              baseColor: ColorManager.lightGreyColor,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white),
+                                height: 10,
+                                width: 150,
+                              )),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
               ),
             )
           : RefreshIndicator(

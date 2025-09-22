@@ -24,6 +24,9 @@ import 'package:new_sai/presentation/pages/main/pages/store/view/store_view.dart
 import 'package:new_sai/presentation/pages/main/pages/store/widgets/store_app_bar.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
+import '../../../../app/app_permission.dart';
+import '../../../resources/routes_manger.dart';
+
 class MainController extends GetxController {
   final addressController = Get.find<AddressController>();
   final appController = Get.find<AppController>();
@@ -51,13 +54,37 @@ class MainController extends GetxController {
 
   set currentIndex(value) => _currentIndex.value = value;
 
-  onChangeCurrentIndex(int value) {
+  ReelsController? controller ;
+  var isChecked = false ;
+  onChangeCurrentIndex(int value) async {
     Get.find<ReelsController>().audioPlayer?.stop();
     currentIndex = value;
-    if (value == 2) {
-      Get.find<ReelsController>().reelsCurrentIndex = 0;
-      Get.find<ReelsController>().onPageChanged(0);
-      Get.find<ReelsController>().getReels();
+    if(value != 2){
+      isChecked = false ;
+    }
+    if (isChecked == true && value == 2){
+      controller?.audioPlayer?.pause();
+      controller?.videoPlayerController?.pause();
+      if (await AppPermission.requestCameraPermission() &&
+          await AppPermission.requestMicPermission()){
+        await Get.toNamed(
+          AppRoutes.cameraRoute,
+          arguments: {
+            'isStory': false,
+          },
+        );
+        controller?.videoPlayerController?.play();
+        controller?.audioPlayer?.play();
+      }
+      isChecked = false ;
+    } else {
+      if (value == 2 && isChecked == false) {
+        Get.find<ReelsController>().audioPlayer?.stop();
+        Get.find<ReelsController>().reelsCurrentIndex = 0;
+        Get.find<ReelsController>().onPageChanged(0);
+        Get.find<ReelsController>().getReels();
+        isChecked = true ;
+      }
     }
   }
 

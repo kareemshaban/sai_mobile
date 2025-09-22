@@ -19,15 +19,8 @@ class ReelsAppBarWidget extends GetView<ReelsController> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Obx(
             () => Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InkWell(
-                  onTap: onTapAdd,
-                  child: const Icon(
-                    Icons.add,
-                    color: ColorManager.white,
-                    size: 30,
-                  ),
-                ),
                 const Spacer(),
                 RoomsAppBarFilterItem(
                   title: AppStrings.following,
@@ -46,7 +39,7 @@ class ReelsAppBarWidget extends GetView<ReelsController> {
                       : ColorManager.white.withOpacity(.6),
                   onTap: () => controller.onChangeReelsFilter(0),
                 ),
-                const Spacer(),
+                const Spacer() ,
                 InkWell(
                   onTap: () async {
                     controller.videoPlayerController?.pause();

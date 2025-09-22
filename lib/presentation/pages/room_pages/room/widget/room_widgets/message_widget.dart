@@ -71,6 +71,7 @@ class MessageWidget extends StatelessWidget {
             return false;
           },
           child: Container(
+            padding: const EdgeInsets.all(10.0),
             constraints: BoxConstraints(
               maxWidth: .75.w(context),
             ),
@@ -92,25 +93,25 @@ class MessageWidget extends StatelessWidget {
                           roomController.getUserImage(message.user.userID),
                           errorBuilder: (context, error, stackTrace) {
                             return roomController.userErrorImageWidget(
-                              width: 40,
-                              height: 40,
+                              width: 30,
+                              height: 30,
                             );
                           },
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           fit: BoxFit.cover,
                         ),
                       ),
                       if (user != null)
                         PrivilegeDataView(
                           url: user.privileges.data.profileFrame.file,
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                         )
                     ],
                   ),
                 ),
-                3.horizontalSpace(),
+                5.horizontalSpace(),
                 Flexible(
                   fit: FlexFit.loose,
                   child: Column(
@@ -128,7 +129,7 @@ class MessageWidget extends StatelessWidget {
                               child: Text(
                                 message.user.userName,
                                 style: Get.textTheme.bodySmall!.copyWith(
-                                  fontSize: AppSize.s16(context),
+                                  fontSize: AppSize.s17(context),
                                   color: Get.find<AppController>().isVipActive()
                                       ? user != null &&
                                               user.privileges.data.colorfulName
@@ -137,6 +138,7 @@ class MessageWidget extends StatelessWidget {
                                               .data.colorfulName.value)
                                           : null
                                       : null,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -156,18 +158,18 @@ class MessageWidget extends StatelessWidget {
                       if (message.message != null &&
                           message.message!.isNotEmpty)
                         Container(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(5.0),
                           decoration: BoxDecoration(
-                            color: ColorManager.black.withOpacity(.3),
+                            color: ColorManager.lightGreyColor.withValues(alpha: 0.5),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Linkify(
                             text: message.message!,
                             style: Get.textTheme.bodySmall!.copyWith(
-                              fontSize: AppSize.s16(context),
+                              fontSize: AppSize.s14(context),
                             ),
                             linkStyle: Get.textTheme.bodyLarge!.copyWith(
-                              fontSize: AppSize.s16(context),
+                              fontSize: AppSize.s14(context),
                             ),
                             linkifiers: const [
                               UserTagLinkifier(),
