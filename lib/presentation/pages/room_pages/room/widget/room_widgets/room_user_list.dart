@@ -102,6 +102,13 @@ class RoomUserList extends GetView<RoomController> {
                                   clipBehavior: Clip.none,
                                   alignment: Alignment.center,
                                   children: [
+                                    if(user != null  && user.isVip == 1)
+                                    PrivilegeDataView(
+                                      url: user.privileges.data.profileFrame.file,
+                                      width: 30,
+                                      height: 30,
+                                      fit: BoxFit.cover,
+                                    ),
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(52),
                                       child: Image.network(
@@ -121,14 +128,6 @@ class RoomUserList extends GetView<RoomController> {
                                         fit: BoxFit.cover,
                                       ),
                                     ),
-                                    if (user != null)
-                                      PrivilegeDataView(
-                                        url: user
-                                            .privileges.data.profileFrame.file,
-                                        width: 30,
-                                        height: 30,
-                                        fit: BoxFit.cover,
-                                      ),
                                     if (controller.mutedListLocally.any(
                                             (element) =>
                                                 element ==

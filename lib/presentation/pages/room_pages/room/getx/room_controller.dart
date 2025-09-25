@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svgaplayer3/parser.dart';
@@ -20,8 +17,10 @@ import 'package:new_sai/app/constants.dart';
 import 'package:new_sai/app/di/basic_di.dart';
 import 'package:new_sai/app/function.dart';
 import 'package:new_sai/data/mapper/app_mapper.dart';
+import 'package:new_sai/data/mapper/auth_mapper.dart';
 import 'package:new_sai/data/mapper/room_mapper.dart';
 import 'package:new_sai/data/model/app_model/pagination_model.dart';
+import 'package:new_sai/data/model/auth_model/user_model.dart';
 import 'package:new_sai/data/model/room_model/gift_model.dart';
 import 'package:new_sai/data/model/room_model/joined_room_model.dart';
 import 'package:new_sai/data/model/room_model/room_user_model.dart';
@@ -42,6 +41,7 @@ import 'package:new_sai/domain/entity/room_entity/joined_room_entity.dart';
 import 'package:new_sai/domain/entity/room_entity/room_user_entity.dart';
 import 'package:new_sai/domain/use_case/app_use_case/get_app_search_use_case.dart';
 import 'package:new_sai/domain/use_case/auth_use_case/cancel_friend_request_use_case.dart';
+import 'package:new_sai/domain/use_case/auth_use_case/get_user_profile_by_id_use_case.dart' show GetUserProfileByIdUseCase;
 import 'package:new_sai/domain/use_case/auth_use_case/send_friend_request_use_case.dart';
 import 'package:new_sai/domain/use_case/room_use_case/cancel_membership_use_case.dart';
 import 'package:new_sai/domain/use_case/room_use_case/fire_user_use_case.dart';
@@ -85,8 +85,6 @@ import 'package:new_sai/presentation/resources/routes_manger.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
 import 'package:new_sai/presentation/widgets/app_image.dart';
 import 'package:new_sai/presentation/widgets/app_utils/app_snack_bar.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
 import '../../../../../app/app_pref.dart';
 import '../../../../../data/model/game_model/game_model.dart';
 
@@ -125,6 +123,7 @@ class RoomController extends GetxController
       instance<GenerateZegoTokenUseCase>();
   final LeaveRoomUseCase _leaveRoomUseCase = instance<LeaveRoomUseCase>();
   final GetRoomUserUseCase _getRoomUserUseCase = instance<GetRoomUserUseCase>();
+  final GetUserProfileByIdUseCase _getUserProfileByIdUseCase = instance<GetUserProfileByIdUseCase>();
   final GetGiftListUseCase _getGiftListUseCase = instance<GetGiftListUseCase>();
   final SendRoomMessageUseCase _messageUseCase =
       instance<SendRoomMessageUseCase>();
@@ -173,6 +172,7 @@ class RoomController extends GetxController
   bool isSvg = false;
   bool isNotSvg = false;
   final RxBool _enableScroll = false.obs;
+  final RxBool _showEmojiPicker = false.obs;
   final RxBool _loadingJoinRoom = false.obs;
   final Rx<JoinedRoomEntity> newRoom = JoinedRoomModel().toDomain().obs;
   final RxMap<String, String> _micUsers = <String, String>{}.obs;
@@ -182,6 +182,7 @@ class RoomController extends GetxController
   final RxBool _isTakingSeat = false.obs;
   final RxBool _isMuteAll = false.obs;
   final RxBool _loadingGetProfile = false.obs;
+  final RxBool _loadingGetSenderProfile = false.obs;
   final RxBool _loadingGetGift = false.obs;
   final RxBool _displaySvgAnimatedGift = false.obs;
   final RxMap<String, double> _soundLevel = <String, double>{}.obs;
@@ -220,6 +221,8 @@ class RoomController extends GetxController
   final RxList<ZegoUser> _requestMicList = <ZegoUser>[].obs;
   final RxList<UserEntity> _apiUsers = <UserEntity>[].obs;
   final Rx<RoomUserEntity> _userProfile = RoomUserModel().toDomain().obs;
+  final Rx<UserEntity> _sender = UserModel().toDomain().obs;
+  final Rx<UserEntity> _entryUser = UserModel().toDomain().obs;
   final RxBool _loadingCancelFriend = false.obs;
   final RxBool _loadingSendFriend = false.obs;
   final RxBool _loadingCancelMempership = false.obs;
@@ -234,6 +237,7 @@ class RoomController extends GetxController
   final RxList<UserEntity> _searchUsers = <UserEntity>[].obs;
 
   bool get enableScroll => _enableScroll.value;
+  bool get showEmojiPicker => _showEmojiPicker.value;
   bool get loadingJoinRoom => _loadingJoinRoom.value;
   JoinedRoomEntity get room => newRoom.value;
   Map<String, String> get micUsers => _micUsers;
@@ -243,6 +247,7 @@ class RoomController extends GetxController
   bool get isTakingSeat => _isTakingSeat.value;
   bool get isMuteAll => _isMuteAll.value;
   bool get loadingGetProfile => _loadingGetProfile.value;
+  bool get loadingGetSenderProfile => _loadingGetSenderProfile.value;
   bool get loadingGetGift => _loadingGetGift.value;
   bool get displaySvgAnimatedGift => _displaySvgAnimatedGift.value;
   Map<String, double> get soundLevel => _soundLevel;
@@ -277,6 +282,8 @@ class RoomController extends GetxController
   List<ZegoUser> get requestMicList => _requestMicList;
   List<UserEntity> get apiUsers => _apiUsers;
   RoomUserEntity get userProfile => _userProfile.value;
+  UserEntity get sender => _sender.value;
+  UserEntity get entryUser => _entryUser.value;
   bool get loadingCancelFriend => _loadingCancelFriend.value;
   bool get loadingSendFriend => _loadingSendFriend.value;
   bool get loadingCancelMempership => _loadingCancelMempership.value;
@@ -298,6 +305,7 @@ class RoomController extends GetxController
   }
 
   set loadingJoinRoom(value) => _loadingJoinRoom.value = value;
+  set showEmojiPicker(value) => _showEmojiPicker.value = value;
   set room(JoinedRoomEntity value) => newRoom.value = value;
   set micUsers(Map<String, String> value) => _micUsers.value = value;
   set users(List<ZegoUser> value) => _users.value = value;
@@ -306,6 +314,7 @@ class RoomController extends GetxController
   set isTakingSeat(value) => _isTakingSeat.value = value;
   set isMuteAll(value) => _isMuteAll.value = value;
   set loadingGetProfile(value) => _loadingGetProfile.value = value;
+  set loadingGetSenderProfile(value) => _loadingGetSenderProfile.value = value;
   set loadingGetGift(value) => _loadingGetGift.value = value;
   set displaySvgAnimatedGift(value) => _displaySvgAnimatedGift.value = value;
   set soundLevel(Map<String, double> value) => _soundLevel.value = value;
@@ -344,6 +353,8 @@ class RoomController extends GetxController
   set requestMicList(List<ZegoUser> value) => _requestMicList.value = value;
   set apiUsers(List<UserEntity> value) => _apiUsers.value = value;
   set userProfile(RoomUserEntity value) => _userProfile.value = value;
+  set sender(UserEntity value) => _sender.value = value;
+  set entryUser(UserEntity value) => _entryUser.value = value;
   set loadingCancelFriend(value) => _loadingCancelFriend.value = value;
   set loadingSendFriend(value) => _loadingSendFriend.value = value;
   set loadingCancelMempership(value) => _loadingCancelMempership.value = value;
@@ -801,16 +812,20 @@ class RoomController extends GetxController
             }
           },
         ),
-        expressService.roomUserListUpdateStreamCtrl.stream.listen((event) {
+        expressService.roomUserListUpdateStreamCtrl.stream.listen((event) async {
           if (event.updateType == ZegoUpdateType.Add) {
+            print("event.userList.first") ;
+            print(event.userList.first.userID) ;
+            var entryUser = await getEntryProfile(int.parse(event.userList.first.userID));
             roomNotificationList.insert(
                 roomNotificationList.length,
                 NewUserEntryNotification(
                   user: event.userList.first,
                   onDelete: () {
                     roomNotificationList.removeAt(0);
-                  },
-                ));
+                  }, userEntity: entryUser,
+                )
+            );
             users.addAll(event.userList);
             getApiUsers();
           } else {
@@ -1173,12 +1188,12 @@ class RoomController extends GetxController
       print('test532423799');
     } else {
       jsonGift.value = gift.giftFile.toString();
-      // showLottie.value = true;
-      // print(jsonGift);
-      // messages.add(GiftMessageWidget(gift: gift));
-      // animateToLast();
-      //  messages.add(GiftMessageWidget(gift: gift));
-      // animateToLast();
+      showLottie.value = true;
+      print(jsonGift);
+      messages.add(GiftMessageWidget(gift: gift));
+      animateToLast();
+       messages.add(GiftMessageWidget(gift: gift));
+      animateToLast();
       final newId = generateRandomString(12); // أو أي توليد مميز
       print("Adding gift with id: $newId");
       giftUrls.add({'url': jsonGift.value.toString(), 'id': newId});
@@ -1559,9 +1574,9 @@ class RoomController extends GetxController
   }
 
   openProfileBottomSheet(String id) {
-    if (id == user.id.toString()) {
-      return;
-    }
+    // if (id == user.id.toString()) {
+    //   return;
+    // }
     getUserProfile(int.parse(id));
     Get.bottomSheet(const UserProfileBottomSheet());
   }
@@ -1580,6 +1595,37 @@ class RoomController extends GetxController
       },
     );
     loadingGetProfile = false;
+    print(userProfile.privileges.data.roomBackcground) ;
+  }
+
+  getEntryProfile(int id) async {
+    print('test123userProfile');
+    entryUser = UserModel().toDomain();
+    (await _getUserProfileByIdUseCase.execute(id)).fold(
+          (l) {
+        showSnackBarWidget(message: l.message);
+      },
+          (r) {
+        entryUser = r;
+      },
+    );
+  }
+
+  Future<UserEntity>getSenderProfile(int id) async {
+    print('test123userProfile');
+    loadingGetSenderProfile = true ;
+    sender = UserModel().toDomain();
+    (await _getUserProfileByIdUseCase.execute(id)).fold(
+          (l) {
+        showSnackBarWidget(message: l.message);
+      },
+          (r) {
+        sender = r;
+      },
+    );
+    loadingGetSenderProfile = false ;
+    print(sender.privileges.data.exclusiveChatBox.file) ;
+    return sender ;
   }
 
   bool isOwner() => room.role == "owner";
@@ -1800,7 +1846,7 @@ class RoomController extends GetxController
       if (result.errorCode == 0) {
         messages.insert(
           messages.length,
-          MessageWidget(
+          MessageWidget(  
             onConfirmDelete: () {
               enableScroll = true;
               focusNode.requestFocus();
@@ -2152,6 +2198,7 @@ class RoomController extends GetxController
     zegoToken = '';
     userProfile = RoomUserModel().toDomain();
     enableScroll = false;
+    showEmojiPicker = false;
     loadingJoinRoom = false;
     room = JoinedRoomModel().toDomain();
     micUsers.clear();
@@ -2446,7 +2493,7 @@ class RoomController extends GetxController
     }
   }
 
-  void initLottie(TickerProvider vsync, void Function()? onCompleted) {
+  void initLottie(TickerProvider vsync, void Function()? onCompleted){
     animationController = AnimationController(vsync: vsync);
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -2456,4 +2503,6 @@ class RoomController extends GetxController
       }
     });
   }
+
+
 }

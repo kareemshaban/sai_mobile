@@ -71,6 +71,7 @@ class UserEntity {
   int friendId;
   @JsonKey(defaultValue: "")
   String backgroundTheme;
+  int isVip;
 
   UserEntity({
     required this.id,
@@ -116,6 +117,7 @@ class UserEntity {
     required this.comment,
     required this.friendId,
     required this.backgroundTheme,
+    required this.isVip,
   });
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>

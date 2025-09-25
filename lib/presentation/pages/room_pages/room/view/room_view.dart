@@ -1,13 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:new_sai/app/extensions.dart';
 import 'package:new_sai/presentation/pages/game/view/game_page.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/getx/room_controller.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_dilaog/leave_room_dialog.dart';
-import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/gift_json.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/gift_svg_player.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/music/room_music_player.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/room_app_bar.dart';
@@ -17,21 +14,25 @@ import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/r
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/room_seat_list.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/room_user_list.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/seat_widget.dart';
-import 'package:new_sai/presentation/resources/assets_manger.dart';
 import 'package:new_sai/presentation/resources/color_manger.dart';
 import 'package:new_sai/presentation/widgets/app_image.dart';
 import 'package:new_sai/presentation/widgets/app_loader.dart';
+
+import '../../../../widgets/privilege_data_view.dart';
+import '../widget/room_widgets/gift_json.dart';
 
 class RoomView extends GetView<RoomController> {
   const RoomView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    print(controller.user.privileges.data.entryWithInfluences.file);
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
 
     print("controller.loadingJoinRoom");
     print(controller.loadingJoinRoom);
+    print(controller);
     print("controller.isPlayingGame.value");
     print(controller.isPlayingGame.value);
     controller.enableScroll = MediaQuery.viewInsetsOf(context).bottom != 0 &&
@@ -69,7 +70,7 @@ class RoomView extends GetView<RoomController> {
                       ),
                     ],
                     if (controller.room.backgroundTheme.isEmpty)
-                      Container(
+                      SizedBox(
                           // fit: BoxFit.cover,
                           width: 1.w(context),
                           height: 1.h(context),
@@ -190,7 +191,7 @@ class RoomView extends GetView<RoomController> {
                     if (controller.isPlayingGame.value) const GamePageInRoom(),
                     if (isKeyboardOpen)
                       Padding(
-                        padding: EdgeInsets.only(bottom: keyboardHeight + 68),
+                        padding: EdgeInsets.only(bottom: keyboardHeight + 45),
                         child: Container(
                           color: ColorManager.darkGreyColor,
                           padding: const EdgeInsets.only(top: 50),
@@ -238,10 +239,6 @@ class RoomView extends GetView<RoomController> {
                             Expanded(
                               child: Stack(
                                 children: [
-                                  // Obx(() => Get.find<RoomController>().showLottie.value
-                                  //     ? const LottieScreen()
-                                  //     : const SizedBox.shrink()),
-                                  const LottieScreen(),
                                   Column(
                                     children: [
                                       const Padding(
@@ -305,6 +302,18 @@ class RoomView extends GetView<RoomController> {
                         ),
                       ),
                     ),
+                    Obx(() => Get.find<RoomController>().showLottie.value
+                        ? const LottieScreen()
+                        : const SizedBox.shrink()),
+                    if (isKeyboardOpen)
+                      Padding(
+                        padding: EdgeInsets.only(bottom: keyboardHeight + 45),
+                        child: Container(
+                          color: ColorManager.darkGreyColor.withValues(alpha: 0.5),
+                          padding: const EdgeInsets.only(top: 55),
+                          child:  const RoomMessageList(true),
+                        ),
+                      ),
                     //  Lottie.asset(LottieAssets.data1),
 
                     const GiftSvgPlayer(),
@@ -315,15 +324,6 @@ class RoomView extends GetView<RoomController> {
                         child: RoomMusicPlayer(),
                       ),
                     if (controller.isPlayingGame.value) GamePageInRoom(),
-                    if (isKeyboardOpen)
-                      Padding(
-                        padding: EdgeInsets.only(bottom: keyboardHeight + 53),
-                        child: Container(
-                          color: ColorManager.darkGreyColor.withValues(alpha: 0.5),
-                          padding: const EdgeInsets.only(top: 55),
-                          child:  const RoomMessageList(true),
-                        ),
-                      ),
                     // GamePage(
                     //   gameUrl: controller.gameItems[0].game.url,
                     //   gameResponse: controller.gameResponse.value!,

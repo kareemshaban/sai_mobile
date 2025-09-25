@@ -61,8 +61,8 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                       clipBehavior: Clip.none,
                       children: [
                         Container(
-                          width: 100,
-                          height: 100,
+                          width: 90,
+                          height: 90,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
@@ -73,13 +73,13 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                               errorBuilder: (context, error, stackTrace) {
                                 return const AppImage(
                                   image: Constants.userErrorWidget,
-                                  width: 100,
-                                  height: 100,
+                                  width: 90,
+                                  height:90,
                                   isCircle: true,
                                 );
                               },
-                              width: 100,
-                              height: 100,
+                              width: 90,
+                              height: 90,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -87,8 +87,8 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                         PrivilegeDataView(
                           url:
                               controller.user.privileges.data.profileFrame.file,
-                          width: 120,
-                          height: 120,
+                          width: 130,
+                          height: 130,
                         ),
                       ],
                     ),
@@ -99,11 +99,17 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                         const AppIcon(
                           icon: IconsAssets.verified,
                         ),
-                        5.verticalSpace(),
+                        if(controller.user.isVip == 1 )
+                          AppImage(
+                            image: controller.user.privileges.categoryIcon,
+                            height: 25.0,
+                            width: 25.0,
+                          ),
+                        5.horizontalSpace(),
                         Text(
                           controller.user.name,
                           style: Get.textTheme.titleLarge!.copyWith(
-                            fontSize: AppSize.s24(context),
+                            fontSize: AppSize.s25(context),
                             color: controller.appController.isVipActive()
                                 ? controller.user.privileges.data.colorfulName
                                         .value.isNotEmpty
@@ -112,6 +118,23 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                                     : null
                                 : null,
                           ),
+                        ),
+                      ],
+                    ),
+                    5.verticalSpace(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PrivilegeDataView(
+                          url: controller.user.privileges.data.badgePremium.file,
+                          width: 30,
+                          height: 30,
+                        ),
+                        5.horizontalSpace(),
+                        PrivilegeDataView(
+                          url: controller.user.privileges.data.exclusiveNameCard.file,
+                          width: 70,
+                          height: 40,
                         ),
                       ],
                     ),
@@ -167,24 +190,6 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                     const UserProfileButtons(),
                   ],
                 ),
-              ),
-            ),
-            PositionedDirectional(
-              bottom: 0,
-              end: 10,
-              child: PrivilegeDataView(
-                url: controller.user.privileges.data.badgePremium.file,
-                width: 50,
-                height: 50,
-              ),
-            ),
-            PositionedDirectional(
-              bottom: 0,
-              start: 10,
-              child: PrivilegeDataView(
-                url: controller.user.privileges.data.exclusiveNameCard.file,
-                width: 100,
-                height: 40,
               ),
             ),
           ],

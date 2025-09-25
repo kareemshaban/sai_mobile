@@ -42,7 +42,7 @@ class GamePageInRoom extends GetView<RoomController> {
                 top: Get.height * 0.09,
               ),
               child: Container(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                     color: Colors.black38,
                     borderRadius: BorderRadius.only(

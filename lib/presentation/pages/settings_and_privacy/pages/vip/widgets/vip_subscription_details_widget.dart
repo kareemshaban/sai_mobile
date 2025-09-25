@@ -20,8 +20,8 @@ class VipSubscriptionDetailsWidget extends GetView<VipController> {
           10.verticalSpace(),
           AppImage(
             image: controller.premium.data[controller.currentIndex].badge,
-            width: 260,
-            height: 260,
+            width: 200,
+            height: 200,
             radius: 10,
           ),
           10.verticalSpace(),

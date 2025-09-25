@@ -42,6 +42,7 @@ initRoomModule() {
   instance.registerLazySingleton<RoomRepository>(() => RoomRepositoryImpl(
         instance(),
         instance(),
+        instance(),
       ));
 
   instance.registerLazySingleton<GetMyRoomUseCase>(

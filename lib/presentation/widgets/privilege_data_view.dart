@@ -27,13 +27,7 @@ class PrivilegeDataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Get.find<AppController>().isVipActive()) {
       return getDataWidget();
-    }
-    if (isBadges) {
-      return getDataWidget();
-    }
-    return const SizedBox();
   }
 
   Widget getDataWidget() {

@@ -420,4 +420,12 @@ class RoomRemoteDataSourceImpl extends RoomRemoteDataSource {
       },
     );
   }
+
+  Future<BaseMapModel<UserModel>> getUserProfileByID(int params) async {
+    return await _appServiceClient.performGetRequest(
+      EndPoint.getUserProfileByID(params),
+      UserModel.fromJson,
+    );
+  }
+
 }

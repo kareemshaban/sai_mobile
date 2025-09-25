@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:detectable_text_field/detectable_text_field.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/extensions.dart';
@@ -20,7 +22,6 @@ class RoomBottomBarWidget extends GetView<RoomController> {
 
   @override
   Widget build(BuildContext context) {
-    FocusNode _focusNode = FocusNode();
     return Obx(
       () => Column(
         mainAxisSize: MainAxisSize.min,
@@ -72,195 +73,207 @@ class RoomBottomBarWidget extends GetView<RoomController> {
             ),
           ),
           controller.enableScroll
-              ? Container(
-                  color:  ColorManager.white,
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.viewInsetsOf(context).bottom + 7,
-                      top: 7,
-                      left: 7,
-                      right: 7),
-                  child: Row(
-                    children: [
-                      if (controller.messageImage.isNotEmpty)
-                        Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Container(
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: FileImage(
-                                    File(controller.messageImage),
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            PositionedDirectional(
-                              top: 0,
-                              end: 0,
-                              child: InkWell(
-                                onTap: controller.clearMessageImage,
-                                child: Container(
+              ? Column(
+                children: [
+                  Container(
+                      color:  ColorManager.white,
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.viewInsetsOf(context).bottom + 7,
+                          top: 7,
+                          left: 7,
+                          right: 7),
+                      child: Row(
+                        children: [
+                          if (controller.messageImage.isNotEmpty)
+                            Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                Container(
                                   width: 20,
                                   height: 20,
-                                  decoration: const BoxDecoration(
-                                    color: ColorManager.red,
-                                    shape: BoxShape.circle,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: FileImage(
+                                        File(controller.messageImage),
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                  child: const Icon(
-                                    Icons.close,
-                                    color: ColorManager.white,
-                                    size: 15,
+                                ),
+                                PositionedDirectional(
+                                  top: 0,
+                                  end: 0,
+                                  child: InkWell(
+                                    onTap: controller.clearMessageImage,
+                                    child: Container(
+                                      width: 20,
+                                      height: 20,
+                                      decoration: const BoxDecoration(
+                                        color: ColorManager.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.close,
+                                        color: ColorManager.white,
+                                        size: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          else
+                            InkWell(
+                              onTap: controller.onPickMessageImage,
+                              child: const AppIcon(
+                                icon: IconsAssets.gallery,
+                                width: 20,
+                                height: 20,
+                              ),
+                            ),
+                          5.horizontalSpace(),
+                          Expanded(
+                            child: SizedBox(
+                              height: 30.0,
+                              child: DetectableTextField(
+                                style: Get.textTheme.labelLarge!.copyWith(
+                                  fontSize: AppSize.s14(context),
+                                  color: Colors.black,
+                                ),
+                                onTap: () {
+                                  controller.showEmojiPicker = false;
+                                },
+                                controller: controller.messageController,
+                                focusNode: controller.focusNode,
+                                minLines: 1,
+                                maxLines: 1,
+                                maxLength: 130,
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.send,
+                                onSubmitted: (value) {
+                                  controller.sendMessage() ;
+                                  controller.focusNode.requestFocus() ;
+                                },
+                                decoration: InputDecoration(
+                                  counterText: '',
+                                  fillColor:
+                                      ColorManager.lightGreyColor,
+                                  filled: true,
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: ColorManager.transparent,
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: ColorManager.transparent,
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: ColorManager.transparent,
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                  ),
+                                  hintText: AppStrings.saySomthing,
+                                  helperStyle: Get.textTheme.labelMedium!.copyWith(
+                                    color: ColorManager.textGrey2,
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        )
-                      else
-                        InkWell(
-                          onTap: controller.onPickMessageImage,
-                          child: const AppIcon(
-                            icon: IconsAssets.gallery,
-                            width: 20,
-                            height: 20,
                           ),
-                        ),
-                      5.horizontalSpace(),
-                      Expanded(
-                        child: SizedBox(
-                          height: 30.0,
-                          child: DetectableTextField(
-                            style: Get.textTheme.labelLarge!.copyWith(
-                              fontSize: AppSize.s14(context),
-                              color: Colors.black,
-                            ),
-                            controller: controller.messageController,
-                            focusNode: controller.focusNode,
-                            textInputAction: TextInputAction.next,
-                            minLines: 1,
-                            maxLines: 1,
-                            maxLength: 130,
-                            onSubmitted: (value) {
-                              controller.sendMessage() ;
-                            },
-                            decoration: InputDecoration(
-                              counterText: '',
-                              fillColor:
-                                  ColorManager.lightGreyColor,
-                              filled: true,
-                              border: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: ColorManager.transparent,
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: ColorManager.transparent,
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: ColorManager.transparent,
-                                ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                              ),
-                              hintText: AppStrings.saySomthing,
-                              helperStyle: Get.textTheme.labelMedium!.copyWith(
-                                color: ColorManager.textGrey2,
-                              ),
+                          5.horizontalSpace(),
+                          InkWell(
+                            onTap: controller.toggleTag,
+                            child: const Icon(
+                              Icons.alternate_email,
+                              size: 20.0,
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                      5.horizontalSpace(),
-                      InkWell(
-                        onTap: controller.toggleTag,
-                        child: const Icon(
-                          Icons.alternate_email,
-                          size: 20.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                    ),
+                ],
+              )
               : Padding(
                   padding: const EdgeInsets.only(
                     left: 16,
                     right: 16,
                   ),
-                  child: Row(
+                  child: Column(
                     children: [
-                      InkWell(
-                        onTap:
-                            isLoading ? null : controller.toggleMuteAllLocally,
-                        child: Icon(
-                          controller.isMuteAll
-                              ? Icons.volume_off_rounded
-                              : Icons.volume_up_outlined,
-                          color: ColorManager.white,
-                          size: 30,
-                        ),
-                      ),
-                      10.horizontalSpace(),
-                      if (controller.isTakingSeat) ...[
-                        InkWell(
-                          onTap: isLoading ? null : controller.toggleMic,
-                          child: Icon(
-                            controller.micState
-                                ? Icons.mic_none_outlined
-                                : Icons.mic_off_outlined,
-                            color: ColorManager.white,
-                            size: 30,
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap:
+                                isLoading ? null : controller.toggleMuteAllLocally,
+                            child: Icon(
+                              controller.isMuteAll
+                                  ? Icons.volume_off_rounded
+                                  : Icons.volume_up_outlined,
+                              color: ColorManager.white,
+                              size: 30,
+                            ),
                           ),
-                        ),
-                        10.horizontalSpace(),
-                      ],
-                      Expanded(
-                        child: InkWell(
-                          onTap: isLoading
-                              ? null
-                              : () {
-                                  controller.enableScroll = true;
-                                  controller.focusNode.requestFocus();
-                                  controller.enableTag = false;
-                                },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 15,
+                          10.horizontalSpace(),
+                          if (controller.isTakingSeat) ...[
+                            InkWell(
+                              onTap: isLoading ? null : controller.toggleMic,
+                              child: Icon(
+                                controller.micState
+                                    ? Icons.mic_none_outlined
+                                    : Icons.mic_off_outlined,
+                                color: ColorManager.white,
+                                size: 30,
+                              ),
                             ),
-                            decoration: BoxDecoration(
-                              color: ColorManager.white.withOpacity(.3),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  AppStrings.saySomthing,
-                                  style: Get.textTheme.bodySmall!.copyWith(
-                                    fontSize: AppSize.s15(context),
-                                  ),
+                            10.horizontalSpace(),
+                          ],
+                          Expanded(
+                            child: InkWell(
+                              onTap: isLoading
+                                  ? null
+                                  : () {
+                                      controller.enableScroll = true;
+                                      controller.enableTag = false;
+                                    },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 15,
                                 ),
-                                const Icon(
-                                  Icons.emoji_emotions_outlined,
-                                  color: ColorManager.white,
-                                )
-                              ],
+                                decoration: BoxDecoration(
+                                  color: ColorManager.white.withOpacity(.3),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      AppStrings.saySomthing,
+                                      style: Get.textTheme.bodySmall!.copyWith(
+                                        fontSize: AppSize.s15(context),
+                                      ),
+                                    ),
+                                    const Icon(
+                                      Icons.emoji_emotions_outlined,
+                                      color: ColorManager.white,
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          50.horizontalSpace(),
+                        ],
                       ),
-                      50.horizontalSpace(),
                     ],
                   ),
                 ),

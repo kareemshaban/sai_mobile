@@ -212,6 +212,7 @@ extension RoomUserMapper on RoomUserModel? {
       supportReceivedVal: this?.supportReceivedVal ?? Constants.empty,
       supportSentVal: this?.supportSentVal ?? Constants.empty,
       isFollowing: this?.isFollowing ?? false,
+      isVip: this?.isVip ?? 0,
     );
   }
 }

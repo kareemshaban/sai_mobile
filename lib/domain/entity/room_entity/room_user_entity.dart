@@ -18,6 +18,7 @@ class RoomUserEntity {
   String supportSentVal;
   bool isFollow;
   bool isFollowing;
+  int isVip;
 
   RoomUserEntity({
     required this.referenceId,
@@ -37,5 +38,6 @@ class RoomUserEntity {
     required this.supportReceivedVal,
     required this.supportSentVal,
     required this.isFollowing,
+    required this.isVip,
   });
 }

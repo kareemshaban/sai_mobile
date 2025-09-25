@@ -68,6 +68,7 @@ extension UserMapper on UserModel? {
       track: this?.track ?? Constants.empty,
       friendId: this?.friendId ?? Constants.zero,
       backgroundTheme: this?.backgroundTheme ?? Constants.empty,
+      isVip: this?.isVip ?? Constants.zero,
     );
   }
 }

@@ -17,7 +17,7 @@ class LottieScreen extends StatelessWidget {
       final currentGift = controller.giftUrls.first;
       final url = currentGift['url'];
       final id = currentGift['id'];
-      return SizedBox(
+      return  SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Lottie.network(

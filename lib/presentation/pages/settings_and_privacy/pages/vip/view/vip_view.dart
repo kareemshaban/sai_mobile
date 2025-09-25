@@ -22,23 +22,26 @@ class VipView extends GetView<VipController> {
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButton(),
-        centerTitle: false,
+        centerTitle: true,
         title: Text(AppStrings.saiVip),
         actions: [
           Obx(
-            () => Text(
+                () => Text(
               controller
                   .appController.user.goldValue.formatCurrencyWithoutSymbol,
               style: Get.textTheme.displayLarge!.copyWith(
-                fontSize: AppSize.s16(context),
+                fontSize: AppSize.s18(context),
               ),
             ),
           ),
           5.horizontalSpace(),
-          const AppIcon(
-            icon: IconsAssets.coins,
-            width: 17,
-            height: 17,
+          const Padding(
+            padding: EdgeInsets.only(bottom: 5.0),
+            child:  AppIcon(
+              icon: IconsAssets.coins,
+              width: 20,
+              height: 20,
+            ),
           ),
           16.horizontalSpace(),
         ],

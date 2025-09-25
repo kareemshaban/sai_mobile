@@ -135,7 +135,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       (value) => null,
     );
   }
-
   @override
   Future<BaseMapModel<UserModel>> getUserProfileByID(int params) async {
     return await _appServiceClient.performGetRequest(
@@ -143,6 +142,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       UserModel.fromJson,
     );
   }
+  @override
+
 
   @override
   Future<BaseMapModel> sendFriendRequest(int params) async {

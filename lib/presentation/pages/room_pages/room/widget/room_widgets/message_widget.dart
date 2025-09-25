@@ -3,8 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
-import 'package:new_sai/app/app_controller.dart';
 import 'package:new_sai/app/extensions.dart';
+import 'package:new_sai/domain/entity/auth_entity/user_entity.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/getx/room_controller.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/room_local_model/message_widget_model.dart';
 import 'package:new_sai/presentation/resources/color_manger.dart';
@@ -12,195 +12,214 @@ import 'package:new_sai/presentation/resources/font_manger.dart';
 import 'package:new_sai/presentation/resources/language_manger.dart';
 import 'package:new_sai/presentation/widgets/app_image.dart';
 import 'package:new_sai/presentation/widgets/privilege_data_view.dart';
-
 import 'room_image_view.dart';
 
-class MessageWidget extends StatelessWidget {
+class MessageWidget extends  GetView<RoomController> {
   final MessageWidgetModel message;
   final void Function() onConfirmDelete;
+
   const MessageWidget(
-      {super.key, required this.message, required this.onConfirmDelete});
+      {super.key,
+      required this.message,
+      required this.onConfirmDelete,});
 
   @override
   Widget build(BuildContext context) {
     if (context.locale == arabicLocale) {
       return SlideInRight(
-        duration: const Duration(milliseconds: 300),
-        child: messageWidget(context),
+        duration: const Duration(milliseconds: 450),
+        child: messageWidget(context)
       );
     }
     return SlideInLeft(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 450),
       child: messageWidget(context),
     );
   }
 
   Widget messageWidget(BuildContext context) {
-    final roomController = Get.find<RoomController>();
+    final userId = int.parse(message.user.userID);
 
-    return Obx(
-      () {
-        final user = roomController.apiUsers.firstWhereOrNull(
-            (element) => element.id.toString() == message.user.userID);
-        return Dismissible(
-          key: ValueKey(message.user.userID),
-          background: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Row(
-              children: [
-                Icon(
-                  Icons.reply,
-                  color: ColorManager.white,
-                  size: 20,
-                ),
-              ],
-            ),
-          ),
-          direction: message.user.userID ==
-                  roomController.appController.user.id.toString()
-              ? DismissDirection.none
-              : DismissDirection.startToEnd,
-          dismissThresholds: const {
-            DismissDirection.startToEnd: .2,
-          },
-          confirmDismiss: (direction) async {
-            onConfirmDelete();
-            return false;
-          },
-          child: Container(
-            padding: const EdgeInsets.all(10.0),
-            constraints: BoxConstraints(
-              maxWidth: .75.w(context),
-            ),
-            margin: const EdgeInsets.only(bottom: 9),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () {
-                    roomController.openProfileBottomSheet(message.user.userID);
-                  },
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
-                        child: Image.network(
-                          roomController.getUserImage(message.user.userID),
-                          errorBuilder: (context, error, stackTrace) {
-                            return roomController.userErrorImageWidget(
-                              width: 30,
-                              height: 30,
-                            );
-                          },
-                          width: 30,
-                          height: 30,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      if (user != null)
-                        PrivilegeDataView(
-                          url: user.privileges.data.profileFrame.file,
-                          width: 30,
-                          height: 30,
-                        )
-                    ],
+    return FutureBuilder<UserEntity>(
+      future: controller.getSenderProfile(userId),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const SizedBox();
+        }
+
+        final sender = snapshot.data!;
+        final privileges = sender.privileges;
+        print('exclusiveChatBox') ;
+        print(sender.privileges.data.exclusiveChatBox.file) ;
+
+        return Obx(() {
+          return Dismissible(
+            key: ValueKey(message.user.userID),
+            background: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Row(
+                children: [
+                  Icon(
+                    Icons.reply,
+                    color: ColorManager.white,
+                    size: 20,
                   ),
-                ),
-                5.horizontalSpace(),
-                Flexible(
-                  fit: FlexFit.loose,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          roomController
-                              .openProfileBottomSheet(message.user.userID);
-                        },
-                        child: Row(
-                          children: [
-                            
-                            Flexible(
-                              child: Text(
-                                message.user.userName,
-                                style: Get.textTheme.bodySmall!.copyWith(
-                                  fontSize: AppSize.s17(context),
-                                  color: Get.find<AppController>().isVipActive()
-                                      ? user != null &&
-                                              user.privileges.data.colorfulName
-                                                  .value.isNotEmpty
-                                          ? Colors.white.fromHex(user.privileges
-                                              .data.colorfulName.value)
-                                          : null
-                                      : null,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            if (user != null && user.badges.isNotEmpty) ...[
-                              2.horizontalSpace(),
-                              PrivilegeDataView(
-                                isBadges: true,
-                                url: user.badges.first,
-                                width: 20,
-                                height: 20,
-                                fit: BoxFit.cover,
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                      if (message.message != null &&
-                          message.message!.isNotEmpty)
-                        Container(
-                          padding: const EdgeInsets.all(5.0),
-                          decoration: BoxDecoration(
-                            color: ColorManager.lightGreyColor.withValues(alpha: 0.5),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Linkify(
-                            text: message.message!,
-                            style: Get.textTheme.bodySmall!.copyWith(
-                              fontSize: AppSize.s14(context),
-                            ),
-                            linkStyle: Get.textTheme.bodyLarge!.copyWith(
-                              fontSize: AppSize.s14(context),
-                            ),
-                            linkifiers: const [
-                              UserTagLinkifier(),
-                            ],
-                          ),
-                        ),
-                      if (message.image != null) ...[
-                        5.verticalSpace(),
-                        InkWell(
-                          onTap: () {
-                            Get.dialog(RoomImageView(image: message.image!));
-                          },
-                          child: AppImage(
-                            image: message.image!,
-                            width: 180,
-                            height: 180,
-                            radius: 8,
+                ],
+              ),
+            ),
+            direction: message.user.userID ==
+                controller.appController.user.id.toString()
+                ? DismissDirection.none
+                : DismissDirection.startToEnd,
+            dismissThresholds: const {
+              DismissDirection.startToEnd: .2,
+            },
+            confirmDismiss: (direction) async {
+              onConfirmDelete();
+              return false;
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              constraints: BoxConstraints(
+                maxWidth: .75.w(context),
+              ),
+              margin: const EdgeInsets.only(bottom: 9),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      controller.openProfileBottomSheet(message.user.userID);
+                    },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: Image.network(
+                            controller.getUserImage(message.user.userID),
+                            errorBuilder: (context, error, stackTrace) {
+                              return controller.userErrorImageWidget(
+                                width: 30,
+                                height: 30,
+                              );
+                            },
+                            width: 30,
+                            height: 30,
                             fit: BoxFit.cover,
                           ),
                         ),
+                        if (sender.isVip == 1)
+                          PrivilegeDataView(
+                            url: privileges.data.profileFrame.file,
+                            width: 40,
+                            height: 40,
+                          )
                       ],
-                    ],
+                    ),
                   ),
-                )
-              ],
+                  5.horizontalSpace(),
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            controller.openProfileBottomSheet(message.user.userID);
+                          },
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  message.user.userName,
+                                  style: Get.textTheme.bodySmall!.copyWith(
+                                    fontSize: AppSize.s17(context),
+                                    color: sender.isVip == 1
+                                        ? sender.privileges.data.colorfulName.value.toColor()
+                                        : null,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              5.horizontalSpace(),
+                              if (sender.badges.isNotEmpty) ...[
+                                2.horizontalSpace(),
+                                if (sender.isVip == 1)
+                                  PrivilegeDataView(
+                                    isBadges: true,
+                                    url: sender.badges.first,
+                                    width: 20,
+                                    height: 20,
+                                    fit: BoxFit.cover,
+                                  ),
+                              ],
+                              if (sender.isVip == 1)
+                                AppImage(
+                                  image: privileges.categoryIcon,
+                                  height: 25,
+                                  width: 25,
+                                )
+                            ],
+                          ),
+                        ),
+                        if (message.message != null &&
+                            message.message!.isNotEmpty)
+                          Stack(
+                            children: [
+                              PrivilegeDataView(url: privileges.data.exclusiveChatBox.file  , height: 50, width: 50,),
+                              Container(
+                                padding: const EdgeInsets.all(5.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: ColorManager.lightGreyColor.withOpacity(0.5),
+                                ),
+                                child: Linkify(
+                                  text: message.message!,
+                                  style: Get.textTheme.bodySmall!.copyWith(
+                                    fontSize: AppSize.s14(context),
+                                  ),
+                                  linkStyle: Get.textTheme.bodyLarge!.copyWith(
+                                    fontSize: AppSize.s14(context),
+                                  ),
+                                  linkifiers: const [
+                                    UserTagLinkifier(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        if (message.image != null) ...[
+                          5.verticalSpace(),
+                          InkWell(
+                            onTap: () {
+                              Get.dialog(RoomImageView(image: message.image!));
+                            },
+                            child: AppImage(
+                              image: message.image!,
+                              width: 180,
+                              height: 180,
+                              radius: 8,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        });
       },
     );
   }
+
 }
 
 class UserTagLinkifier extends Linkifier {

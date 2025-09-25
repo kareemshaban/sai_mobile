@@ -34,6 +34,8 @@ class RoomUserModel {
   bool? isFollow;
   @JsonKey(name: "is_following")
   bool? isFollowing;
+  @JsonKey(name: "is_vip")
+  int? isVip;
 
   RoomUserModel({
     this.referenceId,
@@ -53,6 +55,7 @@ class RoomUserModel {
     this.supportReceivedVal,
     this.supportSentVal,
     this.isFollowing,
+    this.isVip,
   });
 
   factory RoomUserModel.fromJson(Map<String, dynamic> json) =>

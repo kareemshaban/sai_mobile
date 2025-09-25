@@ -28,6 +28,25 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    print('1');
+    print(controller.appController.user.privileges.data.luxuryVehicles.file) ;
+    print('2');
+    print(controller.appController.user.privileges.data.exclusiveChatBox.file) ;
+    print('2');
+    print(controller.appController.user.privileges.data.profileCover.file) ;
+    print(controller.appController.user.privileges.data.roomBackcground.file) ;
+    print(controller.appController.user.privileges.data.profileBorder.file) ;
+    print(controller.appController.user.privileges.data.disableMuteAndFiering.file) ;
+    print(controller.appController.user.privileges.data.chatroomLock.file) ;
+    print(controller.appController.user.privileges.data.exclusiveNameCard.file) ;
+    print(controller.appController.user.privileges.data.exclusiveGifts.file) ;
+    print(controller.appController.user.privileges.data.badgePremium.file) ;
+    print(controller.appController.user.privileges.data.profileFrame.file) ;
+    print(controller.appController.user.privileges.data.entryWithInfluences.file) ;
+    print(controller.appController.user.privileges.data.colorfulName.file) ;
+    print(controller.appController.user.privileges.data.profileCard.file) ;
+    print(controller.appController.user.privileges.data.friendsCount.file) ;
+    print(controller.appController.user.isVip) ;
     return isGuest()
         ? const GuestDilaog()
         : Obx(
@@ -78,6 +97,33 @@ class ProfileView extends GetView<ProfileController> {
                                         ),
                                         onTap: () => Get.toNamed(
                                             AppRoutes.settingsMarketRoute),
+                                      ),
+                                      PopupMenuItem(
+                                        child: Row(
+                                          children: [
+                                            const AppIcon(
+                                              icon: IconsAssets.jeweled,
+                                              width: 20,
+                                              height: 20,
+                                            ),
+                                            11.horizontalSpace(),
+                                            Text(
+                                              AppStrings.store,
+                                              style: Get.textTheme.titleMedium!
+                                                  .copyWith(
+                                                fontSize: AppSize.s16(context),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            const Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: ColorManager.iconGreyColor,
+                                              size: 16.0,
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () => Get.toNamed(
+                                            AppRoutes.vipRoute),
                                       ),
                                       if (controller.appController
                                           .isGoldReddemeActive()) ...[
@@ -230,7 +276,7 @@ class ProfileView extends GetView<ProfileController> {
                             ),
                           ),
                           SliverAppBar(
-                            expandedHeight: 575 + 40,
+                            expandedHeight: 575 + 50,
                             pinned: true,
                             bottom: const ProfileTabBar(),
                             flexibleSpace: FlexibleSpaceBar(

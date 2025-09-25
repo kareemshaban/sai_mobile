@@ -43,7 +43,7 @@ class VipExclusivePrivilegeItem extends StatelessWidget {
         Text(
           model.name,
           style: Get.textTheme.titleMedium!.copyWith(
-            fontSize: AppSize.s15(context),
+            fontSize: AppSize.s14(context),
             color: isActive ? ColorManager.primary : null,
           ),
         ),
@@ -54,7 +54,7 @@ class VipExclusivePrivilegeItem extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: Get.textTheme.titleMedium!.copyWith(
-            fontSize: AppSize.s15(context),
+            fontSize: AppSize.s14(context),
             color: isActive
                 ? ColorManager.primary
                 : ColorManager.black.withOpacity(.5),

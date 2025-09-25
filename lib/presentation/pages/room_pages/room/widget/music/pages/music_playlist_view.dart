@@ -165,48 +165,40 @@ class MusicPlaylistView extends GetView<RoomController> {
           if (Platform.isAndroid) {
             Get.to(() => const AddMusicView());
           } else {
-            final OnAudioQuery audioQuery = OnAudioQuery();
+            final picker = await FilePicker.platform.pickFiles(
+              type: FileType.audio,
+              allowMultiple: true,
+            );
 
-            if (await audioQuery.checkAndRequest(retryRequest: true)) {
-              final picker = await FilePicker.platform.pickFiles(
-                type: FileType.audio,
-                allowMultiple: true,
-              );
-              if (picker != null) {
-                for (var element in picker.files) {
-                  final path = element.path;
-                  if (path != null) {
-                    try {
-                      final metadata =
-                          await MetadataRetriever.fromFile(File(path));
-                      final song = RoomSongModel(
-                        name: metadata.trackName ?? element.name,
-                        path: path,
-                        duration:
-                            ((metadata.trackDuration?.toDouble() ?? 0) / 1000)
-                                .toInt(),
-                        image: metadata.albumArt,
-                      );
+            if (picker != null) {
+              for (var element in picker.files) {
+                final path = element.path;
+                if (path != null) {
+                  try {
+                    final metadata = await MetadataRetriever.fromFile(File(path));
 
-                      controller.songs.addIf(
-                        !controller.songs.any((s) => s.path == song.path),
-                        song,
-                      );
-                      controller.songBox.clear();
-                      controller.songBox.addAll(controller.songs);
-                      print("✅ Added: ${song.name} (${song.duration}s)");
-                    } catch (e) {
-                      print("❌ Error reading metadata for: $path\n$e");
-                    }
+                    final song = RoomSongModel(
+                      name: metadata.trackName ?? element.name,
+                      path: path,
+                      duration:
+                      ((metadata.trackDuration?.toDouble() ?? 0) / 1000).toInt(),
+                      image: metadata.albumArt,
+                    );
+
+                    controller.songs.addIf(
+                      !controller.songs.any((s) => s.path == song.path),
+                      song,
+                    );
+
+                    controller.songBox.clear();
+                    controller.songBox.addAll(controller.songs);
+
+                    print("✅ Added: ${song.name} (${song.duration}s)");
+                  } catch (e) {
+                    print("❌ Error reading metadata for: $path\n$e");
                   }
                 }
               }
-            } else {
-              Get.dialog(
-                AppPermissionDialog(
-                  message: AppStrings.youMustEnablePermissionToAccessAudioFiles,
-                ),
-              );
             }
           }
         },

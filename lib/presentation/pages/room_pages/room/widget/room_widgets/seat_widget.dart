@@ -156,6 +156,8 @@ class _SeatWidgetState extends State<SeatWidget> {
                                                     .getUserImage(value.userID),
                                                 isCircle: true,
                                                 fit: BoxFit.cover,
+                                                height: 40,
+                                                width: 40,
                                                 errorWidget: controller
                                                     .userErrorImageWidget(),
                                               ),
@@ -186,8 +188,8 @@ class _SeatWidgetState extends State<SeatWidget> {
                               PrivilegeDataView(
                                 url: privi.data.profileFrame.file,
                                 fit: BoxFit.cover,
-                                width: 50,
-                                height: 50,
+                                width: 55,
+                                height: 55,
                               ),
                           ],
                         ),

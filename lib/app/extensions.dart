@@ -58,3 +58,11 @@ extension HexColor on Color {
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
 }
+
+extension HexColors on String {
+  Color toColor() {
+    final hex = replaceAll('#', '');
+    final formattedHex = hex.length == 6 ? 'FF$hex' : hex; // FF = شفافية كاملة
+    return Color(int.parse(formattedHex, radix: 16));
+  }
+}

@@ -46,7 +46,7 @@ class VipController extends GetxController
     loadingGetPremium = false;
   }
 
-  activatePreium() async {
+  activatePremium() async {
     showAppLoadingDialog();
     (await _activatePremiumUseCase.execute(premium.data[currentIndex].id)).fold(
       (l) {
@@ -60,7 +60,7 @@ class VipController extends GetxController
     );
   }
 
-  renewPreium() async {
+  renewPremium() async {
     showAppLoadingDialog();
     (await _renewPremiumUseCase.execute(premium.data[currentIndex].id)).fold(
       (l) {

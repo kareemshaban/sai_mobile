@@ -51,8 +51,8 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                       clipBehavior: Clip.none,
                       children: [
                         Obx(() => Container(
-                              width: 100,
-                              height: 100,
+                              width: 90,
+                              height: 90,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                               ),
@@ -64,8 +64,8 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                                     withCache: false,
                                     image: controller
                                         .appController.user.profileImg,
-                                    width: 100,
-                                    height: 100,
+                                    width: 90,
+                                    height: 90,
                                     isCircle: true,
                                     fit: BoxFit.cover,
                                   ),
@@ -75,8 +75,8 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                         PrivilegeDataView(
                           url: controller.appController.user.privileges.data
                               .profileFrame.file,
-                          width: 120,
-                          height: 120,
+                          width: 130,
+                          height: 130,
                         ),
                       ],
                     ),
@@ -87,24 +87,46 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                         const AppIcon(
                           icon: IconsAssets.verified,
                         ),
-                        5.verticalSpace(),
+                        if(controller.appController.user.isVip == 1 )
+                        AppImage(
+                          image: controller.appController.user.privileges.categoryIcon,
+                        height: 25.0,
+                        width: 25.0,
+                      ),
                         Text(
                           controller.appController.user.name,
                           style: Get.textTheme.titleLarge!.copyWith(
                             fontSize: AppSize.s24(context),
-                            color: controller.appController.isVipActive()
+                            color: controller.appController.user.isVip == 1
                                 ? controller.appController.user.privileges.data
                                         .colorfulName.value.isNotEmpty
-                                    ? Colors.white.fromHex(controller
+                                    ? controller
                                         .appController
                                         .user
                                         .privileges
                                         .data
                                         .colorfulName
-                                        .value)
+                                        .value.toColor()
                                     : null
                                 : null,
                           ),
+                        ),
+                      ],
+                    ),
+                    5.verticalSpace(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PrivilegeDataView(
+                          url: controller.appController.user.privileges.data.badgePremium.file,
+                          width: 30,
+                          height: 30,
+                        ),
+                        5.horizontalSpace(),
+                        PrivilegeDataView(
+                          url: controller.appController.user.privileges.data.exclusiveNameCard.file,
+                          width: 70,
+                          height: 40,
                         ),
                       ],
                     ),
@@ -134,7 +156,7 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                           5.horizontalSpace(),
                           Container(
                             margin: EdgeInsets.only(bottom: 5.0),
-                            child: Icon(
+                            child: const Icon(
                               Icons.copy,
                               color: ColorManager.textGrey3,
                               size: 20,
@@ -164,7 +186,7 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                               fontSize: AppSize.s18(context),
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10.0,
                         ),
                         Image(
@@ -176,26 +198,6 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                     ),
                   ],
                 ),
-              ),
-            ),
-            PositionedDirectional(
-              bottom: 0,
-              end: 10,
-              child: PrivilegeDataView(
-                url: controller
-                    .appController.user.privileges.data.badgePremium.file,
-                width: 50,
-                height: 50,
-              ),
-            ),
-            PositionedDirectional(
-              bottom: 0,
-              start: 10,
-              child: PrivilegeDataView(
-                url: controller
-                    .appController.user.privileges.data.exclusiveNameCard.file,
-                width: 100,
-                height: 40,
               ),
             ),
           ],

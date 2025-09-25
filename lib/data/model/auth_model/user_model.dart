@@ -107,6 +107,8 @@ class UserModel {
   int? friendId;
   @JsonKey(name: "background_theme")
   String? backgroundTheme;
+  @JsonKey(name: "is_vip")
+  int? isVip;
 
   UserModel({
     this.id,
@@ -152,6 +154,7 @@ class UserModel {
     this.track,
     this.friendId,
     this.backgroundTheme,
+    this.isVip,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

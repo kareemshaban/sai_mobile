@@ -56,8 +56,8 @@ class VipBottomButton extends GetView<VipController> {
                       AppButton(
                         title: AppStrings.renewal,
                         radius: 10,
-                        height: 50,
-                        onTap: controller.renewPreium,
+                        height: 40,
+                        onTap: controller.renewPremium,
                         textStyle: Get.textTheme.bodyLarge!.copyWith(
                           fontSize: AppSize.s16(context),
                         ),
@@ -66,8 +66,8 @@ class VipBottomButton extends GetView<VipController> {
                       AppButton(
                         title: AppStrings.activation,
                         radius: 10,
-                        height: 50,
-                        onTap: controller.activatePreium,
+                        height: 40,
+                        onTap: controller.activatePremium,
                         textStyle: Get.textTheme.bodyLarge!.copyWith(
                           fontSize: AppSize.s16(context),
                         ),
@@ -78,7 +78,7 @@ class VipBottomButton extends GetView<VipController> {
                       AppButton(
                         title: AppStrings.activated,
                         radius: 10,
-                        height: 50,
+                        height: 40,
                         textStyle: Get.textTheme.bodyLarge!.copyWith(
                           fontSize: AppSize.s16(context),
                         ),
@@ -87,8 +87,8 @@ class VipBottomButton extends GetView<VipController> {
                       AppButton(
                         title: AppStrings.activation,
                         radius: 10,
-                        height: 50,
-                        onTap: controller.activatePreium,
+                        height: 40,
+                        onTap: controller.activatePremium,
                         textStyle: Get.textTheme.bodyLarge!.copyWith(
                           fontSize: AppSize.s16(context),
                         ),

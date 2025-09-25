@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'size_config.dart';
 
 class FontConstants {
-  static const String interFontFamily = 'Tajawal';
+  static const String interFontFamily = 'NotoSansArabic';
 }
 
 class FontWeightManger {

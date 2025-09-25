@@ -3,17 +3,20 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/extensions.dart';
+import 'package:new_sai/domain/entity/auth_entity/user_entity.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/zego_handler/internal/internal.dart';
 import 'package:new_sai/presentation/resources/color_manger.dart';
 import 'package:new_sai/presentation/resources/font_manger.dart';
 import 'package:new_sai/presentation/resources/language_manger.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
+import 'package:new_sai/presentation/widgets/privilege_data_view.dart';
 
 class NewUserEntryNotification extends StatefulWidget {
   final ZegoUser user;
+  final UserEntity userEntity;
   final void Function()? onDelete;
   const NewUserEntryNotification(
-      {super.key, required this.user, this.onDelete});
+      {super.key, required this.user, this.onDelete, required this.userEntity,});
 
   @override
   State<NewUserEntryNotification> createState() =>
@@ -50,6 +53,7 @@ class _NewUserEntryNotificationState extends State<NewUserEntryNotification> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        widget.userEntity.isVip == 1 ?
         Container(
           constraints: BoxConstraints(maxWidth: .75.w(context)),
           margin: const EdgeInsets.only(bottom: 8),
@@ -64,6 +68,16 @@ class _NewUserEntryNotificationState extends State<NewUserEntryNotification> {
               fontSize: AppSize.s16(context),
             ),
           ),
+        ) : Stack(
+          children: [
+            PrivilegeDataView(url: widget.userEntity.privileges.data.entryWithInfluences.file),
+            Text(
+              "${context.locale == arabicLocale ? AppStrings.join : ''} ${widget.user.userName} ${context.locale == englishLocal ? AppStrings.join : ''}",
+              style: Get.textTheme.bodyLarge!.copyWith(
+                fontSize: AppSize.s16(context),
+              ),
+            ),
+          ],
         ),
       ],
     );

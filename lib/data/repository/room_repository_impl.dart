@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+import 'package:new_sai/data/data_source/auth_data_source/auth_remote_data_source.dart';
 import 'package:new_sai/data/data_source/room_data_source/room_remote_data_source.dart';
 import 'package:new_sai/data/mapper/auth_mapper.dart';
 import 'package:new_sai/data/mapper/room_mapper.dart';
@@ -35,10 +36,12 @@ import 'package:new_sai/domain/repository/room_repository.dart';
 class RoomRepositoryImpl extends RoomRepository {
   final NetworkInfo _networkInfo;
   final RoomRemoteDataSource _remoteDataSource;
+  AuthRemoteDataSource _authRemoteDataSource ;
 
   RoomRepositoryImpl(
     this._remoteDataSource,
     this._networkInfo,
+      this._authRemoteDataSource
   );
 
   @override
@@ -646,4 +649,7 @@ class RoomRepositoryImpl extends RoomRepository {
       return Left(DataSource.noInternetConnection.getFailure());
     }
   }
+
+
+
 }
