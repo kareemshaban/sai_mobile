@@ -75,8 +75,8 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                         PrivilegeDataView(
                           url: controller.appController.user.privileges.data
                               .profileFrame.file,
-                          width: 130,
-                          height: 130,
+                          width: 110,
+                          height: 110,
                         ),
                       ],
                     ),
@@ -93,6 +93,7 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                         height: 25.0,
                         width: 25.0,
                       ),
+                        5.horizontalSpace(),
                         Text(
                           controller.appController.user.name,
                           style: Get.textTheme.titleLarge!.copyWith(

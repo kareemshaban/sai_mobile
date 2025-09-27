@@ -191,7 +191,7 @@ class RoomView extends GetView<RoomController> {
                     if (controller.isPlayingGame.value) const GamePageInRoom(),
                     if (isKeyboardOpen)
                       Padding(
-                        padding: EdgeInsets.only(bottom: keyboardHeight + 45),
+                        padding: EdgeInsets.only(bottom: keyboardHeight + MediaQuery.viewInsetsOf(context).bottom + 7 + 30),
                         child: Container(
                           color: ColorManager.darkGreyColor,
                           padding: const EdgeInsets.only(top: 50),
@@ -311,7 +311,11 @@ class RoomView extends GetView<RoomController> {
                         child: Container(
                           color: ColorManager.darkGreyColor.withValues(alpha: 0.5),
                           padding: const EdgeInsets.only(top: 55),
-                          child:  const RoomMessageList(true),
+                          child:  Column(
+                            children: [
+                              const RoomMessageList(true),
+                            ],
+                          ),
                         ),
                       ),
                     //  Lottie.asset(LottieAssets.data1),

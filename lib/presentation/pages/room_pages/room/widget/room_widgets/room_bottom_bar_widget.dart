@@ -141,9 +141,6 @@ class RoomBottomBarWidget extends GetView<RoomController> {
                                   fontSize: AppSize.s14(context),
                                   color: Colors.black,
                                 ),
-                                onTap: () {
-                                  controller.showEmojiPicker = false;
-                                },
                                 controller: controller.messageController,
                                 focusNode: controller.focusNode,
                                 minLines: 1,

@@ -13,42 +13,45 @@ class ProfileTabBar extends GetView<ProfileController>
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => TabBar(
-        controller: controller.tabController,
-        tabs: [
-          Tab(
-            icon: Padding(
-              padding: const EdgeInsets.only(bottom: 5.0),
-              child: AppIcon(
-                icon: IconsAssets.grid,
-                color: controller.currentIndex == 0
-                    ? ColorManager.black
-                    : ColorManager.iconGreyColor,
-                width: 20.0,
-                height: 20.0,
+      () => SizedBox(
+        height: 55.0,
+        child: TabBar(
+          controller: controller.tabController,
+          tabs: [
+            Tab(
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 5.0),
+                child: AppIcon(
+                  icon: IconsAssets.grid,
+                  color: controller.currentIndex == 0
+                      ? ColorManager.black
+                      : ColorManager.iconGreyColor,
+                  width: 20.0,
+                  height: 20.0,
+                ),
               ),
+              text: AppStrings.myReels,
             ),
-            text: AppStrings.myReels,
-          ),
-          Tab(
-            icon: Padding(
-              padding: const EdgeInsets.only(bottom: 5.0),
-              child: AppIcon(
-                icon: IconsAssets.saved,
-                color: controller.currentIndex == 1
-                    ? ColorManager.black
-                    : ColorManager.iconGreyColor,
-                width: 20.0,
-                height: 20.0,
+            Tab(
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 5.0),
+                child: AppIcon(
+                  icon: IconsAssets.saved,
+                  color: controller.currentIndex == 1
+                      ? ColorManager.black
+                      : ColorManager.iconGreyColor,
+                  width: 20.0,
+                  height: 20.0,
+                ),
               ),
+              text: AppStrings.savedReels,
             ),
-            text: AppStrings.savedReels,
-          ),
-        ],
-        indicatorColor: ColorManager.black,
-        unselectedLabelColor: ColorManager.iconGreyColor,
-        labelColor: ColorManager.black,
-        indicatorPadding: const EdgeInsets.symmetric(horizontal: 50),
+          ],
+          indicatorColor: ColorManager.black,
+          unselectedLabelColor: ColorManager.iconGreyColor,
+          labelColor: ColorManager.black,
+          indicatorPadding: const EdgeInsets.symmetric(horizontal: 50),
+        ),
       ),
     );
   }

@@ -65,30 +65,39 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if(controller.userProfile.isVip == 1)...[
+                    if (controller.userProfile.isVip == 1) ...[
                       120.verticalSpace(),
-
-                    ]else...[
+                    ] else ...[
                       40.verticalSpace(),
                     ],
-                    Text(
-                      controller.userProfile.name,
-                      style: Get.textTheme.labelMedium!.copyWith(
-                        fontSize: AppSize.s22(context),
-                        color: controller.userProfile.isVip == 1
-                            ? privilege.colorfulName.value.toColor()
-                            : null,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (controller.userProfile.isVip == 1)
+                          PrivilegeDataView(
+                            url: controller
+                                .userProfile.privileges.data.badgePremium.file,
+                            width: 30,
+                            height: 30,
+                          ),
+                        Text(
+                          controller.userProfile.name,
+                          style: Get.textTheme.labelMedium!.copyWith(
+                            fontSize: AppSize.s22(context),
+                            fontWeight: FontWeight.bold,
+                            color: controller.userProfile.isVip == 1
+                                ? privilege.colorfulName.value.toColor()
+                                : null,
+                          ),
+                        ),
+                      ],
                     ),
                     Text(
                       'ID : ${controller.userProfile.referenceId}',
                       style: Get.textTheme.labelMedium!.copyWith(
                         fontSize: AppSize.s16(context),
-                        color: controller.userProfile.isVip == 1
-                            ? ColorManager.black.withOpacity(.5)
-                            : isHaveProfileCard
-                                ? ColorManager.white
-                                : ColorManager.black.withOpacity(.5),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                     20.verticalSpace(),
@@ -116,6 +125,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                                 '${AppStrings.send2} ${controller.userProfile.supportSentVal}',
                                 style: Get.textTheme.titleSmall!.copyWith(
                                   fontSize: AppSize.s13(context),
+                                  color: Colors.white
                                 ),
                               ),
                               7.horizontalSpace(),
@@ -149,6 +159,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                                 '${AppStrings.receive} ${controller.userProfile.supportReceivedVal}',
                                 style: Get.textTheme.titleSmall!.copyWith(
                                   fontSize: AppSize.s13(context),
+                                  color: Colors.white
                                 ),
                               ),
                               7.horizontalSpace(),
@@ -194,16 +205,12 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                                     : AppStrings.follow,
                                 style: Get.textTheme.titleSmall!.copyWith(
                                   fontSize: AppSize.s14(context),
-                                  color: controller.userProfile.isVip == 1
-                                      ? null
-                                      : isHaveProfileCard
-                                          ? ColorManager.white
-                                          : null,
+                                  color: Colors.white,
                                 ),
                               ),
                             ],
                           ),
-                        ), 
+                        ),
                         InkWell(
                           onTap: controller.sendGiftToUser,
                           child: Column(
@@ -219,11 +226,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                                 AppStrings.gift,
                                 style: Get.textTheme.titleSmall!.copyWith(
                                   fontSize: AppSize.s15(context),
-                                  color: controller.userProfile.isVip == 1
-                                      ? null
-                                      : isHaveProfileCard
-                                          ? ColorManager.white
-                                          : null,
+                                  color: Colors.white,
                                 ),
                               ),
                             ],
@@ -251,11 +254,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                                     : AppStrings.mute,
                                 style: Get.textTheme.titleSmall!.copyWith(
                                   fontSize: AppSize.s15(context),
-                                  color: controller.userProfile.isVip == 1
-                                      ? null
-                                      : isHaveProfileCard
-                                          ? ColorManager.white
-                                          : null,
+                                  color:Colors.white,
                                 ),
                               ),
                             ],
@@ -276,11 +275,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                                 AppStrings.show,
                                 style: Get.textTheme.titleSmall!.copyWith(
                                   fontSize: AppSize.s15(context),
-                                  color: controller.userProfile.isVip == 1
-                                      ? null
-                                      : isHaveProfileCard
-                                          ? ColorManager.white
-                                          : null,
+                                  color: Colors.white,
                                 ),
                               ),
                             ],
@@ -345,11 +340,22 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                       width: 1.w(context),
                     ),
                   ),
+                if (controller.userProfile.isVip == 1)
+                  PositionedDirectional(
+                    top: 0,
+                    end: 0,
+                    child: PrivilegeDataView(
+                      url: controller
+                          .userProfile.privileges.data.exclusiveNameCard.file,
+                      width: 60,
+                      height: 40,
+                    ),
+                  ),
                 PositionedDirectional(
                   top: controller.userProfile.isVip == 1
                       ? privilege.profileFrame.file.isNotEmpty
                           ? 25
-                          : 0
+                          : 25
                       : -50,
                   child: Stack(
                     alignment: Alignment.center,
@@ -403,28 +409,6 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                     ),
                   ),
                 ),
-                if (controller.userProfile.isVip == 1)
-                  PositionedDirectional(
-                    top: 0,
-                    end: 0,
-                    child: PrivilegeDataView(
-                      url: controller
-                          .userProfile.privileges.data.badgePremium.file,
-                      width: 40,
-                      height: 40,
-                    ),
-                  ),
-                if (controller.userProfile.isVip == 1)
-                  PositionedDirectional(
-                    top: 20,
-                    start: -10,
-                    child: PrivilegeDataView(
-                      url: controller
-                          .userProfile.privileges.data.exclusiveNameCard.file,
-                      width: 60,
-                      height: 40,
-                    ),
-                  ),
                 if (controller.userProfile.isVip == 1)
                   PositionedDirectional(
                     top: 50,

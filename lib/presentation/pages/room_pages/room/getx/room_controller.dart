@@ -1843,7 +1843,7 @@ class RoomController extends GetxController
     ZegoExpressEngine.instance
         .sendBroadcastMessage(roomId, jsonEncode(message.toJson()))
         .then((ZegoIMSendBroadcastMessageResult result) {
-      if (result.errorCode == 0) {
+      if (result.errorCode == 0 && messageController.text.isNotEmpty ) {
         messages.insert(
           messages.length,
           MessageWidget(  

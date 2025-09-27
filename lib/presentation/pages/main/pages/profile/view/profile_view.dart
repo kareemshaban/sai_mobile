@@ -28,25 +28,6 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    print('1');
-    print(controller.appController.user.privileges.data.luxuryVehicles.file) ;
-    print('2');
-    print(controller.appController.user.privileges.data.exclusiveChatBox.file) ;
-    print('2');
-    print(controller.appController.user.privileges.data.profileCover.file) ;
-    print(controller.appController.user.privileges.data.roomBackcground.file) ;
-    print(controller.appController.user.privileges.data.profileBorder.file) ;
-    print(controller.appController.user.privileges.data.disableMuteAndFiering.file) ;
-    print(controller.appController.user.privileges.data.chatroomLock.file) ;
-    print(controller.appController.user.privileges.data.exclusiveNameCard.file) ;
-    print(controller.appController.user.privileges.data.exclusiveGifts.file) ;
-    print(controller.appController.user.privileges.data.badgePremium.file) ;
-    print(controller.appController.user.privileges.data.profileFrame.file) ;
-    print(controller.appController.user.privileges.data.entryWithInfluences.file) ;
-    print(controller.appController.user.privileges.data.colorfulName.file) ;
-    print(controller.appController.user.privileges.data.profileCard.file) ;
-    print(controller.appController.user.privileges.data.friendsCount.file) ;
-    print(controller.appController.user.isVip) ;
     return isGuest()
         ? const GuestDilaog()
         : Obx(
@@ -108,7 +89,7 @@ class ProfileView extends GetView<ProfileController> {
                                             ),
                                             11.horizontalSpace(),
                                             Text(
-                                              AppStrings.store,
+                                              AppStrings.saiVip ,
                                               style: Get.textTheme.titleMedium!
                                                   .copyWith(
                                                 fontSize: AppSize.s16(context),
@@ -314,85 +295,88 @@ class ProfileView extends GetView<ProfileController> {
                           //   }, child: Text("test")),
                           // ),
                           SliverFillRemaining(
-                            child: TabBarView(
-                              controller: controller.tabController,
-                              children: [
-                                if (controller.loadingUserReels)
-                                  const ReelsLoadingList()
-                                else
-                                  Column(
-                                    children: [
-                                      Expanded(
-                                        child: controller.userReels.isEmpty
-                                            ? const EmptyDataWidget()
-                                            : ProfileReelsList(
-                                                reels: controller.userReels,
-                                                controller: controller
-                                                    .userReelsController,
-                                                onTapReels: (index) {
-                                                  Get.toNamed(
-                                                    AppRoutes
-                                                        .usersAndSavedReelsRoute,
-                                                    arguments: {
-                                                      'title':
-                                                          AppStrings.myReels,
-                                                      'reels':
-                                                          controller.userReels,
-                                                      'initIndex': index,
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                      ),
-                                      if (controller.loadingUserReelsPagination)
-                                        const Padding(
-                                          padding: EdgeInsets.all(20),
-                                          child: Center(
-                                            child: AppLoader(),
-                                          ),
-                                        )
-                                    ],
-                                  ),
-                                if (controller.loadingSavedReels)
-                                  const ReelsLoadingList()
-                                else
-                                  Column(
-                                    children: [
-                                      Expanded(
-                                        child: controller.savedReels.isEmpty
-                                            ? const EmptyDataWidget()
-                                            : ProfileReelsList(
-                                                reels: controller.savedReels,
-                                                controller: controller
-                                                    .savedReelsController,
-                                                onTapReels: (index) async {
-                                                  await Get.toNamed(
-                                                    AppRoutes
-                                                        .usersAndSavedReelsRoute,
-                                                    arguments: {
-                                                      'title':
-                                                          AppStrings.savedReels,
-                                                      'reels':
-                                                          controller.savedReels,
-                                                      'initIndex': index,
-                                                    },
-                                                  );
-                                                  await controller
-                                                      .getSavedReels();
-                                                },
-                                              ),
-                                      ),
-                                      if (controller
-                                          .loadingSavedReelsPagination)
-                                        const Padding(
-                                          padding: EdgeInsets.all(20),
-                                          child: Center(
-                                            child: AppLoader(),
-                                          ),
-                                        )
-                                    ],
-                                  ),
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 55.0),
+                              child: TabBarView(
+                                controller: controller.tabController,
+                                children: [
+                                  if (controller.loadingUserReels)
+                                    const ReelsLoadingList()
+                                  else
+                                    Column(
+                                      children: [
+                                        Expanded(
+                                          child: controller.userReels.isEmpty
+                                              ? const EmptyDataWidget()
+                                              : ProfileReelsList(
+                                                  reels: controller.userReels,
+                                                  controller: controller
+                                                      .userReelsController,
+                                                  onTapReels: (index) {
+                                                    Get.toNamed(
+                                                      AppRoutes
+                                                          .usersAndSavedReelsRoute,
+                                                      arguments: {
+                                                        'title':
+                                                            AppStrings.myReels,
+                                                        'reels':
+                                                            controller.userReels,
+                                                        'initIndex': index,
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                        ),
+                                        if (controller.loadingUserReelsPagination)
+                                          const Padding(
+                                            padding: EdgeInsets.all(20),
+                                            child: Center(
+                                              child: AppLoader(),
+                                            ),
+                                          )
+                                      ],
+                                    ),
+                                  if (controller.loadingSavedReels)
+                                    const ReelsLoadingList()
+                                  else
+                                    Column(
+                                      children: [
+                                        Expanded(
+                                          child: controller.savedReels.isEmpty
+                                              ? const EmptyDataWidget()
+                                              : ProfileReelsList(
+                                                  reels: controller.savedReels,
+                                                  controller: controller
+                                                      .savedReelsController,
+                                                  onTapReels: (index) async {
+                                                    await Get.toNamed(
+                                                      AppRoutes
+                                                          .usersAndSavedReelsRoute,
+                                                      arguments: {
+                                                        'title':
+                                                            AppStrings.savedReels,
+                                                        'reels':
+                                                            controller.savedReels,
+                                                        'initIndex': index,
+                                                      },
+                                                    );
+                                                    await controller
+                                                        .getSavedReels();
+                                                  },
+                                                ),
+                                        ),
+                                        if (controller
+                                            .loadingSavedReelsPagination)
+                                          const Padding(
+                                            padding: EdgeInsets.all(20),
+                                            child: Center(
+                                              child: AppLoader(),
+                                            ),
+                                          )
+                                      ],
+                                    ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
