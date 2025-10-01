@@ -814,16 +814,13 @@ class RoomController extends GetxController
         ),
         expressService.roomUserListUpdateStreamCtrl.stream.listen((event) async {
           if (event.updateType == ZegoUpdateType.Add) {
-            print("event.userList.first") ;
-            print(event.userList.first.userID) ;
-            var entryUser = await getEntryProfile(int.parse(event.userList.first.userID));
             roomNotificationList.insert(
                 roomNotificationList.length,
                 NewUserEntryNotification(
                   user: event.userList.first,
                   onDelete: () {
                     roomNotificationList.removeAt(0);
-                  }, userEntity: entryUser,
+                  },
                 )
             );
             users.addAll(event.userList);
@@ -1598,7 +1595,7 @@ class RoomController extends GetxController
     print(userProfile.privileges.data.roomBackcground) ;
   }
 
-  getEntryProfile(int id) async {
+  Future<UserEntity> getEntryProfile(int id) async {
     print('test123userProfile');
     entryUser = UserModel().toDomain();
     (await _getUserProfileByIdUseCase.execute(id)).fold(
@@ -1609,6 +1606,7 @@ class RoomController extends GetxController
         entryUser = r;
       },
     );
+    return entryUser ;
   }
 
   Future<UserEntity>getSenderProfile(int id) async {
@@ -2327,6 +2325,7 @@ class RoomController extends GetxController
       data = Get.arguments['data'];
     }
     initController(roomId, data: data);
+    WidgetsBinding.instance.addObserver(this);
     super.onInit();
   }
 
@@ -2372,7 +2371,6 @@ class RoomController extends GetxController
       );
 
       if (response.statusCode == 200) {
-        print('dfdfs');
         isLoadingGams.value = false;
         print('end');
         final jsonData = response.data;
@@ -2504,5 +2502,9 @@ class RoomController extends GetxController
     });
   }
 
+  bool isArabic(String text) {
+    final arabicRegExp = RegExp(r'[\u0600-\u06FF]');
+    return arabicRegExp.hasMatch(text);
+  }
 
 }

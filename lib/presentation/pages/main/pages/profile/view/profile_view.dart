@@ -28,6 +28,8 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    print('data');
+    // print(controller.appController.user.privileges.) ;
     return isGuest()
         ? const GuestDilaog()
         : Obx(
@@ -83,13 +85,13 @@ class ProfileView extends GetView<ProfileController> {
                                         child: Row(
                                           children: [
                                             const AppIcon(
-                                              icon: IconsAssets.jeweled,
+                                              icon: IconsAssets.goldCrown,
                                               width: 20,
                                               height: 20,
                                             ),
                                             11.horizontalSpace(),
                                             Text(
-                                              AppStrings.saiVip ,
+                                              AppStrings.saiVip,
                                               style: Get.textTheme.titleMedium!
                                                   .copyWith(
                                                 fontSize: AppSize.s16(context),
@@ -103,8 +105,8 @@ class ProfileView extends GetView<ProfileController> {
                                             ),
                                           ],
                                         ),
-                                        onTap: () => Get.toNamed(
-                                            AppRoutes.vipRoute),
+                                        onTap: () =>
+                                            Get.toNamed(AppRoutes.vipRoute),
                                       ),
                                       if (controller.appController
                                           .isGoldReddemeActive()) ...[
@@ -208,23 +210,24 @@ class ProfileView extends GetView<ProfileController> {
                                 const Spacer(),
                                 Obx(() {
                                   return controller.isTitleVisible.value
-                                      ? Text(
+                                      ?  Text(
                                     controller.appController.user.name,
                                     style: Get.textTheme.titleLarge!.copyWith(
                                       fontSize: AppSize.s24(context),
-                                      color: controller.appController.isVipActive()
+                                      color: controller.appController.user.isVip == 1
                                           ? controller.appController.user.privileges.data
                                           .colorfulName.value.isNotEmpty
-                                          ? Colors.white.fromHex(controller
+                                          ? controller
                                           .appController
                                           .user
                                           .privileges
                                           .data
                                           .colorfulName
-                                          .value)
+                                          .value.toColor()
                                           : null
                                           : null,
-                                    ))
+                                    ),
+                                  )
                                       : Container();
                                 }),
                                 const Spacer(),
@@ -319,15 +322,16 @@ class ProfileView extends GetView<ProfileController> {
                                                       arguments: {
                                                         'title':
                                                             AppStrings.myReels,
-                                                        'reels':
-                                                            controller.userReels,
+                                                        'reels': controller
+                                                            .userReels,
                                                         'initIndex': index,
                                                       },
                                                     );
                                                   },
                                                 ),
                                         ),
-                                        if (controller.loadingUserReelsPagination)
+                                        if (controller
+                                            .loadingUserReelsPagination)
                                           const Padding(
                                             padding: EdgeInsets.all(20),
                                             child: Center(
@@ -353,10 +357,10 @@ class ProfileView extends GetView<ProfileController> {
                                                       AppRoutes
                                                           .usersAndSavedReelsRoute,
                                                       arguments: {
-                                                        'title':
-                                                            AppStrings.savedReels,
-                                                        'reels':
-                                                            controller.savedReels,
+                                                        'title': AppStrings
+                                                            .savedReels,
+                                                        'reels': controller
+                                                            .savedReels,
                                                         'initIndex': index,
                                                       },
                                                     );

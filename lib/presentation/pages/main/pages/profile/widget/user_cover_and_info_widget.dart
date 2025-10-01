@@ -75,8 +75,8 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                         PrivilegeDataView(
                           url: controller.appController.user.privileges.data
                               .profileFrame.file,
-                          width: 110,
-                          height: 110,
+                          width: 120,
+                          height: 120,
                         ),
                       ],
                     ),
@@ -178,24 +178,11 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                       ),
                     ),
                     5.verticalSpace(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          controller.appController.user.country.name,
-                          style: Get.textTheme.titleMedium!.copyWith(
-                              fontSize: AppSize.s18(context),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Image(
-                          image: CachedNetworkImageProvider(
-                              controller.appController.user.country.flag),
-                          width: 30,
-                        ),
-                      ],
+                    Text(
+                      controller.appController.user.country.name,
+                      style: Get.textTheme.titleMedium!.copyWith(
+                          fontSize: AppSize.s18(context),
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

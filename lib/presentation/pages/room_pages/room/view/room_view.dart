@@ -15,10 +15,7 @@ import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/r
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/room_user_list.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_widgets/seat_widget.dart';
 import 'package:new_sai/presentation/resources/color_manger.dart';
-import 'package:new_sai/presentation/widgets/app_image.dart';
 import 'package:new_sai/presentation/widgets/app_loader.dart';
-
-import '../../../../widgets/privilege_data_view.dart';
 import '../widget/room_widgets/gift_json.dart';
 
 class RoomView extends GetView<RoomController> {
@@ -28,7 +25,6 @@ class RoomView extends GetView<RoomController> {
   Widget build(BuildContext context) {
     print(controller.user.privileges.data.entryWithInfluences.file);
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-    double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
 
     print("controller.loadingJoinRoom");
     print(controller.loadingJoinRoom);
@@ -56,20 +52,6 @@ class RoomView extends GetView<RoomController> {
                 // controller.isPlayingGame.value = false;
                 return Stack(
                   children: [
-                    if (controller.room.backgroundTheme.isNotEmpty) ...[
-                      AppImage(
-                        image: controller.room.backgroundTheme,
-                        fit: BoxFit.cover,
-                        width: 1.w(context),
-                        height: 1.h(context),
-                      ),
-                      Container(
-                        width: 1.w(context),
-                        height: 1.h(context),
-                        color: ColorManager.black.withOpacity(.2),
-                      ),
-                    ],
-                    if (controller.room.backgroundTheme.isEmpty)
                       SizedBox(
                           // fit: BoxFit.cover,
                           width: 1.w(context),
@@ -92,47 +74,56 @@ class RoomView extends GetView<RoomController> {
                                 children: [
                                   Column(
                                     children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                        ),
-                                        child: RoomAppBar(),
-                                      ),
-                                      8.verticalSpace(),
-                                      const Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                        ),
-                                        child: RoomUserList(),
-                                      ),
-                                      10.verticalSpace(),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                        ),
+                                      AnimatedSlide(
+                                        offset: isKeyboardOpen ? const Offset(0, -0.9) : const Offset(0, 0),
+                                        duration: const Duration(milliseconds: 300),
+                                        curve: Curves.easeInOut,
                                         child: Column(
                                           children: [
-                                            const Center(
-                                              child: SeatWidget(
-                                                index: 0,
-                                                isLoading: true,
+                                            const Padding(
+                                              padding: EdgeInsets.only(
+                                                left: 10,
+                                                right: 10,
                                               ),
+                                              child: RoomAppBar(),
+                                            ),
+                                            8.verticalSpace(),
+                                            const Padding(
+                                              padding: EdgeInsets.only(
+                                                left: 10,
+                                                right: 10,
+                                              ),
+                                              child: RoomUserList(),
                                             ),
                                             10.verticalSpace(),
-                                            Center(
-                                              child: Wrap(
-                                                spacing: 10,
-                                                runSpacing: 10,
-                                                children: List.generate(
-                                                  6,
-                                                  (index) => SeatWidget(
-                                                    index: index + 1,
-                                                    isLoading: true,
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 10,
+                                                right: 10,
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  const Center(
+                                                    child: SeatWidget(
+                                                      index: 0,
+                                                      isLoading: true,
+                                                    ),
                                                   ),
-                                                ),
+                                                  10.verticalSpace(),
+                                                  Center(
+                                                    child: Wrap(
+                                                      spacing: 10,
+                                                      runSpacing: 10,
+                                                      children: List.generate(
+                                                        6,
+                                                            (index) => SeatWidget(
+                                                          index: index + 1,
+                                                          isLoading: true,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -189,36 +180,13 @@ class RoomView extends GetView<RoomController> {
                       ),
                     ),
                     if (controller.isPlayingGame.value) const GamePageInRoom(),
-                    if (isKeyboardOpen)
-                      Padding(
-                        padding: EdgeInsets.only(bottom: keyboardHeight + MediaQuery.viewInsetsOf(context).bottom + 7 + 30),
-                        child: Container(
-                          color: ColorManager.darkGreyColor,
-                          padding: const EdgeInsets.only(top: 50),
-                          child:  const RoomMessageList(true),
-                        ),
-                      ),
                   ],
                 );
               } else {
                 return Stack(
                   alignment: AlignmentDirectional.center,
                   children: [
-                    if (controller.room.backgroundTheme.isNotEmpty) ...[
-                      AppImage(
-                        image: controller.room.backgroundTheme,
-                        fit: BoxFit.cover,
-                        width: 1.w(context),
-                        height: 1.h(context),
-                      ),
-                      Container(
-                        width: 1.w(context),
-                        height: 1.h(context),
-                        color: ColorManager.black.withOpacity(.2),
-                      ),
-                    ],
-                    if (controller.room.backgroundTheme.isEmpty)
-                      Container(
+                      SizedBox(
                           // fit: BoxFit.cover,
                           width: 1.w(context),
                           height: 1.h(context),
@@ -241,22 +209,30 @@ class RoomView extends GetView<RoomController> {
                                 children: [
                                   Column(
                                     children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
+                                      AnimatedSlide(
+                                        offset: isKeyboardOpen ? const Offset(0 , -1) : const Offset(0, 0) ,
+                                        duration: const Duration(milliseconds: 400),
+                                        child: Column(
+                                          children: [
+                                            const Padding(
+                                              padding: EdgeInsets.only(
+                                                left: 10,
+                                                right: 10,
+                                              ),
+                                              child: RoomAppBar(),
+                                            ),
+                                            8.verticalSpace(),
+                                            const Padding(
+                                              padding: EdgeInsets.only(
+                                                left: 10,
+                                                right: 10,
+                                              ),
+                                              child: RoomUserList(),
+                                            ),
+                                            10.verticalSpace(),
+                                          ],
                                         ),
-                                        child: RoomAppBar(),
                                       ),
-                                      8.verticalSpace(),
-                                      const Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                        ),
-                                        child: RoomUserList(),
-                                      ),
-                                      10.verticalSpace(),
                                       const Padding(
                                         padding: EdgeInsets.only(
                                           left: 10,
@@ -264,13 +240,30 @@ class RoomView extends GetView<RoomController> {
                                         ),
                                         child: RoomSeatList(),
                                       ),
-                                      if (!isKeyboardOpen) ...[
-                                        10.verticalSpace(),
-                                        const RoomMessageList(true),
-                                        10.verticalSpace(),
-                                      ]
+                                        if(!isKeyboardOpen)...[
+                                          10.verticalSpace(),
+                                          const RoomMessageList(true),
+                                          10.verticalSpace(),
+                                        ]
                                     ],
                                   ),
+                                  if(isKeyboardOpen)...[
+                                    10.verticalSpace(),
+                                    AnimatedSlide(
+                                      offset: const Offset(0, 0),
+                                      duration: const Duration(milliseconds: 400) ,
+                                      child: Container(
+                                        padding: const EdgeInsets.only(top: 50.0),
+                                          color: ColorManager.black.withOpacity(0.35),
+                                            child: const Column(
+                                              children: [
+                                                RoomMessageList(true),
+                                              ],
+                                            )
+                                        ),
+                                    ),
+                                    10.verticalSpace(),
+                                  ],
                                   if (controller.enableScroll)
                                     GestureDetector(
                                       onTap: controller.unFocusNode,
@@ -305,19 +298,6 @@ class RoomView extends GetView<RoomController> {
                     Obx(() => Get.find<RoomController>().showLottie.value
                         ? const LottieScreen()
                         : const SizedBox.shrink()),
-                    if (isKeyboardOpen)
-                      Padding(
-                        padding: EdgeInsets.only(bottom: keyboardHeight + 45),
-                        child: Container(
-                          color: ColorManager.darkGreyColor.withValues(alpha: 0.5),
-                          padding: const EdgeInsets.only(top: 55),
-                          child:  Column(
-                            children: [
-                              const RoomMessageList(true),
-                            ],
-                          ),
-                        ),
-                      ),
                     //  Lottie.asset(LottieAssets.data1),
 
                     const GiftSvgPlayer(),

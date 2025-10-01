@@ -40,7 +40,7 @@ class PrivilegesDataModel {
   PrivilegesDataItemModel? friendsCount;
   @JsonKey(name: "Profile frame")
   PrivilegesDataItemModel? profileFrame;
-  @JsonKey(name: "Exclusive rooms box")
+  @JsonKey(name: "Exclusive chat box")
   PrivilegesDataItemModel? exclusiveChatBox;
   @JsonKey(name: "Profile cover")
   PrivilegesDataItemModel? profileCover;

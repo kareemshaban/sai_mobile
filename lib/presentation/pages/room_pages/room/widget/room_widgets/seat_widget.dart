@@ -184,7 +184,7 @@ class _SeatWidgetState extends State<SeatWidget> {
                                           size: 34,
                                         ),
                             ),
-                            if (privi != null && privi.categoryId != 0)
+                            if (privi != null)
                               PrivilegeDataView(
                                 url: privi.data.profileFrame.file,
                                 fit: BoxFit.cover,

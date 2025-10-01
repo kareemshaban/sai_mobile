@@ -13,23 +13,24 @@ import 'package:new_sai/presentation/resources/language_manger.dart';
 import 'package:new_sai/presentation/widgets/app_image.dart';
 import 'package:new_sai/presentation/widgets/privilege_data_view.dart';
 import 'room_image_view.dart';
+import 'dart:ui' as ui;
 
-class MessageWidget extends  GetView<RoomController> {
+class MessageWidget extends GetView<RoomController> {
   final MessageWidgetModel message;
   final void Function() onConfirmDelete;
 
-  const MessageWidget(
-      {super.key,
-      required this.message,
-      required this.onConfirmDelete,});
+  const MessageWidget({
+    super.key,
+    required this.message,
+    required this.onConfirmDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
     if (context.locale == arabicLocale) {
       return SlideInRight(
-        duration: const Duration(milliseconds: 450),
-        child: messageWidget(context)
-      );
+          duration: const Duration(milliseconds: 450),
+          child: messageWidget(context));
     }
     return SlideInLeft(
       duration: const Duration(milliseconds: 450),
@@ -49,8 +50,8 @@ class MessageWidget extends  GetView<RoomController> {
 
         final sender = snapshot.data!;
         final privileges = sender.privileges;
-        print('exclusiveChatBox') ;
-        print(sender.privileges.data.exclusiveChatBox.file) ;
+        print('exclusiveChatBox');
+        print(sender.privileges.data.exclusiveChatBox.file);
 
         return Obx(() {
           return Dismissible(
@@ -71,7 +72,7 @@ class MessageWidget extends  GetView<RoomController> {
               ),
             ),
             direction: message.user.userID ==
-                controller.appController.user.id.toString()
+                    controller.appController.user.id.toString()
                 ? DismissDirection.none
                 : DismissDirection.startToEnd,
             dismissThresholds: const {
@@ -90,6 +91,7 @@ class MessageWidget extends  GetView<RoomController> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
                     onTap: () {
@@ -122,17 +124,20 @@ class MessageWidget extends  GetView<RoomController> {
                       ],
                     ),
                   ),
-                  5.horizontalSpace(),
                   Flexible(
                     fit: FlexFit.loose,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         InkWell(
                           onTap: () {
-                            controller.openProfileBottomSheet(message.user.userID);
+                            controller
+                                .openProfileBottomSheet(message.user.userID);
                           },
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Flexible(
                                 child: Text(
@@ -140,7 +145,9 @@ class MessageWidget extends  GetView<RoomController> {
                                   style: Get.textTheme.bodySmall!.copyWith(
                                     fontSize: AppSize.s17(context),
                                     color: sender.isVip == 1
-                                        ? sender.privileges.data.colorfulName.value.toColor()
+                                        ? sender
+                                            .privileges.data.colorfulName.value
+                                            .toColor()
                                         : null,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -170,25 +177,50 @@ class MessageWidget extends  GetView<RoomController> {
                         if (message.message != null &&
                             message.message!.isNotEmpty)
                           Stack(
+                            alignment: AlignmentDirectional.center,
                             children: [
-                              PrivilegeDataView(url: privileges.data.exclusiveChatBox.file  , height: 50, width: 50,),
-                              Container(
-                                padding: const EdgeInsets.all(5.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: ColorManager.lightGreyColor.withOpacity(0.5),
+                              if (sender.isVip == 1)
+                                Positioned.fill(
+                                  child: PrivilegeDataView(
+                                    url: privileges.data.exclusiveChatBox.file,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
-                                child: Linkify(
-                                  text: message.message!,
-                                  style: Get.textTheme.bodySmall!.copyWith(
-                                    fontSize: AppSize.s14(context),
+                              Directionality(
+                                textDirection:
+                                controller.isArabic(message.message!)
+                                    ? ui.TextDirection.rtl
+                                    : ui.TextDirection.ltr,
+                                child: Container(
+                                  padding: sender.isVip == 1
+                                      ? const EdgeInsetsDirectional.only(
+                                          top: 30, end: 25, start: 30, bottom: 25)
+                                      : const EdgeInsets.all(5.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: sender.isVip == 1
+                                        ? null
+                                        : ColorManager.black.withOpacity(0.5),
                                   ),
-                                  linkStyle: Get.textTheme.bodyLarge!.copyWith(
-                                    fontSize: AppSize.s14(context),
+                                  child: Linkify(
+                                    text: message.message!,
+                                    maxLines: 4,
+                                    textAlign:
+                                        controller.isArabic(message.message!)
+                                            ? TextAlign.right
+                                            : TextAlign.left,
+                                    softWrap: true,
+                                    style: Get.textTheme.bodySmall!.copyWith(
+                                      fontSize: AppSize.s14(context),
+                                    ),
+                                    linkStyle:
+                                        Get.textTheme.bodyLarge!.copyWith(
+                                      fontSize: AppSize.s14(context),
+                                    ),
+                                    linkifiers: const [
+                                      UserTagLinkifier(),
+                                    ],
                                   ),
-                                  linkifiers: const [
-                                    UserTagLinkifier(),
-                                  ],
                                 ),
                               ),
                             ],
@@ -219,7 +251,6 @@ class MessageWidget extends  GetView<RoomController> {
       },
     );
   }
-
 }
 
 class UserTagLinkifier extends Linkifier {

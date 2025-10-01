@@ -14,6 +14,8 @@ class VipTabs extends GetView<VipController> {
       child: DefaultTabController(
         length: controller.premium.data.length,
         child: TabBar(
+          indicatorWeight: 0,
+          indicatorColor: Colors.transparent,
           controller: controller.tabController,
           tabs: List.generate(
             controller.premium.data.length,

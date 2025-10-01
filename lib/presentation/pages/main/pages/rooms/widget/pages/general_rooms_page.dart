@@ -18,7 +18,7 @@ import 'package:new_sai/presentation/widgets/app_loading/room_loading_item.dart'
 import '../../../../../game/view/game_page.dart';
 
 class GeneralRoomsPage extends GetView<RoomsController> {
-  const GeneralRoomsPage({super.key});
+  const   GeneralRoomsPage({super.key});
 
   @override
   Widget build(BuildContext context) {

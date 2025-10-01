@@ -37,7 +37,7 @@ class RoomBottomBarWidget extends GetView<RoomController> {
               constraints: const BoxConstraints(
                 maxHeight: 300,
               ),
-              margin: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+              margin: const EdgeInsets.only(bottom:  8, left: 8, right: 8),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
@@ -107,8 +107,8 @@ class RoomBottomBarWidget extends GetView<RoomController> {
                                   child: InkWell(
                                     onTap: controller.clearMessageImage,
                                     child: Container(
-                                      width: 20,
-                                      height: 20,
+                                      width: 25,
+                                      height: 25,
                                       decoration: const BoxDecoration(
                                         color: ColorManager.red,
                                         shape: BoxShape.circle,
@@ -124,21 +124,21 @@ class RoomBottomBarWidget extends GetView<RoomController> {
                               ],
                             )
                           else
-                            InkWell(
+                          InkWell(
                               onTap: controller.onPickMessageImage,
                               child: const AppIcon(
                                 icon: IconsAssets.gallery,
-                                width: 20,
-                                height: 20,
+                                width: 25,
+                                height: 25,
                               ),
                             ),
                           5.horizontalSpace(),
                           Expanded(
                             child: SizedBox(
-                              height: 30.0,
+                              height: 32.0,
                               child: DetectableTextField(
                                 style: Get.textTheme.labelLarge!.copyWith(
-                                  fontSize: AppSize.s14(context),
+                                  fontSize: AppSize.s13(context),
                                   color: Colors.black,
                                 ),
                                 controller: controller.messageController,
@@ -233,38 +233,20 @@ class RoomBottomBarWidget extends GetView<RoomController> {
                             ),
                             10.horizontalSpace(),
                           ],
-                          Expanded(
-                            child: InkWell(
-                              onTap: isLoading
-                                  ? null
-                                  : () {
-                                      controller.enableScroll = true;
-                                      controller.enableTag = false;
-                                    },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal: 15,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: ColorManager.white.withOpacity(.3),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      AppStrings.saySomthing,
-                                      style: Get.textTheme.bodySmall!.copyWith(
-                                        fontSize: AppSize.s15(context),
-                                      ),
-                                    ),
-                                    const Icon(
-                                      Icons.emoji_emotions_outlined,
-                                      color: ColorManager.white,
-                                    )
-                                  ],
-                                ),
+                          GestureDetector(
+                            onTap: (){
+                              controller.enableScroll = true;
+                              controller.enableTag = false;
+                              Future.delayed(const Duration(milliseconds: 200), () {
+                                FocusScope.of(context).requestFocus(controller.focusNode);
+                              });
+                              print('request Focus') ;
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: ColorManager.lightGreyColor.withOpacity(0.3),
+                              child: const Icon(
+                                Icons.chat_rounded,
+                                color: ColorManager.white,
                               ),
                             ),
                           ),
