@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svgaplayer3/parser.dart';
@@ -120,36 +121,36 @@ class RoomController extends GetxController
   final GetAppSearchUseCase _appSearchUseCase = instance<GetAppSearchUseCase>();
   final JoinRoomUseCase _joinRoomUseCase = instance<JoinRoomUseCase>();
   final GenerateZegoTokenUseCase _generateZegoTokenUseCase =
-      instance<GenerateZegoTokenUseCase>();
+  instance<GenerateZegoTokenUseCase>();
   final LeaveRoomUseCase _leaveRoomUseCase = instance<LeaveRoomUseCase>();
   final GetRoomUserUseCase _getRoomUserUseCase = instance<GetRoomUserUseCase>();
   final GetUserProfileByIdUseCase _getUserProfileByIdUseCase = instance<GetUserProfileByIdUseCase>();
   final GetGiftListUseCase _getGiftListUseCase = instance<GetGiftListUseCase>();
   final SendRoomMessageUseCase _messageUseCase =
-      instance<SendRoomMessageUseCase>();
+  instance<SendRoomMessageUseCase>();
   final LockMicUseCase _lockMicUseCase = instance<LockMicUseCase>();
   final UnlockMicUseCase _unlockMicUseCase = instance<UnlockMicUseCase>();
   final LockRoomUseCase _lockRoomUseCase = instance<LockRoomUseCase>();
   final UnlockRoomUseCase _unlockRoomUseCase = instance<UnlockRoomUseCase>();
   final FireUserUseCase _fireUserUseCase = instance<FireUserUseCase>();
   final UpdateUserRoleUseCase updateUserRoleUseCase =
-      instance<UpdateUserRoleUseCase>();
+  instance<UpdateUserRoleUseCase>();
   final GetRoomMempersUseCase _getRoomMempersUseCase =
-      instance<GetRoomMempersUseCase>();
+  instance<GetRoomMempersUseCase>();
   final CancelMembershipUseCase _cancelMembershipUseCase =
-      instance<CancelMembershipUseCase>();
+  instance<CancelMembershipUseCase>();
   final JoinAsMemberUseCase _joinAsMemberUseCase =
-      instance<JoinAsMemberUseCase>();
+  instance<JoinAsMemberUseCase>();
   final SendRoomReportUseCase _reportUseCase =
-      instance<SendRoomReportUseCase>();
+  instance<SendRoomReportUseCase>();
   final GetUsersInRoomUseCase _getUsersInRoomUseCase =
-      instance<GetUsersInRoomUseCase>();
+  instance<GetUsersInRoomUseCase>();
   final SendFriendRequestUseCase _friendRequestUseCase =
-      instance<SendFriendRequestUseCase>();
+  instance<SendFriendRequestUseCase>();
   final CancelFriendRequestUseCase _cancelFriendRequestUseCase =
-      instance<CancelFriendRequestUseCase>();
+  instance<CancelFriendRequestUseCase>();
   final SendRoomGiftUseCase _sendRoomGiftUseCase =
-      instance<SendRoomGiftUseCase>();
+  instance<SendRoomGiftUseCase>();
   late SVGAAnimationController svgController;
   RxList<String> giftQueue = <String>[].obs;
   var isVisible = false.obs;
@@ -221,8 +222,10 @@ class RoomController extends GetxController
   final RxList<ZegoUser> _requestMicList = <ZegoUser>[].obs;
   final RxList<UserEntity> _apiUsers = <UserEntity>[].obs;
   final Rx<RoomUserEntity> _userProfile = RoomUserModel().toDomain().obs;
-  final Rx<UserEntity> _sender = UserModel().toDomain().obs;
+  final Rx<RoomUserEntity> _micUser = RoomUserModel().toDomain().obs;
+  final Rx<RoomUserEntity> _sender = RoomUserModel().toDomain().obs;
   final Rx<UserEntity> _entryUser = UserModel().toDomain().obs;
+  final Rx<RoomUserEntity> _usersList = RoomUserModel().toDomain().obs;
   final RxBool _loadingCancelFriend = false.obs;
   final RxBool _loadingSendFriend = false.obs;
   final RxBool _loadingCancelMempership = false.obs;
@@ -282,7 +285,9 @@ class RoomController extends GetxController
   List<ZegoUser> get requestMicList => _requestMicList;
   List<UserEntity> get apiUsers => _apiUsers;
   RoomUserEntity get userProfile => _userProfile.value;
-  UserEntity get sender => _sender.value;
+  RoomUserEntity get micUser => _micUser.value;
+  RoomUserEntity get sender => _sender.value;
+  RoomUserEntity get usersList => _usersList.value;
   UserEntity get entryUser => _entryUser.value;
   bool get loadingCancelFriend => _loadingCancelFriend.value;
   bool get loadingSendFriend => _loadingSendFriend.value;
@@ -353,7 +358,9 @@ class RoomController extends GetxController
   set requestMicList(List<ZegoUser> value) => _requestMicList.value = value;
   set apiUsers(List<UserEntity> value) => _apiUsers.value = value;
   set userProfile(RoomUserEntity value) => _userProfile.value = value;
-  set sender(UserEntity value) => _sender.value = value;
+  set micUser(RoomUserEntity value) => _micUser.value = value;
+  set sender(RoomUserEntity value) => _sender.value = value;
+  set usersList(RoomUserEntity value) => _usersList.value = value;
   set entryUser(UserEntity value) => _entryUser.value = value;
   set loadingCancelFriend(value) => _loadingCancelFriend.value = value;
   set loadingSendFriend(value) => _loadingSendFriend.value = value;
@@ -385,12 +392,12 @@ class RoomController extends GetxController
         await startSilentAudio();
       }
       (await _joinRoomUseCase.execute(roomId)).fold(
-        (l) {
+            (l) {
           loadingJoinRoom = false;
           backToMainRoute();
           showSnackBarWidget(message: l.message);
         },
-        (r) async {
+            (r) async {
           room = r;
           if (r.zegoToken.isEmpty) {
             backToMainRoute();
@@ -408,9 +415,9 @@ class RoomController extends GetxController
           lockRoomController.text = room.lockCode;
           lockedSeatList =
               List.generate(room.microphonesCount.toInt(), (index) {
-            return LockedSeatLocalModel(
-                seatIndex: index, seatValue: false, userID: '');
-          });
+                return LockedSeatLocalModel(
+                    seatIndex: index, seatValue: false, userID: '');
+              });
           // await generateZegoToken();
           await initZego();
         },
@@ -426,12 +433,12 @@ class RoomController extends GetxController
       userId: user.id,
     );
     (await _generateZegoTokenUseCase.execute(params)).fold(
-      (l) {
+          (l) {
         loadingJoinRoom = false;
         backToMainRoute();
         showSnackBarWidget(message: l.message);
       },
-      (r) async {
+          (r) async {
         zegoToken = r.zegoToken;
         await initZego();
       },
@@ -467,11 +474,11 @@ class RoomController extends GetxController
     };
 
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
     Get.back();
   }
 
@@ -500,7 +507,7 @@ class RoomController extends GetxController
       await loginRoom();
       ZegoLiveAudioRoomManager().seatList = List.generate(
         room.microphonesCount.toInt(),
-        (index) => ZegoLiveAudioRoomSeat(index),
+            (index) => ZegoLiveAudioRoomSeat(index),
       );
 
       users.add(ZegoUser(
@@ -518,10 +525,10 @@ class RoomController extends GetxController
           onZIMConnectionStateChanged,
         ),
         zimService.roomAttributeUpdateStreamCtrl.stream.listen(
-          (event) async {
+              (event) async {
             if (event.updateInfo.roomAttributes.containsKey("locked_list")) {
               final data =
-                  jsonDecode(event.updateInfo.roomAttributes['list'] ?? '{}');
+              jsonDecode(event.updateInfo.roomAttributes['list'] ?? '{}');
 
               lockedSeatList.clear();
               data.forEach((element) {
@@ -630,7 +637,7 @@ class RoomController extends GetxController
 
             if (event.updateInfo.roomAttributes.containsKey("show_message")) {
               final data =
-                  jsonDecode(event.updateInfo.roomAttributes['data'] ?? '{}');
+              jsonDecode(event.updateInfo.roomAttributes['data'] ?? '{}');
               final targetUserId = data['user_id'];
               final text = data['text'];
               print('test');
@@ -648,7 +655,7 @@ class RoomController extends GetxController
 
             if (event.updateInfo.roomAttributes.containsKey("settings")) {
               final data =
-                  jsonDecode(event.updateInfo.roomAttributes['data'] ?? '{}');
+              jsonDecode(event.updateInfo.roomAttributes['data'] ?? '{}');
               final settings = RoomUpdateSettingsModel.fromJson(data);
               room = room.copyFromSettings(settings);
 
@@ -662,8 +669,8 @@ class RoomController extends GetxController
               if (ZegoLiveAudioRoomManager().seatList.length >
                   room.microphonesCount.toInt()) {
                 for (int i = ZegoLiveAudioRoomManager().seatList.length;
-                    i > room.microphonesCount.toInt();
-                    i--) {
+                i > room.microphonesCount.toInt();
+                i--) {
                   ZegoLiveAudioRoomManager().seatList.removeAt(i - 1);
                   lockedSeatList.removeAt(i - 1);
                 }
@@ -671,8 +678,8 @@ class RoomController extends GetxController
               if (ZegoLiveAudioRoomManager().seatList.length <
                   room.microphonesCount.toInt()) {
                 for (int i = ZegoLiveAudioRoomManager().seatList.length;
-                    i < room.microphonesCount.toInt();
-                    i++) {
+                i < room.microphonesCount.toInt();
+                i++) {
                   ZegoLiveAudioRoomManager()
                       .seatList
                       .add(ZegoLiveAudioRoomSeat(i));
@@ -700,7 +707,7 @@ class RoomController extends GetxController
             }
             if (event.updateInfo.roomAttributes.containsKey("update_role")) {
               final data =
-                  jsonDecode(event.updateInfo.roomAttributes['data'] ?? '{}');
+              jsonDecode(event.updateInfo.roomAttributes['data'] ?? '{}');
               final role = UpdateRoleParams.fromJson(data);
               if (role.userId == user.id.toString()) {
                 room = room.updateRole(
@@ -709,19 +716,19 @@ class RoomController extends GetxController
                 if (role.role == 'guest') {
                   showSnackBarWidget(
                       message:
-                          "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}");
+                      "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}");
                 }
                 if (role.role == 'member') {
                   showSnackBarWidget(
                     message:
-                        "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}",
+                    "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}",
                     color: ColorManager.green,
                   );
                 }
                 if (role.role == 'admin') {
                   showSnackBarWidget(
                     message:
-                        "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}",
+                    "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}",
                     color: ColorManager.green,
                   );
                 }
@@ -759,7 +766,7 @@ class RoomController extends GetxController
 
                     showSnackBarWidget(
                       message:
-                          '${AppStrings.askedToSpeakOnTheMicrophone(data['user_name'] ?? '')} 👋',
+                      '${AppStrings.askedToSpeakOnTheMicrophone(data['user_name'] ?? '')} 👋',
                       snackPosition: SnackPosition.TOP,
                       color: ColorManager.green,
                       second: 5,
@@ -827,9 +834,9 @@ class RoomController extends GetxController
             getApiUsers();
           } else {
             apiUsers.removeWhere((element) =>
-                element.id.toString() == event.userList.first.userID);
+            element.id.toString() == event.userList.first.userID);
             users.removeWhere(
-                (element) => element.userID == event.userList.first.userID);
+                    (element) => element.userID == event.userList.first.userID);
           }
         }),
       ]);
@@ -859,7 +866,7 @@ class RoomController extends GetxController
           for (var element in streamList) {
             ZegoExpressEngine.instance.startPlayingStream(element.streamID);
             if (mutedListLocally
-                    .any((userID) => userID == element.user.userID) ||
+                .any((userID) => userID == element.user.userID) ||
                 mutedList.any((userID) => userID == element.user.userID)) {
               ZegoExpressEngine.instance
                   .mutePlayStreamAudio(element.streamID, true);
@@ -900,7 +907,7 @@ class RoomController extends GetxController
               if (!messageController.text.contains(
                   "@${message.fromUser.userName.replaceAll(" ", "_")}\n")) {
                 messageController.text +=
-                    "@${message.fromUser.userName.replaceAll(" ", "_")}\n";
+                "@${message.fromUser.userName.replaceAll(" ", "_")}\n";
               }
             },
             message: MessageWidgetModel(
@@ -908,7 +915,7 @@ class RoomController extends GetxController
               message: MessageLocalModel.fromJson(jsonDecode(message.message))
                   .message,
               image:
-                  MessageLocalModel.fromJson(jsonDecode(message.message)).image,
+              MessageLocalModel.fromJson(jsonDecode(message.message)).image,
             ),
           ),
         );
@@ -975,8 +982,8 @@ class RoomController extends GetxController
   }
 
   void onZIMConnectionStateChanged(
-    ZIMServiceConnectionStateChangedEvent event,
-  ) {
+      ZIMServiceConnectionStateChangedEvent event,
+      ) {
     debugPrint('AudioRoomPage:onZIMConnectionStateChanged: $event');
     if (event.state == ZIMConnectionState.disconnected) {
       backToMainRoute();
@@ -1004,7 +1011,7 @@ class RoomController extends GetxController
         // log("Login Room Success");
       }
     }).onError(
-      (error, stackTrace) {
+          (error, stackTrace) {
         // log('error $error $stackTrace');
       },
     );
@@ -1025,9 +1032,8 @@ class RoomController extends GetxController
   }
 
   createMediaPlayer() async {
-    print("createMediaPlayer");
+
     if (mediaPlayer == null) {
-      print("mediaPlayer === null");
       await ZegoExpressEngine.instance.createMediaPlayer().then((value) async {
         if (value != null) {
           mediaPlayer = value;
@@ -1053,11 +1059,11 @@ class RoomController extends GetxController
       "data": jsonEncode(model.toJson()),
     };
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
   }
 
   lockRoom() async {
@@ -1069,10 +1075,10 @@ class RoomController extends GetxController
         roomID: roomId,
       );
       (await _lockRoomUseCase.execute(params)).fold(
-        (l) {
+            (l) {
           showSnackBarWidget(message: l.message);
         },
-        (r) {
+            (r) {
           room.lockCode = lockRoomController.text;
           if (Get.isDialogOpen == true) {
             Get.back();
@@ -1087,10 +1093,10 @@ class RoomController extends GetxController
     if (loadingLockRoom) return;
     loadingLockRoom = true;
     (await _unlockRoomUseCase.execute(roomId)).fold(
-      (l) {
+          (l) {
         showSnackBarWidget(message: l.message);
       },
-      (r) {
+          (r) {
         room.lockCode = '';
         lockRoomController.clear();
         if (Get.isDialogOpen == true) {
@@ -1112,10 +1118,10 @@ class RoomController extends GetxController
         content: reportRoomController.text,
       );
       (await _reportUseCase.execute(params)).fold(
-        (l) {
+            (l) {
           showSnackBarWidget(message: l.message);
         },
-        (r) {
+            (r) {
           showSnackBarWidget(
             message: AppStrings
                 .yourComplaintWillBeReviewedAndYouWillBeContactedQuickly,
@@ -1133,10 +1139,10 @@ class RoomController extends GetxController
     ZegoGiftController().service.recvNotifier.addListener(onGiftReceived);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ZegoGiftController().service.init(
-            appID: appID,
-            localUserID: ZEGOSDKManager().currentUser!.userID,
-            localUserName: 'user_${ZEGOSDKManager().currentUser!.userName}',
-          );
+        appID: appID,
+        localUserID: ZEGOSDKManager().currentUser!.userID,
+        localUserName: 'user_${ZEGOSDKManager().currentUser!.userName}',
+      );
     });
   }
 
@@ -1147,20 +1153,14 @@ class RoomController extends GetxController
   }
 
   onGiftReceived() async {
-    print("on gift received");
     final receivedGiftCommand = ZegoGiftController().service.recvNotifier.value;
-    print("on gift received value =${receivedGiftCommand} ");
-    print('//test123 on gift received  ');
-    print('//test123 on gift received  ');
-    print(
-        '//test123 on gift received ${appController.user.goldValue.toString()}');
-    print('//test123 on gift received ${room.membershipFee}');
+
     if (receivedGiftCommand == null) {
       return;
     }
 
     final gift =
-        RoomSendGiftModel.fromJson(jsonDecode(receivedGiftCommand.giftName));
+    RoomSendGiftModel.fromJson(jsonDecode(receivedGiftCommand.giftName));
     final giftPath = await getPathFromAssetOrCache(gift.giftFile);
     messages.insert(messages.length, GiftMessageWidget(gift: gift));
     animateToLast();
@@ -1176,23 +1176,21 @@ class RoomController extends GetxController
     if (gift.giftFile.contains('svga')) {
       if (!svgController.isAnimating) {
         svgController.videoItem =
-            await SVGAParser.shared.decodeFromBuffer(giftPath);
+        await SVGAParser.shared.decodeFromBuffer(giftPath);
         displaySvgAnimatedGift = true;
         svgController.forward();
       } else {
         pendingGiftList.add(giftPath);
       }
-      print('test532423799');
     } else {
       jsonGift.value = gift.giftFile.toString();
       showLottie.value = true;
       print(jsonGift);
       messages.add(GiftMessageWidget(gift: gift));
       animateToLast();
-       messages.add(GiftMessageWidget(gift: gift));
+      messages.add(GiftMessageWidget(gift: gift));
       animateToLast();
       final newId = generateRandomString(12); // أو أي توليد مميز
-      print("Adding gift with id: $newId");
       giftUrls.add({'url': jsonGift.value.toString(), 'id': newId});
       showLottie.value = true;
       if (!animationController.isAnimating) {
@@ -1204,10 +1202,10 @@ class RoomController extends GetxController
   getGiftList() async {
     loadingGetGift = true;
     (await _getGiftListUseCase.execute('')).fold(
-      (l) {
+          (l) {
         showSnackBarWidget(message: l.message);
       },
-      (r) {
+          (r) {
         gifts = r;
 
         for (final element in gifts) {
@@ -1215,7 +1213,7 @@ class RoomController extends GetxController
             giftsCategories
                 .where(
                   (cat) => cat.id == element.category.id,
-                )
+            )
                 .isEmpty,
             element.category,
           );
@@ -1226,9 +1224,7 @@ class RoomController extends GetxController
   }
 
   onSendGift() async {
-    print('//test123');
-    print('//test123${appController.user.goldValue.toString()}');
-    print('//test123${room.membershipFee}');
+
     if (loadingSendGift) return;
 
     if (appController.user.goldValue < room.membershipFee) {
@@ -1259,12 +1255,12 @@ class RoomController extends GetxController
       type: selectedUserGift.userID == AppStrings.all
           ? 2
           : selectedUserGift.userID == AppStrings.micsUser
-              ? 1
-              : 0,
+          ? 1
+          : 0,
       giftCount: giftCount,
       giftId: selectedGift.id,
       user: (selectedUserGift.userID == AppStrings.all ||
-              selectedUserGift.userID == AppStrings.micsUser)
+          selectedUserGift.userID == AppStrings.micsUser)
           ? null
           : int.parse(selectedUserGift.userID),
       usersInRoom: users
@@ -1272,30 +1268,30 @@ class RoomController extends GetxController
           .map((e) => e.userID)
           .toList(),
       usersOnMic:
-          micUsers.values.where((e) => e != user.id.toString()).toList(),
+      micUsers.values.where((e) => e != user.id.toString()).toList(),
     );
 
     (await _sendRoomGiftUseCase.execute(params)).fold(
-      (l) {
+          (l) {
         showSnackBarWidget(message: l.message);
       },
-      (r) async {
+          (r) async {
         final gift = RoomSendGiftModel(
           giftFile: selectedGift.giftFile,
           giftImage: selectedGift.giftImg,
           sender: GiftUser(name: user.name, id: user.id),
           giftCount: giftCount,
           recevier: (selectedUserGift.userID == AppStrings.all ||
-                  selectedUserGift.userID == AppStrings.micsUser)
+              selectedUserGift.userID == AppStrings.micsUser)
               ? null
               : GiftUser(
-                  name: selectedUserGift.userName,
-                  id: int.parse(selectedUserGift.userID)),
+              name: selectedUserGift.userName,
+              id: int.parse(selectedUserGift.userID)),
           giftType: selectedUserGift.userID == AppStrings.all
               ? 2
               : selectedUserGift.userID == AppStrings.micsUser
-                  ? 1
-                  : 0,
+              ? 1
+              : 0,
         );
 
         ZegoGiftController().addToPlayingList(
@@ -1314,7 +1310,7 @@ class RoomController extends GetxController
           if (isSvg == true) {
             if (!svgController.isAnimating) {
               svgController.videoItem =
-                  await SVGAParser.shared.decodeFromBuffer(giftPath);
+              await SVGAParser.shared.decodeFromBuffer(giftPath);
               displaySvgAnimatedGift = true;
               svgController.forward();
             } else {
@@ -1326,11 +1322,10 @@ class RoomController extends GetxController
             messages.add(GiftMessageWidget(gift: gift));
             animateToLast();
             final newId = generateRandomString(12);
-            print("Adding gift with id: $newId");
+
             giftUrls
                 .add({'url': gift.giftFile.toString(), 'id': newId.toString()});
-            print(newId);
-            print(gift.giftFile.toString());
+
             showLottie.value = true;
             if (!animationController.isAnimating) {
               _startCurrentAnimation();
@@ -1391,7 +1386,7 @@ class RoomController extends GetxController
       Get.back();
     }
     lockedSeatList.firstWhereOrNull(
-      (element) {
+          (element) {
         if (element.seatIndex == seatIndex) {
           element.seatValue = true;
 
@@ -1405,11 +1400,11 @@ class RoomController extends GetxController
       "list": jsonEncode(lockedSeatList.map((e) => e.toJson()).toList()),
     };
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
     if (isAdmin()) {
       lockMic(seatIndex);
     }
@@ -1420,7 +1415,7 @@ class RoomController extends GetxController
       Get.back();
     }
     lockedSeatList.firstWhereOrNull(
-      (element) {
+          (element) {
         if (element.seatIndex == seatIndex) {
           element.seatValue = false;
           return element.seatIndex == seatIndex;
@@ -1433,11 +1428,11 @@ class RoomController extends GetxController
       "list": jsonEncode(lockedSeatList.map((e) => e.toJson()).toList()),
     };
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
     unlockMic(seatIndex);
   }
 
@@ -1489,7 +1484,7 @@ class RoomController extends GetxController
   muteUnMuteUser() async {
     Get.back();
     final user =
-        apiUsers.firstWhereOrNull((element) => element.id == userProfile.id);
+    apiUsers.firstWhereOrNull((element) => element.id == userProfile.id);
     if (user != null) {
       if (appController.vipActive &&
           user.privileges.data.disableMuteAndFiering.id != 0) {
@@ -1519,11 +1514,11 @@ class RoomController extends GetxController
       "user_name": user.name,
     };
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
   }
 
   approveSpeakToMic(String userID) async {
@@ -1532,11 +1527,11 @@ class RoomController extends GetxController
       "user_id": userID,
     };
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
     requestMicList.removeWhere((element) => element.userID == userID);
   }
 
@@ -1546,11 +1541,11 @@ class RoomController extends GetxController
       "user_id": userID,
     };
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
     requestMicList.removeWhere((element) => element.userID == userID);
   }
 
@@ -1584,10 +1579,10 @@ class RoomController extends GetxController
     userProfile = RoomUserModel().toDomain();
     final params = RoomUserParams(userID: id.toString(), roomID: roomId);
     (await _getRoomUserUseCase.execute(params)).fold(
-      (l) {
+          (l) {
         showSnackBarWidget(message: l.message);
       },
-      (r) {
+          (r) {
         userProfile = r;
       },
     );
@@ -1609,11 +1604,12 @@ class RoomController extends GetxController
     return entryUser ;
   }
 
-  Future<UserEntity>getSenderProfile(int id) async {
+  Future<RoomUserEntity>getSenderProfile(int id) async {
     print('test123userProfile');
     loadingGetSenderProfile = true ;
-    sender = UserModel().toDomain();
-    (await _getUserProfileByIdUseCase.execute(id)).fold(
+    sender = RoomUserModel().toDomain();
+    final params = RoomUserParams(userID: id.toString(), roomID: roomId);
+    (await _getRoomUserUseCase.execute(params)).fold(
           (l) {
         showSnackBarWidget(message: l.message);
       },
@@ -1624,6 +1620,22 @@ class RoomController extends GetxController
     loadingGetSenderProfile = false ;
     print(sender.privileges.data.exclusiveChatBox.file) ;
     return sender ;
+  }
+
+  Future<RoomUserEntity>getUsersListProfile(int id) async {
+    print('test123userProfile');
+    usersList = RoomUserModel().toDomain();
+    final params = RoomUserParams(userID: id.toString(), roomID: roomId);
+    (await _getRoomUserUseCase.execute(params)).fold(
+          (l) {
+        showSnackBarWidget(message: l.message);
+      },
+          (r) {
+        usersList = r;
+      },
+    );
+    print(usersList.privileges.data.exclusiveChatBox.file) ;
+    return usersList ;
   }
 
   bool isOwner() => room.role == "owner";
@@ -1675,8 +1687,8 @@ class RoomController extends GetxController
       role: getNextRole(userProfile.role, isForApi: true),
     );
     (await updateUserRoleUseCase.execute(params)).fold(
-      (l) {},
-      (r) {
+          (l) {},
+          (r) {
         updateZegoUserRole(params);
         getRoomMempers();
       },
@@ -1690,17 +1702,17 @@ class RoomController extends GetxController
       "data": jsonEncode(params.toJson()),
     };
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
   }
 
   kickoutUser() async {
     Get.back();
     final user =
-        apiUsers.firstWhereOrNull((element) => element.id == userProfile.id);
+    apiUsers.firstWhereOrNull((element) => element.id == userProfile.id);
     if (user != null) {
       if (appController.vipActive &&
           user.privileges.data.disableMuteAndFiering.id != 0) {
@@ -1724,8 +1736,8 @@ class RoomController extends GetxController
       userID: userProfile.id.toString(),
     );
     (await _fireUserUseCase.execute(params)).fold(
-      (l) {},
-      (r) {
+          (l) {},
+          (r) {
         kickOutPermanently = false;
       },
     );
@@ -1737,20 +1749,70 @@ class RoomController extends GetxController
   }
 
   getApiUsers() async {
-    final List<String> params = [];
+    print('users.length: ${users.length}');
+    print('apiUsers.length before cleanup: ${apiUsers.length}');
+
+    // 🧹 احذف أي مستخدم في apiUsers مش موجود حاليًا في users
+    final beforeRemove = apiUsers.length;
+    apiUsers.removeWhere((apiUser) =>
+    !users.any((u) => u.userID.trim() == apiUser.id.toString().trim()));
+    if (beforeRemove != apiUsers.length) {
+      print("🧽 Removed ${beforeRemove - apiUsers.length} old users from apiUsers");
+      _apiUsers.refresh(); // ✅ ضروري لتحديث الواجهة بعد الحذف
+    }
+
+    final params = <String>{}; // Set لتجنب التكرار
+
     for (var element in users) {
-      if (!apiUsers.any((user) => user.id.toString() == element.userID)) {
-        params.add(element.userID);
+      final exists = apiUsers.any(
+            (user) => user.id.toString().trim() == element.userID.trim(),
+      );
+
+      if (!exists) {
+        params.add(element.userID.trim());
+      } else {
+        if (kDebugMode) {
+          print("🔸 Skipped existing user: ${element.userID}");
+        }
       }
     }
-    (await _getUsersInRoomUseCase.execute(params)).fold(
-      (l) {},
-      (r) {
-        apiUsers.clear();
-        apiUsers.addAll(r);
-      },
-    );
+
+    if (params.isEmpty) {
+      print("🚫 No new users to fetch");
+      return;
+    }
+
+    print("📦 Fetching ${params.length} new users: $params");
+
+    try {
+      final result = await _getUsersInRoomUseCase.execute(params.toList());
+      result.fold(
+            (l) => print("❌ Error fetching users: $l"),
+            (r) {
+          print("✅ Received ${r.length} users from API");
+
+          // 🧩 أضف فقط المستخدمين الجدد بعد التأكد من عدم التكرار
+          for (var newUser in r) {
+            final alreadyExists = apiUsers.any(
+                  (u) => u.id == newUser.id,
+            );
+            if (!alreadyExists) {
+              apiUsers.add(newUser);
+            }
+          }
+
+          print("📢 Triggering refresh for apiUsers");
+          print("apiUsers count after fetch: ${apiUsers.length}");
+          _apiUsers.refresh();
+        },
+      );
+    } catch (e, st) {
+      print("🔥 Exception while fetching users: $e");
+      print(st);
+    }
   }
+
+
 
   sendFriendRequest() async {
     if (loadingSendFriend) {
@@ -1758,8 +1820,8 @@ class RoomController extends GetxController
     }
     loadingSendFriend = true;
     (await _friendRequestUseCase.execute(userProfile.id.toInt())).fold(
-      (l) {},
-      (r) {
+          (l) {},
+          (r) {
         userProfile.isFollowing = true;
         _userProfile.refresh();
       },
@@ -1773,8 +1835,8 @@ class RoomController extends GetxController
     }
     loadingCancelFriend = true;
     (await _cancelFriendRequestUseCase.execute(userProfile.id.toInt())).fold(
-      (l) {},
-      (r) {
+          (l) {},
+          (r) {
         userProfile.isFollowing = false;
         _userProfile.refresh();
       },
@@ -1795,10 +1857,10 @@ class RoomController extends GetxController
       "page": roomMempersPage,
     }))
         .fold(
-      (l) {
+          (l) {
         showSnackBarWidget(message: l.message);
       },
-      (r) {
+          (r) {
         roomMempers.clear();
         roomMempersPage++;
         roomMempers.addAll(r.data);
@@ -1836,7 +1898,7 @@ class RoomController extends GetxController
     final message = MessageLocalModel(
       image: messageImage.isNotEmpty ? messageImage : null,
       message:
-          messageController.text.isNotEmpty ? messageController.text : null,
+      messageController.text.isNotEmpty ? messageController.text : null,
     );
     ZegoExpressEngine.instance
         .sendBroadcastMessage(roomId, jsonEncode(message.toJson()))
@@ -1844,14 +1906,14 @@ class RoomController extends GetxController
       if (result.errorCode == 0 && messageController.text.isNotEmpty ) {
         messages.insert(
           messages.length,
-          MessageWidget(  
+          MessageWidget(
             onConfirmDelete: () {
               enableScroll = true;
               focusNode.requestFocus();
               if (!messageController.text
                   .contains("@${user.name.replaceAll(" ", "_")}\n")) {
                 messageController.text +=
-                    "@${user.name.replaceAll(" ", "_")}\n";
+                "@${user.name.replaceAll(" ", "_")}\n";
               }
             },
             message: MessageWidgetModel(
@@ -1896,8 +1958,8 @@ class RoomController extends GetxController
       message: messageController.text,
     );
     (await _messageUseCase.execute(params)).fold(
-      (l) {},
-      (r) {
+          (l) {},
+          (r) {
         messageImage = r.image;
       },
     );
@@ -1914,11 +1976,11 @@ class RoomController extends GetxController
       'clear_messages': 'true',
     };
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
   }
 
   cancelMembership() async {
@@ -1930,10 +1992,10 @@ class RoomController extends GetxController
       userId: user.id.toString(),
     );
     (await _cancelMembershipUseCase.execute(params)).fold(
-      (l) {
+          (l) {
         showSnackBarWidget(message: l.message);
       },
-      (r) {
+          (r) {
         room.role = 'guest';
         newRoom.refresh();
         sendMessageToAdminAfterJoinOrCancelMembership(
@@ -1954,10 +2016,10 @@ class RoomController extends GetxController
       return;
     }
     (await _joinAsMemberUseCase.execute(roomId)).fold(
-      (l) {
+          (l) {
         showSnackBarWidget(message: l.message);
       },
-      (r) {
+          (r) {
         room.role = 'member';
         newRoom.refresh();
         sendMessageToAdminAfterJoinOrCancelMembership(
@@ -1980,11 +2042,11 @@ class RoomController extends GetxController
       "data": message,
     };
     await ZEGOSDKManager().zimService.setRoomAttributes(
-          attributes,
-          isForce: true,
-          isUpdateOwner: true,
-          isDeleteAfterOwnerLeft: false,
-        );
+      attributes,
+      isForce: true,
+      isUpdateOwner: true,
+      isDeleteAfterOwnerLeft: false,
+    );
   }
 
   /// messages
@@ -2053,7 +2115,7 @@ class RoomController extends GetxController
     await seekMusic(0);
     await pauseMusic();
     currentSongIndex =
-        isNext ? increaseSongLocalIndex() : decreaseSongLocalIndex();
+    isNext ? increaseSongLocalIndex() : decreaseSongLocalIndex();
     await playMusic();
   }
 
@@ -2130,14 +2192,14 @@ class RoomController extends GetxController
     songBox = Hive.box<RoomSongModel>("RoomSongModel");
     songs = songBox.values.toList();
     await joinRoom();
-
+    fetchGameList(userId: user.id.toString(), roomId: roomId);
     svgController.addStatusListener((status) async {
       print('test5324237');
       if (status == AnimationStatus.completed) {
         svgController.videoItem = null;
         if (pendingGiftList.isNotEmpty) {
           svgController.videoItem =
-              await SVGAParser.shared.decodeFromBuffer(pendingGiftList.first);
+          await SVGAParser.shared.decodeFromBuffer(pendingGiftList.first);
           await Future.delayed(const Duration(seconds: 1));
           svgController.forward();
           pendingGiftList.removeAt(0);
@@ -2284,10 +2346,10 @@ class RoomController extends GetxController
       ),
     ))
         .fold(
-      (l) {
+          (l) {
         showSnackBarWidget(message: l.message);
       },
-      (r) {
+          (r) {
         searchUsers = r.users;
       },
     );
@@ -2372,16 +2434,19 @@ class RoomController extends GetxController
 
       if (response.statusCode == 200) {
         isLoadingGams.value = false;
-        print('end');
+        print('end ================');
         final jsonData = response.data;
         print(jsonData);
         gameResponse.value = GameResponse.fromJson(jsonData['data']);
-        gameItems.value = GameResponse.fromJson(jsonData['data'])
-            .gameList
-            .map((game) => GameItem(game: game))
-            .toList();
+        // gameItems.value = GameResponse.fromJson(jsonData['data'])
+        //     .gameList
+        //     .map((game) => GameItem(game: game))
+        //     .toList();
         currentGame.value =
-            gameItems.value.firstWhere((e) => e.game.id == 1077).game;
+            GameResponse.fromJson(jsonData['data'])
+                .gameList
+                .map((game) => GameItem(game: game))
+                .toList().firstWhere((e) => e.game.id == 1077).game;
       } else {
         isLoadingGams.value = false;
         Get.snackbar('Error', 'Failed: ${response.statusMessage}');

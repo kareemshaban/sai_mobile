@@ -13,12 +13,14 @@ class ReelsWidget extends StatefulWidget {
   final void Function(VideoPlayerController videoController) getVideoController;
   final bool withMusic;
   final int id;
+  final double? aspectRatio;
+
   const ReelsWidget({
     super.key,
     required this.videoPath,
     required this.getVideoController,
     required this.id,
-    this.withMusic = false,
+    this.withMusic = false, this.aspectRatio,
   });
 
   @override
@@ -36,8 +38,9 @@ class _ReelsWidgetState extends State<ReelsWidget> {
         looping: true,
         autoDispose: true,
         autoPlay: false,
-        fit: BoxFit.cover,
-        aspectRatio: 1080 / 1920,
+        fit: BoxFit.contain,
+        aspectRatio:widget.aspectRatio?? 1080 / 1920,
+        // fullScreenAspectRatio: 1980 / 1080,
         controlsConfiguration: BetterPlayerControlsConfiguration(
           enableAudioTracks: false,
           enableFullscreen: false,
@@ -76,7 +79,8 @@ class _ReelsWidgetState extends State<ReelsWidget> {
           bufferForPlaybackAfterRebufferMs: 3000,
         ),
         cacheConfiguration: BetterPlayerCacheConfiguration(
-          useCache: !Platform.isIOS,
+          // useCache: !Platform.isIOS,
+          useCache: true,
           key: widget.videoPath,
           maxCacheSize: 2000 * 1024 * 1024,
           maxCacheFileSize: 100 * 1024 * 1024,
@@ -117,7 +121,7 @@ class _ReelsWidgetState extends State<ReelsWidget> {
           controller.seekTo(const Duration(seconds: 0));
         }
       },
-      child: Center(
+      child: SizedBox.expand(
         child: BetterPlayer(
           controller: controller,
         ),

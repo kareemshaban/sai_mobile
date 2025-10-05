@@ -48,8 +48,6 @@ class _NewUserEntryNotificationState extends State<NewUserEntryNotification> {
           if (!snapshot.hasData) {
             return const SizedBox();
           }
-          print('snapshot');
-          print(snapshot.data!.isVip);
           final entryUser = snapshot.data!;
           if (context.locale == arabicLocale) {
             return SlideInRight(
@@ -79,9 +77,9 @@ class _NewUserEntryNotificationState extends State<NewUserEntryNotification> {
                           url: entryUser.privileges.data
                               .entryWithInfluences.file,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Positioned.fill(
+                      Positioned.fill(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: Center(
                             child: Container(
                               constraints: BoxConstraints(maxWidth: .60.w(context)),

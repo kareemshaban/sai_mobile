@@ -5,6 +5,8 @@ part 'room_model.g.dart';
 @JsonSerializable()
 class RoomModel {
   int? id;
+  @JsonKey(name: "room_id")
+  int? roomId;
   @JsonKey(name: "room_reference_id")
   num? roomReferenceId;
   @JsonKey(name: "room_image")
@@ -26,6 +28,7 @@ class RoomModel {
 
   RoomModel({
     this.id,
+    this.roomId,
     this.roomReferenceId,
     this.roomImage,
     this.roomName,

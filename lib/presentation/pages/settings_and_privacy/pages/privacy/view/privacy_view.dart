@@ -113,6 +113,7 @@ class PrivacyView extends GetView<PrivacyController> {
                         Get.bottomSheet(
                           Obx(
                             () => PrivacyBottomSheet(
+                              withNoneValue: true,
                               title: AppStrings.tracking,
                               allValue: controller.trackValue == 'all',
                               friendsValue: controller.trackValue == 'private',

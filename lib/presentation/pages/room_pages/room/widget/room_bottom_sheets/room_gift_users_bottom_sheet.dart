@@ -4,9 +4,13 @@ import 'package:new_sai/app/constants.dart';
 import 'package:new_sai/app/di/basic_di.dart';
 import 'package:new_sai/app/extensions.dart';
 import 'package:new_sai/data/mapper/app_mapper.dart';
+import 'package:new_sai/data/mapper/auth_mapper.dart';
 import 'package:new_sai/data/model/app_model/pagination_model.dart';
+import 'package:new_sai/data/model/auth_model/user_model.dart';
 import 'package:new_sai/domain/entity/app_entity/pagination_entity.dart';
+import 'package:new_sai/domain/entity/auth_entity/user_entity.dart';
 import 'package:new_sai/domain/entity/room_entity/room_gift_users_entity.dart';
+import 'package:new_sai/domain/use_case/auth_use_case/get_user_profile_by_id_use_case.dart';
 import 'package:new_sai/domain/use_case/room_use_case/get_room_gift_users_use_case.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/getx/room_controller.dart';
 import 'package:new_sai/presentation/resources/assets_manger.dart';
@@ -39,6 +43,7 @@ class _RoomGiftUsersBottomSheetState extends State<RoomGiftUsersBottomSheet> {
   PaginationEntity pagination = PaginationModel().toDomain();
   bool isLoading = false;
   bool isLoadingPagination = false;
+
 
   getData({
     bool isPaginate = false,
@@ -137,30 +142,45 @@ class _RoomGiftUsersBottomSheetState extends State<RoomGiftUsersBottomSheet> {
                   )
                 : SliverList.separated(
                     itemBuilder: (context, index) {
+                      final userVip = controller.apiUsers.firstWhereOrNull(
+                              (element) => element.id.toString() == users[index].fromId.toString());
                       final user = users[index];
                       return InkWell(
                         onTap: () => controller
                             .openProfileBottomSheet(user.fromId.toString()),
                         child: Row(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(52),
-                              child: Image.network(
-                                controller.getUserImage(
-                                  user.fromId.toString(),
-                                ),
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const AppImage(
-                                    image: Constants.userErrorWidget,
+                            Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(52),
+                                  child: Image.network(
+                                    controller.getUserImage(
+                                      user.fromId.toString(),
+                                    ),
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const AppImage(
+                                        image: Constants.userErrorWidget,
+                                        width: 40,
+                                        height: 40,
+                                        isCircle: true,
+                                      );
+                                    },
                                     width: 40,
                                     height: 40,
-                                    isCircle: true,
-                                  );
-                                },
-                                width: 40,
-                                height: 40,
-                                fit: BoxFit.cover,
-                              ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                if (userVip?.isVip == 1)
+                                  PrivilegeDataView(
+                                    url: userVip!.privileges.data
+                                        .profileFrame.file,
+                                    fit: BoxFit.cover,
+                                    height: 70,
+                                    width: 70,
+                                  ),
+                              ],
                             ),
                             10.horizontalSpace(),
                             Flexible(

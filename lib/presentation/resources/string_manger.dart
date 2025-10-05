@@ -102,6 +102,7 @@ class AppStrings {
   static String get reels => "reels".tr();
 
   static String get incoming => "incoming".tr();
+  static String get activeUsers => "activeUsers".tr();
 
   static String get profile => "profile".tr();
 

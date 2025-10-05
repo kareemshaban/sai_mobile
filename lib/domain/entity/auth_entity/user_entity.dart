@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:new_sai/domain/entity/app_entity/country_entity.dart';
 import 'package:new_sai/domain/entity/app_entity/pagination_entity.dart';
 import 'package:new_sai/domain/entity/auth_entity/privileges_entity.dart';
+import 'package:new_sai/domain/entity/room_entity/room_entity.dart';
 part 'user_entity.g.dart';
 
 class UserFriendEntity {
@@ -68,10 +69,13 @@ class UserEntity {
   String track;
   String comment;
   String story;
+  @JsonKey(defaultValue: "")
+  String? role;
   int friendId;
   @JsonKey(defaultValue: "")
   String backgroundTheme;
-  int isVip;
+  int? isVip;
+  RoomEntity? room;
 
   UserEntity({
     required this.id,
@@ -117,7 +121,9 @@ class UserEntity {
     required this.comment,
     required this.friendId,
     required this.backgroundTheme,
-    required this.isVip,
+     this.isVip,
+    this.room,
+    this.role
   });
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>

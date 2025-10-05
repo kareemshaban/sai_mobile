@@ -1,5 +1,6 @@
 import 'package:new_sai/app/constants.dart';
 import 'package:new_sai/data/mapper/app_mapper.dart';
+import 'package:new_sai/data/mapper/room_mapper.dart';
 import 'package:new_sai/data/model/app_model/country_model.dart';
 import 'package:new_sai/data/model/app_model/pagination_model.dart';
 import 'package:new_sai/data/model/auth_model/privileges_model.dart';
@@ -8,6 +9,7 @@ import 'package:new_sai/data/model/auth_model/user_model.dart';
 import 'package:new_sai/domain/entity/auth_entity/privileges_entity.dart';
 import 'package:new_sai/domain/entity/auth_entity/register_entity.dart';
 import 'package:new_sai/domain/entity/auth_entity/user_entity.dart';
+import 'package:new_sai/data/model/room_model/room_model.dart';
 
 extension UserPaginationMapper on UserPaginationModel? {
   UserPaginationEntity toDomain() {
@@ -69,6 +71,9 @@ extension UserMapper on UserModel? {
       friendId: this?.friendId ?? Constants.zero,
       backgroundTheme: this?.backgroundTheme ?? Constants.empty,
       isVip: this?.isVip ?? Constants.zero,
+      role: this?.role ?? Constants.empty  ,
+      room: this?.room != null?
+      this?.room!.toDomain() :RoomModel().toDomain(),
     );
   }
 }

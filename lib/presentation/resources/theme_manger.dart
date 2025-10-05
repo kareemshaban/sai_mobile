@@ -143,12 +143,12 @@ ThemeData getApplicationTheme(BuildContext context) => ThemeData(
         type: BottomNavigationBarType.fixed,
       ),
       dividerTheme: const DividerThemeData(color: ColorManager.dividerColor),
-      tabBarTheme: const TabBarThemeData(
-        labelPadding: EdgeInsets.zero,
-        dividerColor: Colors.transparent,
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicatorColor: ColorManager.transparent,
-      ),
+      // tabBarTheme: const TabBarThemeData(
+      //   labelPadding: EdgeInsets.zero,
+      //   dividerColor: Colors.transparent,
+      //   indicatorSize: TabBarIndicatorSize.tab,
+      //   indicatorColor: ColorManager.transparent,
+      // ),
     );
 
 List<BoxShadow> getBoxShadow({

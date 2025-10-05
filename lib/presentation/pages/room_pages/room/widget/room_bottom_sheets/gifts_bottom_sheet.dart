@@ -256,7 +256,6 @@ class GiftsBottomSheet extends GetView<RoomController> {
                           ),
                           InkWell(
                             onTap: () {
-                              print(controller.selectedGift.goldValue);
 
                               if (controller.selectedGift.goldValue >
                                   double.tryParse(controller
@@ -271,9 +270,7 @@ class GiftsBottomSheet extends GetView<RoomController> {
                               } else {
                                 controller.onSendGift();
                               }
-                              //   print( controller.appController.user.goldValue
-                              // .formatCurrencyWithoutSymbol);
-                              //   print(controller.selectedGift.goldValue);
+
                             },
                             // onTap: controller.onSendGift,
                             child: Container(

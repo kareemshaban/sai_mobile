@@ -141,9 +141,6 @@ import 'package:new_sai/presentation/resources/font_manger.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
 import 'package:new_sai/presentation/widgets/app_back_button.dart';
 import 'package:new_sai/presentation/widgets/app_button.dart';
-import 'package:new_sai/presentation/widgets/app_permission_dialog.dart';
-import 'package:on_audio_query_forked/on_audio_query.dart';
-
 import 'add_music_view.dart';
 
 class MusicPlaylistView extends GetView<RoomController> {
@@ -174,35 +171,32 @@ class MusicPlaylistView extends GetView<RoomController> {
               for (var element in picker.files) {
                 final path = element.path;
                 if (path != null) {
-                  try {
-                    final metadata = await MetadataRetriever.fromFile(File(path));
+                    try {
+                  final metadata = await MetadataRetriever.fromFile(File(path));
 
-                    final song = RoomSongModel(
-                      name: metadata.trackName ?? element.name,
-                      path: path,
-                      duration:
-                      ((metadata.trackDuration?.toDouble() ?? 0) / 1000).toInt(),
-                      image: metadata.albumArt,
-                    );
+                final song = RoomSongModel(
+                  name: metadata.trackName ?? element.name,
+                  path: path,
+                  duration:
+                  ((metadata.trackDuration?.toDouble() ?? 0) / 1000).toInt(),
+                  image: metadata.albumArt,
+                );
 
-                    controller.songs.addIf(
-                      !controller.songs.any((s) => s.path == song.path),
-                      song,
-                    );
+                controller.songs.addIf(
+                  !controller.songs.any((s) => s.path == song.path),
+                  song,
+                );
 
                     controller.songBox.clear();
                     controller.songBox.addAll(controller.songs);
-
-                    print("✅ Added: ${song.name} (${song.duration}s)");
                   } catch (e) {
                     print("❌ Error reading metadata for: $path\n$e");
                   }
                 }
+                  }
               }
             }
-          }
-        },
-      ),
+          },),
       body: Obx(
         () => controller.songs.isEmpty
             ? Center(
@@ -250,6 +244,6 @@ class MusicPlaylistView extends GetView<RoomController> {
                 },
               ),
       ),
-    );
+      );
   }
 }

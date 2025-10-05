@@ -28,8 +28,6 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    print('data');
-    // print(controller.appController.user.privileges.) ;
     return isGuest()
         ? const GuestDilaog()
         : Obx(

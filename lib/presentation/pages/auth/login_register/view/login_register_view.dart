@@ -40,9 +40,10 @@ class LoginRegisterView extends GetView<LoginRegisterController> {
                       50.verticalSpace(),
                       Center(
                         child: Image.asset(
-                          ImageAssets.logo,
-                          width: 160,
-                          height: 160,
+                          ImageAssets.newLogoRBg,
+                          width: 130,
+                          height: 130,
+                          // color: ColorManager.appRedColor,
                         ),
                       ),
                       18.verticalSpace(),

@@ -14,10 +14,13 @@ class StoreSearchFiled extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(
-          ImageAssets.logo,
-          width: 42,
-          height: 42,
+        ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          child: Image.asset(
+            ImageAssets.newLogo,
+            width: 42,
+            height: 42,
+          ),
         ),
         7.horizontalSpace(),
         Flexible(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/app_controller.dart';
+import 'package:new_sai/app/app_pref.dart';
 import 'package:new_sai/app/app_validation.dart';
 import 'package:new_sai/app/di/basic_di.dart';
 import 'package:new_sai/data/mapper/app_mapper.dart';
@@ -25,6 +26,7 @@ class CashWithdrawalController extends GetxController with  GetSingleTickerProvi
   final GetMyRedeemsRecordUseCase _getMyRedeemsRecordUseCase =
       instance<GetMyRedeemsRecordUseCase>();
   int page = 1;
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   final RxBool _getMyRecord = false.obs;
   final RxBool _getMyRecordPagination = false.obs;
@@ -113,6 +115,10 @@ class CashWithdrawalController extends GetxController with  GetSingleTickerProvi
   @override
   void onInit() async {
     tabController = TabController(length: 2, vsync: this);
+    print("User token exists, continue with data fetching");
+    if (_appPreferences.getUserToken().isEmpty) {
+      return;
+    }
     scrollController.addListener(() async {
       if (scrollController.offset ==
           scrollController.position.maxScrollExtent) {

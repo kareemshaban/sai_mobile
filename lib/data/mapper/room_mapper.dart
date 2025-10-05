@@ -43,6 +43,7 @@ extension RoomMapper on RoomModel? {
   RoomEntity toDomain() {
     return RoomEntity(
       id: this?.id ?? Constants.zero,
+      roomId: this?.roomId ?? Constants.zero,
       roomReferenceId: this?.roomReferenceId ?? Constants.zero,
       roomImage: this?.roomImage ?? Constants.empty,
       roomName: this?.roomName ?? Constants.empty,

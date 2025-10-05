@@ -21,21 +21,15 @@ class UserProfileBottomSheet extends GetView<RoomController> {
 
   @override
   Widget build(BuildContext context) {
-    print('profileBorder');
-    print(controller.userProfile.privileges.data.profileBorder.file);
-    print('controller.userProfile.role');
-    print(controller.userProfile.role);
-    print('controller.userProfile.name');
-    print(controller.userProfile.name);
     return Obx(
-      () {
+          () {
         if (controller.loadingGetProfile) {
           return const Center(child: AppLoader());
         } else {
           bool isMutedLocally = controller.mutedListLocally.any(
-              (element) => element == controller.userProfile.id.toString());
+                  (element) => element == controller.userProfile.id.toString());
           bool isMuted = controller.mutedList.any(
-              (element) => element == controller.userProfile.id.toString());
+                  (element) => element == controller.userProfile.id.toString());
           final privilege = controller.userProfile.privileges.data;
           bool isVIPActive = !Get.find<AppController>().vipActive;
           return Container(
@@ -49,12 +43,12 @@ class UserProfileBottomSheet extends GetView<RoomController> {
               ),
               image: controller.userProfile.isVip == 1
                   ? DecorationImage(
-                      image: CachedNetworkImageProvider(
-                        privilege.roomBackcground.file,
-                        scale: 2,
-                      ),
-                      fit: BoxFit.cover,
-                    )
+                image: CachedNetworkImageProvider(
+                  privilege.roomBackcground.file,
+                  scale: 2,
+                ),
+                fit: BoxFit.cover,
+              )
                   : null,
             ),
             child: Stack(
@@ -64,33 +58,33 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    40.verticalSpace(),
-                     Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (controller.userProfile.isVip == 1)
-                            PrivilegeDataView(
-                              url: controller
-                                  .userProfile.privileges.data.badgePremium.file,
-                              width: 30,
-                              height: 30,
-                            ),
-                          Text(
-                            controller.userProfile.name,
-                            style: Get.textTheme.labelMedium!.copyWith(
-                              fontSize: AppSize.s22(context),
-                              fontWeight: FontWeight.bold,
-                              color: controller.userProfile.isVip == 1
-                                  ? privilege.colorfulName.value.toColor()
-                                  : null,
-                            ),
-                          ),
-                        ],
-                      ),
+                    50.verticalSpace(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if (controller.userProfile.isVip == 1)...[
+                        if (controller.userProfile.isVip == 1)
+                          PrivilegeDataView(
+                            url: controller
+                                .userProfile.privileges.data.badgePremium.file,
+                            width: 30,
+                            height: 30,
+                          ),
+                        Text(
+                          controller.userProfile.name,
+                          style: Get.textTheme.labelMedium!.copyWith(
+                            fontSize: AppSize.s22(context),
+                            fontWeight: FontWeight.bold,
+                            color: controller.userProfile.isVip == 1
+                                ? privilege.colorfulName.value.toColor()
+                                : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (controller.userProfile.badges.isNotEmpty)...[
                           Row(
                             children: controller.userProfile.badges
                                 .map((e) => PrivilegeDataView(
@@ -256,15 +250,15 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                             children: [
                               isMutedLocally
                                   ? const Icon(
-                                      Icons.mic_off,
-                                      size: 28,
-                                      color: ColorManager.primary,
-                                    )
+                                Icons.mic_off,
+                                size: 28,
+                                color: ColorManager.primary,
+                              )
                                   : const Icon(
-                                      Icons.mic,
-                                      size: 28,
-                                      color: ColorManager.primary,
-                                    ),
+                                Icons.mic,
+                                size: 28,
+                                color: ColorManager.primary,
+                              ),
                               5.verticalSpace(),
                               Text(
                                 isMutedLocally
@@ -355,7 +349,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                 ),
                 if (controller.userProfile.isVip == 1)
                   PositionedDirectional(
-                    top: -120,
+                    top: -128,
                     width: 1.w(context),
                     child: PrivilegeDataView(
                       url: privilege.profileBorder.file,
@@ -364,17 +358,28 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                   ),
                 if (controller.userProfile.isVip == 1)
                   PositionedDirectional(
-                    top: 0,
+                    top: 15,
                     end: 0,
-                    child: PrivilegeDataView(
-                      url: controller
-                          .userProfile.privileges.data.exclusiveNameCard.file,
-                      width: 60,
-                      height: 40,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0 , vertical: 2.0),
+                      decoration: BoxDecoration(
+                          color: controller.userProfile.privileges.data.colorfulName.value.toColor(),
+                          borderRadius: BorderRadius.circular(10.0)
+                      ),
+                      child: Row(
+                        children: [
+                          Text(controller.userProfile.privileges.categoryName , style: Get.textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: AppSize.s15(context),
+                          )),
+                          5.horizontalSpace(),
+                          AppImage(image: controller.userProfile.privileges.categoryIcon , height: 20, width: 20,),
+                        ],
+                      ),
                     ),
                   ),
                 PositionedDirectional(
-                  top: -60,
+                  top: controller.userProfile.isVip == 1 ? -80 : -60,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
@@ -390,8 +395,8 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                         PrivilegeDataView(
                           url: controller
                               .userProfile.privileges.data.profileFrame.file,
-                          width: 90,
-                          height: 90,
+                          width: 120,
+                          height: 120,
                         ),
                       // if (controller.userProfile.isVip == 1)
                       //   PrivilegeDataView(
@@ -404,7 +409,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                   ),
                 ),
                 PositionedDirectional(
-                  top: 0,
+                  top: 15,
                   start: 0,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -416,8 +421,8 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                       color: controller.userProfile.role == "owner"
                           ? const Color(0x99E71616)
                           : controller.userProfile.role == "admin"
-                              ? ColorManager.green
-                              : const Color(0x997B34FF),
+                          ? ColorManager.green
+                          : const Color(0x997B34FF),
                     ),
                     child: Text(
                       controller.getCurrentRole(controller.userProfile.role),

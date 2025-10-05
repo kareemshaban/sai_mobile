@@ -22,6 +22,48 @@ class RoomFloatingButtons extends GetView<RoomController> {
           : Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                // InkWell(
+                //   onTap: () => controller.isPlayingGame.value = true,
+                //   child: CircleAvatar(
+                //     backgroundImage:
+                //     NetworkImage(controller.currentGame.value.icon),
+                //     radius: 20,
+                //   ),
+                // ),
+                4.verticalSpace(),
+                SizedBox(
+                  width: .1.w(context),
+                  child: Text(
+                    controller.currentGame.value.name,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                  ),
+                ),
+                // 10.verticalSpace(),
+                // InkWell(
+                //   onTap: () {
+                //     controller.isPlayingGame.value = true;
+                //   },
+                //   child: Container(
+                //     width: 40,
+                //     height: 40,
+                //     decoration: const BoxDecoration(
+                //       color: ColorManager.white,
+                //       shape: BoxShape.circle,
+                //     ),
+                //     child: const Icon(
+                //       Icons.games_rounded,
+                //       color: ColorManager.primary,
+                //       size: 22,
+                //     ),
+                //   ),
+                // ),
+                10.verticalSpace(),
                 if (controller.messages.length > 5) ...[
                   InkWell(
                     onTap: controller.loadingJoinRoom

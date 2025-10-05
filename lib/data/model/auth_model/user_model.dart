@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:new_sai/data/model/app_model/country_model.dart';
 import 'package:new_sai/data/model/app_model/pagination_model.dart';
 import 'package:new_sai/data/model/auth_model/privileges_model.dart';
+import 'package:new_sai/data/model/room_model/room_model.dart';
 part 'user_model.g.dart';
 
 @JsonSerializable()
@@ -103,12 +104,15 @@ class UserModel {
   String? track;
   String? comment;
   String? story;
+  String? role;
   @JsonKey(name: "friend_id")
   int? friendId;
   @JsonKey(name: "background_theme")
   String? backgroundTheme;
   @JsonKey(name: "is_vip")
   int? isVip;
+  @JsonKey(name: "room")
+  RoomModel? room;
 
   UserModel({
     this.id,
@@ -155,6 +159,8 @@ class UserModel {
     this.friendId,
     this.backgroundTheme,
     this.isVip,
+    this.room,
+    this.role
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

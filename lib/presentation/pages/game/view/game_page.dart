@@ -59,19 +59,21 @@ class GamePageInRoom extends GetView<RoomController> {
                               height: 200,
                               child: const Center(child: AppLoader()));
                         }
-                        final games = controller.gameResponse.value!.gameList;
+                         // final games = controller.gameResponse.value?.gameList ?? [];
+                        final games = [controller.gameResponse.value?.gameList.firstWhere((e) => e.id == 1077)] ?? [];
+                        // final games = controller.gameItems?? [];
                         return SizedBox(
                           width: Get.width,
                           height: controller.isInSettingsMode.value == false
                               ? 90
                               : Get.height,
                           child: controller.isInSettingsMode.value
-                              ? ListView.builder(
+                              ?
+                          ListView.builder(
                                   physics: const BouncingScrollPhysics(),
                                   itemCount: controller.gameItems.length,
                                   itemBuilder: (_, index) {
                                     final item = controller.gameItems[index];
-
                                     bool invisibleSwitch = item.game.id == 1077;
                                     return
                                         //Obx(() =>
@@ -139,7 +141,7 @@ class GamePageInRoom extends GetView<RoomController> {
                                           scrollDirection: Axis.horizontal,
                                           children: games.map((game) {
                                             return !showGame(
-                                                    game, controller.room.role)
+                                                    game!, controller.room.role)
                                                 ? SizedBox()
                                                 : GestureDetector(
                                                     onTap: () {
@@ -264,13 +266,13 @@ class GamePageInRoom extends GetView<RoomController> {
                                                         CircleAvatar(
                                                           backgroundImage:
                                                               NetworkImage(
-                                                                  game.icon),
+                                                                  game?.icon ?? ""),
                                                           radius: 30,
                                                         ),
                                                         const SizedBox(
                                                             height: 6),
                                                         Text(
-                                                          game.name,
+                                                          game?.name ?? "",
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 13,
@@ -392,6 +394,7 @@ class GamePage extends StatefulWidget {
 class WebViewExampleState extends State<GamePage> {
   late final WebViewController controller;
   final EventChannel eventChannelPlugin = const EventChannel('baishunChannel');
+  // final EventChannel eventChannelPlugin = const EventChannel('sailive');
   final roomController = Get.find<RoomController>();
 
   @override
@@ -576,12 +579,12 @@ class WebViewExampleState extends State<GamePage> {
     );
   }
 
-//   @override
-//   void dispose() {
-//     controller.loadRequest(Uri.parse('about:blank')); // This clears content
-//     print("WebView disposed properly");
-//     // super.dispose();
-//   }
+  @override
+  void dispose() {
+    controller.loadRequest(Uri.parse('about:blank')); // This clears content
+    print("WebView disposed properly");
+     super.dispose();
+  }
 }
 /*
  webview_flutter:

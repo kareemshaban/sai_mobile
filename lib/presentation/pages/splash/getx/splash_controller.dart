@@ -16,7 +16,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 class SplashController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  final image = ImageAssets.logoSplash;
+  // final image = ImageAssets.logoSplash;
+  final image = ImageAssets.liveSailogo;
   final appController = Get.find<AppController>();
   final GetAppInfoUseCase _appInfoUseCase = instance<GetAppInfoUseCase>();
 

@@ -22,6 +22,9 @@ class ImageAssets {
   static const String goldTrophy = "$imagePath/gold_trophy.png";
   static const String logoSplash = "$imagePath/logo_splash.gif";
   static const String liveSailogo = "$imagePath/saiLiiveLogo.gif";
+  static const String activeIcon = "$imagePath/active_icon.png";
+  static const String newLogo = "$imagePath/new_logo.png";
+  static const String newLogoRBg = "$imagePath/new_logo_rbg.png";
 }
 
 class IconsAssets {
@@ -91,6 +94,8 @@ class IconsAssets {
   static const String file = "$iconPath/file.svg";
   static const String sar = "$iconPath/sar.svg";
   static const String logoShape = "$iconPath/logo_shape.svg";
+  static const String liveSailogo = "$imagePath/saiLiiveLogo.gif";
+
 }
 
 class LottieAssets {

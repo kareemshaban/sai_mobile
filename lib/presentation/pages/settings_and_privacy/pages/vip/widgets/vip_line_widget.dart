@@ -1,3 +1,43 @@
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:new_sai/presentation/pages/settings_and_privacy/pages/vip/getx/vip_controller.dart';
+// import 'package:new_sai/presentation/resources/assets_manger.dart';
+// import 'package:new_sai/presentation/resources/color_manger.dart';
+// import 'package:new_sai/presentation/widgets/app_icon.dart';
+//
+// class VipLineWidget extends GetView<VipController> {
+//   const VipLineWidget({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 16),
+//       child: Obx(
+//         () => Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceAround,
+//           children: List.generate(
+//             controller.premium.data.length,
+//             (index) {
+//               return AnimatedOpacity(
+//                 opacity: controller.currentIndex == index ? 1 : 0,
+//                 duration: const Duration(milliseconds: 300),
+//                 child: Transform.rotate(
+//                   angle: 2.37,
+//                   child: const AppIcon(
+//                     icon: IconsAssets.line,
+//                     color: ColorManager.black,
+//                     width: 25,
+//                     height: 25,
+//                   ),
+//                 ),
+//               );
+//             },
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/presentation/pages/settings_and_privacy/pages/vip/getx/vip_controller.dart';
@@ -11,29 +51,33 @@ class VipLineWidget extends GetView<VipController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal:16),
       child: Obx(
-        () => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: List.generate(
-            controller.premium.data.length,
-            (index) {
-              return AnimatedOpacity(
-                opacity: controller.currentIndex == index ? 1 : 0,
-                duration: const Duration(milliseconds: 300),
-                child: Transform.rotate(
-                  angle: 2.37,
-                  child: const AppIcon(
-                    icon: IconsAssets.line,
-                    color: ColorManager.black,
-                    width: 25,
-                    height: 25,
+              () => SizedBox(
+            height: 30.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context , index){
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: AnimatedOpacity(
+                    opacity: controller.currentIndex == index ? 1 : 0,
+                    duration: const Duration(milliseconds: 300),
+                    child: Transform.rotate(
+                      angle: 2.37,
+                      child: const AppIcon(
+                        icon: IconsAssets.line,
+                        color: ColorManager.black,
+                        width: 43,
+                        height: 43,
+                      ),
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ),
+                );
+              },
+              itemCount: controller.premium.data.length,
+            ),
+          )
       ),
     );
   }

@@ -93,7 +93,7 @@ class RankRoomsItem extends StatelessWidget {
       child: Container(
 
         child: SizedBox(
-          width: MediaQuery.widthOf(context) / 4,
+          width: MediaQuery.of(context).size.width / 4,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -24,7 +24,7 @@ class ReelsTextWidget extends StatelessWidget {
       bottom: 0,
       child: Container(
         width: 1.w(context) - 60,
-        height: 100,
+        // height: 150,
         decoration: BoxDecoration(
           borderRadius: const BorderRadiusDirectional.only(
             topEnd: Radius.circular(10),

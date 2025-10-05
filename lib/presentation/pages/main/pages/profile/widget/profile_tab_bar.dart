@@ -50,7 +50,7 @@ class ProfileTabBar extends GetView<ProfileController>
           indicatorColor: ColorManager.black,
           unselectedLabelColor: ColorManager.iconGreyColor,
           labelColor: ColorManager.black,
-          indicatorPadding: const EdgeInsets.symmetric(horizontal: 50),
+          // indicatorPadding: const EdgeInsets.symmetric(horizontal: 0),
         ),
       ),
     );

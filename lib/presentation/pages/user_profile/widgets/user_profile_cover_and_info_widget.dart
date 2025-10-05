@@ -1,3 +1,187 @@
+
+// class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
+//   const UserProfileCoverAndInfoWidget({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Obx(
+//       () => SizedBox(
+//         width: 1.w(context),
+//         // height: 285,
+//         child: Stack(
+//           children: [
+//             Opacity(
+//               opacity: .5,
+//               child: Container(
+//                 width: 1.w(context),
+//                 height: 320 + 12,
+//                 decoration: BoxDecoration(
+//                   gradient: ColorManager.coverImageColor,
+//                 ),
+//                 child: AppImage(
+//                   image: controller.user.profileCover,
+//                   fit: BoxFit.cover,
+//                   errorWidget: const SizedBox.shrink(),
+//                 ),
+//               ),
+//             ),
+//             SafeArea(
+//               child: Padding(
+//                 padding: const EdgeInsets.symmetric(horizontal: 16),
+//                 child: Column(
+//                   children: [
+//                     const Row(
+//                       children: [
+//                         Padding(
+//                           padding: EdgeInsets.only(top: 12.0),
+//                           child: AppBackButton(
+//                             color: ColorManager.white,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     Stack(
+//                       alignment: Alignment.center,
+//                       clipBehavior: Clip.none,
+//                       children: [
+//                         Container(
+//                           width: 90,
+//                           height: 90,
+//                           decoration: const BoxDecoration(
+//                             shape: BoxShape.circle,
+//                           ),
+//                           child: ClipRRect(
+//                             borderRadius: BorderRadius.circular(200),
+//                             child: Image.network(
+//                               controller.user.profileImg,
+//                               errorBuilder: (context, error, stackTrace) {
+//                                 return const AppImage(
+//                                   image: Constants.userErrorWidget,
+//                                   width: 90,
+//                                   height:90,
+//                                   isCircle: true,
+//                                 );
+//                               },
+//                               width: 90,
+//                               height: 90,
+//                               fit: BoxFit.cover,
+//                             ),
+//                           ),
+//                         ),
+//                         PrivilegeDataView(
+//                           url:
+//                               controller.user.privileges.data.profileFrame.file,
+//                           width: 130,
+//                           height: 130,
+//                         ),
+//                       ],
+//                     ),
+//                     1.verticalSpace(),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         const AppIcon(
+//                           icon: IconsAssets.verified,
+//                         ),
+//                         if(controller.user.isVip == 1 )
+//                           AppImage(
+//                             image: controller.user.privileges.categoryIcon,
+//                             height: 25.0,
+//                             width: 25.0,
+//                           ),
+//                         5.horizontalSpace(),
+//                         Text(
+//                           controller.user.name,
+//                           style: Get.textTheme.titleLarge!.copyWith(
+//                             fontSize: AppSize.s25(context),
+//                             color: controller.appController.isVipActive()
+//                                 ? controller.user.privileges.data.colorfulName
+//                                         .value.isNotEmpty
+//                                     ? Colors.white.fromHex(controller.user
+//                                         .privileges.data.colorfulName.value)
+//                                     : null
+//                                 : null,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     5.verticalSpace(),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         PrivilegeDataView(
+//                           url: controller.user.privileges.data.badgePremium.file,
+//                           width: 30,
+//                           height: 30,
+//                         ),
+//                         5.horizontalSpace(),
+//                         PrivilegeDataView(
+//                           url: controller.user.privileges.data.exclusiveNameCard.file,
+//                           width: 70,
+//                           height: 40,
+//                         ),
+//                       ],
+//                     ),
+//                     5.verticalSpace(),
+//                     InkWell(
+//                       onTap: () {
+//                         Clipboard.setData(ClipboardData(
+//                                 text: controller.user.referenceId.toString()))
+//                             .then((_) {
+//                           showSnackBarWidget(
+//                             message: AppStrings.copied,
+//                             color: ColorManager.green,
+//                           );
+//                         });
+//                       },
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.center,
+//                         children: [
+//                           Text(
+//                             "ID : ${controller.user.referenceId}",
+//                             style: Get.textTheme.headlineMedium!.copyWith(
+//                               fontSize: AppSize.s20(context),
+//                               color: ColorManager.textGrey3,
+//                             ),
+//                           ),
+//                           5.horizontalSpace(),
+//                           const Icon(
+//                             Icons.copy,
+//                             color: ColorManager.textGrey3,
+//                             size: 20,
+//                           ),
+//                           if (controller.user.badges.isNotEmpty) ...[
+//                             2.horizontalSpace(),
+//                             PrivilegeDataView(
+//                               url: controller.user.badges.first,
+//                               isBadges: true,
+//                               width: 35,
+//                               height: 35,
+//                               fit: BoxFit.cover,
+//                             ),
+//                           ],
+//                         ],
+//                       ),
+//                     ),
+//                     10.verticalSpace(),
+//                     Text(
+//                       controller.user.country.name,
+//                       style: Get.textTheme.titleMedium!.copyWith(
+//                         fontSize: AppSize.s14(context),
+//                       ),
+//                     ),
+//                     14.verticalSpace(),
+//                     const UserProfileButtons(),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -21,7 +205,7 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => SizedBox(
+          () => SizedBox(
         width: 1.w(context),
         // height: 285,
         child: Stack(
@@ -86,9 +270,9 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                         ),
                         PrivilegeDataView(
                           url:
-                              controller.user.privileges.data.profileFrame.file,
-                          width: 130,
-                          height: 130,
+                          controller.user.privileges.data.profileFrame.file,
+                          width: 140,
+                          height: 140,
                         ),
                       ],
                     ),
@@ -112,16 +296,17 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                             fontSize: AppSize.s25(context),
                             color: controller.appController.isVipActive()
                                 ? controller.user.privileges.data.colorfulName
-                                        .value.isNotEmpty
-                                    ? Colors.white.fromHex(controller.user
-                                        .privileges.data.colorfulName.value)
-                                    : null
+                                .value.isNotEmpty
+                                ? Colors.white.fromHex(controller.user
+                                .privileges.data.colorfulName.value)
+                                : null
                                 : null,
                           ),
                         ),
                       ],
                     ),
                     5.verticalSpace(),
+                    if(controller.user.isVip == 1 )
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -131,18 +316,30 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                           height: 30,
                         ),
                         5.horizontalSpace(),
-                        PrivilegeDataView(
-                          url: controller.user.privileges.data.exclusiveNameCard.file,
-                          width: 70,
-                          height: 40,
-                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0 , vertical: 2.0),
+                          decoration: BoxDecoration(
+                              color: controller.user.privileges.data.colorfulName.value.toColor(),
+                              borderRadius: BorderRadius.circular(10.0)
+                          ),
+                          child: Row(
+                            children: [
+                              Text(controller.user.privileges.categoryName , style: Get.textTheme.bodySmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: AppSize.s15(context),
+                              )),
+                              5.horizontalSpace(),
+                              AppImage(image: controller.user.privileges.categoryIcon , height: 20, width: 20,),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                     5.verticalSpace(),
                     InkWell(
                       onTap: () {
                         Clipboard.setData(ClipboardData(
-                                text: controller.user.referenceId.toString()))
+                            text: controller.user.referenceId.toString()))
                             .then((_) {
                           showSnackBarWidget(
                             message: AppStrings.copied,

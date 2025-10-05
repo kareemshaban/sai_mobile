@@ -63,9 +63,9 @@ class RoomUserBottomSheet extends GetView<RoomController> {
                               ),
                             ),
                           ),
-                          if (user != null)
+                          if (user?.isVip == 1 )
                             PrivilegeDataView(
-                              url: user.privileges.data.profileFrame.file,
+                              url: user!.privileges.data.profileFrame.file,
                               width: 70,
                               height: 70,
                             ),

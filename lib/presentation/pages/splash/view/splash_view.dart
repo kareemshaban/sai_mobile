@@ -23,7 +23,7 @@ class SplashView extends GetView<SplashController> {
                 image: AssetImage(controller.image),
                 autostart: Autostart.once,
                 placeholder: (context) => const SizedBox(),
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
               ),
             ),
           ),

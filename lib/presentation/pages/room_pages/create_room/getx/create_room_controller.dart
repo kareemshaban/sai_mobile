@@ -69,7 +69,8 @@ class CreateRoomController extends GetxController {
             );
           }
           Get.offNamed(AppRoutes.roomRoute, arguments: {
-            "id": r.id.toString(),
+            // "id": r.id.toString(),
+            "id": r.roomId.toString(),
             "data": {
               "roomName": r.roomName,
               "referenceId": r.roomReferenceId,

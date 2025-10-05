@@ -48,7 +48,7 @@ class MainController extends GetxController {
     null,
   ];
 
-  final RxInt _currentIndex = 0.obs;
+  final RxInt _currentIndex = 2.obs;
 
   int get currentIndex => _currentIndex.value;
 

@@ -17,6 +17,7 @@ import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 class SeatWidget extends StatefulWidget {
   final int index;
   final bool isLoading;
+
   const SeatWidget({super.key, required this.index, this.isLoading = false});
 
   @override
@@ -24,6 +25,12 @@ class SeatWidget extends StatefulWidget {
 }
 
 class _SeatWidgetState extends State<SeatWidget> {
+  @override
+  void initState() {
+    // TODO: implement initStat
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RoomController>(
@@ -33,6 +40,7 @@ class _SeatWidgetState extends State<SeatWidget> {
               ? ValueNotifier(null)
               : ZegoLiveAudioRoomManager().seatList[widget.index].currentUser,
           builder: (context, value, child) {
+            final roomController = Get.find<RoomController>();
             return Obx(
               () {
                 RxBool isSpeaking = false.obs;
@@ -79,10 +87,9 @@ class _SeatWidgetState extends State<SeatWidget> {
                         .any((element) => element == value?.userID);
                 bool isMutedToAll = controller.mutedList
                     .any((element) => element == controller.user.id.toString());
-                final privi = controller.apiUsers
-                    .firstWhereOrNull(
-                        (element) => element.id.toString() == value?.userID)
-                    ?.privileges;
+
+                final user = controller.apiUsers.firstWhereOrNull(
+                    (element) => element.id.toString() == value?.userID);
                 return InkWell(
                   onTap: widget.isLoading
                       ? null
@@ -111,102 +118,132 @@ class _SeatWidgetState extends State<SeatWidget> {
                             }
                           }
                         },
-                  child: SizedBox(
-                    width: 1.w(context) / 8,
-                    // height: privi != null && privi.categoryId != 0 ? 82 : 75,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Stack(
-                          clipBehavior: Clip.none,
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              clipBehavior: Clip.none,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorManager.white.withOpacity(.3),
-                              ),
-                              child: isLocked
-                                  ? const Icon(
-                                      Icons.lock,
-                                      color: ColorManager.white,
-                                      size: 34,
-                                    )
-                                  : value != null
-                                      ? Stack(
-                                          alignment: Alignment.center,
-                                          clipBehavior: Clip.none,
-                                          children: [
-                                            RippleAnimation(
-                                              color: ColorManager.rippleColor,
-                                              delay: Duration.zero,
-                                              repeat: true,
-                                              maxRadius:
-                                                  isUserSpeaking ? 22 : 0,
-                                              minRadius:
-                                                  isUserSpeaking ? 22 : 0,
-                                              ripplesCount: 10,
-                                              duration: const Duration(
-                                                  milliseconds: 6 * 300),
-                                              child: AppImage(
-                                                image: controller
-                                                    .getUserImage(value.userID),
-                                                isCircle: true,
-                                                fit: BoxFit.cover,
-                                                height: 40,
-                                                width: 40,
-                                                errorWidget: controller
-                                                    .userErrorImageWidget(),
-                                              ),
-                                            ),
-                                            if (isMuted)
-                                              Container(
-                                                width: 50,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: ColorManager.black
-                                                      .withOpacity(.3),
-                                                ),
-                                                child: const Icon(
-                                                  Icons.mic_off_outlined,
-                                                  color: ColorManager.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 1.0),
+                    child: SizedBox(
+                      width: 1.w(context) / 8,
+                      // height: privi != null && privi.categoryId != 0 ? 82 : 75,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Stack(
+                            clipBehavior: Clip.none,
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                width: 70,
+                                height: 70,
+                                clipBehavior: Clip.none,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: ColorManager.white.withOpacity(.3),
+                                ),
+                                child: isLocked
+                                    ? const Icon(
+                                        Icons.lock,
+                                        color: ColorManager.white,
+                                        size: 34,
+                                      )
+                                    : value != null
+                                        ? Stack(
+                                            alignment: Alignment.center,
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              RippleAnimation(
+                                                color: ColorManager.rippleColor,
+                                                delay: Duration.zero,
+                                                repeat: true,
+                                                maxRadius:
+                                                    isUserSpeaking ? 22 : 0,
+                                                minRadius:
+                                                    isUserSpeaking ? 22 : 0,
+                                                ripplesCount: 10,
+                                                duration: const Duration(
+                                                    milliseconds: 6 * 300),
+                                                child: AppImage(
+                                                  image:
+                                                      controller.getUserImage(
+                                                          value.userID),
+                                                  isCircle: true,
+                                                  fit: BoxFit.cover,
+                                                  height: 40,
+                                                  width: 40,
+                                                  errorWidget: controller
+                                                      .userErrorImageWidget(),
                                                 ),
                                               ),
-                                          ],
-                                        )
-                                      : const Icon(
-                                          Icons.mic_none_outlined,
-                                          color: ColorManager.white,
-                                          size: 34,
-                                        ),
-                            ),
-                            if (privi != null)
-                              PrivilegeDataView(
-                                url: privi.data.profileFrame.file,
-                                fit: BoxFit.cover,
-                                width: 55,
-                                height: 55,
+                                              if (user?.isVip == 1)
+                                                PrivilegeDataView(
+                                                  url: user!.privileges.data
+                                                      .profileFrame.file,
+                                                  fit: BoxFit.cover,
+                                                  height: 70,
+                                                  width: 70,
+                                                ),
+                                              if (isMuted)
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: ColorManager.black
+                                                        .withOpacity(.3),
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.mic_off_outlined,
+                                                    color: ColorManager.white,
+                                                  ),
+                                                ),
+                                            ],
+                                          )
+                                        : const Icon(
+                                            Icons.mic_none_outlined,
+                                            color: ColorManager.white,
+                                            size: 34,
+                                          ),
                               ),
-                          ],
-                        ),
-                        3.5.verticalSpace(),
-                        Text(
-                          isLocked
-                              ? AppStrings.locked
-                              : value != null
-                                  ? value.userName
-                                  : (widget.index + 1).toString(),
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          style: Get.textTheme.bodySmall!.copyWith(
-                            fontSize: AppSize.s12(context),
+                            ],
                           ),
-                        ),
-                      ],
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  if (!isEmptySeat && user != null)
+                                    SizedBox(
+                                      width: constraints.maxWidth * 0.3,
+                                      child: Icon(
+                                        Icons.person,
+                                        color: user.role == 'owner'
+                                            ? Colors.red
+                                            : user.role == 'admin'
+                                                ? Colors.yellow
+                                                : Colors.grey,
+                                        size: 10,
+                                      ),
+                                    ),
+                                  SizedBox(
+                                    width: constraints.maxWidth * 0.7,
+                                    child: Text(
+                                      isLocked
+                                          ? AppStrings.locked
+                                          : value != null
+                                              ? value.userName
+                                              : (widget.index + 1).toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: Get.textTheme.bodySmall!.copyWith(
+                                        fontSize: AppSize.s11(context),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );

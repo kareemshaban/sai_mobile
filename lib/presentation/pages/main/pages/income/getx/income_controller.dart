@@ -14,7 +14,6 @@ import 'package:new_sai/presentation/widgets/app_utils/app_snack_bar.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 class IncomeController extends GetxController {
-
   final RxBool _loadingUsers = false.obs;
   final RxBool _loadingUsersPagination = false.obs;
   final RxList<UserEntity> _users = <UserEntity>[].obs;
@@ -70,19 +69,28 @@ class IncomeController extends GetxController {
 
     final response = await _getUsersTypeUseCase.execute({
       'page': userNumbersPage,
-      'type': "following",
+      // 'type': "following",
+      'type': "follow",
     });
-
     response.fold(
       (l) {
         showSnackBarWidget(message: l.message);
       },
       (r) {
         userNumbersPage++;
+
        for(int i =0 ; i<r.list.data.length;i++){
-        if(r.list.data[i].isFriend==true || r.list.data[i].isFollow==true){
-        users.add(r.list.data[i]);
-        }
+
+         if ((r.list.data[i].isFriend == true &&
+             (r.list.data[i].track == "private" ||
+                 r.list.data[i].track == "all") ||
+             (r.list.data[i].isFollowing == true &&
+                 r.list.data[i].track == "all")) && r.list.data[i].room?.id != 0 && r.list.data[i].room != null) {
+           users.add(r.list.data[i]);
+         }
+        // if(r.list.data[i].isFriend==true || r.list.data[i].isFollow==true){
+        // users.add(r.list.data[i]);
+        // }
        }
         usersPagination = r.list.pagination;
       },

@@ -14,6 +14,201 @@ import 'package:new_sai/presentation/widgets/app_icon.dart';
 import 'package:new_sai/presentation/widgets/app_image.dart';
 import 'package:new_sai/presentation/widgets/app_utils/app_snack_bar.dart';
 import 'package:new_sai/presentation/widgets/privilege_data_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:new_sai/app/constants.dart';
+import 'package:new_sai/app/extensions.dart';
+import 'package:new_sai/presentation/pages/main/pages/profile/getx/profile_controller.dart';
+import 'package:new_sai/presentation/resources/assets_manger.dart';
+import 'package:new_sai/presentation/resources/color_manger.dart';
+import 'package:new_sai/presentation/resources/font_manger.dart';
+import 'package:new_sai/presentation/resources/routes_manger.dart';
+import 'package:new_sai/presentation/resources/string_manger.dart';
+import 'package:new_sai/presentation/widgets/app_icon.dart';
+import 'package:new_sai/presentation/widgets/app_image.dart';
+import 'package:new_sai/presentation/widgets/app_utils/app_snack_bar.dart';
+import 'package:new_sai/presentation/widgets/privilege_data_view.dart';
+// class UserCoverAndInfoWidget extends GetView<ProfileController> {
+//   const UserCoverAndInfoWidget({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Obx(
+//           () => SizedBox(
+//         width: 1.w(context),
+//         height: 295 + 12,
+//         child: Stack(
+//           children: [
+//             Opacity(
+//               opacity: .5,
+//               child: Container(
+//                 width: 1.w(context),
+//                 height: 280,
+//                 decoration: BoxDecoration(
+//                   gradient: ColorManager.coverImageColor,
+//                 ),
+//                 child: AppImage(
+//                   image: controller.appController.user.profileCover,
+//                   fit: BoxFit.cover,
+//                   errorWidget: const SizedBox.shrink(),
+//                 ),
+//               ),
+//             ),
+//             SafeArea(
+//               child: Padding(
+//                 padding: const EdgeInsets.symmetric(horizontal: 16),
+//                 child: Column(
+//                   children: [
+//                     Stack(
+//                       alignment: Alignment.center,
+//                       clipBehavior: Clip.none,
+//                       children: [
+//                         Obx(() => Container(
+//                           width: 90,
+//                           height: 90,
+//                           decoration: const BoxDecoration(
+//                             shape: BoxShape.circle,
+//                           ),
+//                           child: GestureDetector(
+//                             onTap: () {},
+//                             child: ClipRRect(
+//                               borderRadius: BorderRadius.circular(200),
+//                               child: AppImage(
+//                                 withCache: false,
+//                                 image: controller
+//                                     .appController.user.profileImg,
+//                                 width: 90,
+//                                 height: 90,
+//                                 isCircle: true,
+//                                 fit: BoxFit.cover,
+//                               ),
+//                             ),
+//                           ),
+//                         )),
+//                         PrivilegeDataView(
+//                           url: controller.appController.user.privileges.data
+//                               .profileFrame.file,
+//                           width: 120,
+//                           height: 120,
+//                         ),
+//                       ],
+//                     ),
+//                     1.verticalSpace(),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         const AppIcon(
+//                           icon: IconsAssets.verified,
+//                         ),
+//                         if(controller.appController.user.isVip == 1 )
+//                           AppImage(
+//                             image: controller.appController.user.privileges.categoryIcon,
+//                             height: 25.0,
+//                             width: 25.0,
+//                           ),
+//                         5.horizontalSpace(),
+//                         Text(
+//                           controller.appController.user.name,
+//                           style: Get.textTheme.titleLarge!.copyWith(
+//                             fontSize: AppSize.s24(context),
+//                             color: controller.appController.user.isVip == 1
+//                                 ? controller.appController.user.privileges.data
+//                                 .colorfulName.value.isNotEmpty
+//                                 ? controller
+//                                 .appController
+//                                 .user
+//                                 .privileges
+//                                 .data
+//                                 .colorfulName
+//                                 .value.toColor()
+//                                 : null
+//                                 : null,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     5.verticalSpace(),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         PrivilegeDataView(
+//                           url: controller.appController.user.privileges.data.badgePremium.file,
+//                           width: 30,
+//                           height: 30,
+//                         ),
+//                         5.horizontalSpace(),
+//                         PrivilegeDataView(
+//                           url: controller.appController.user.privileges.data.exclusiveNameCard.file,
+//                           width: 70,
+//                           height: 40,
+//                         ),
+//                       ],
+//                     ),
+//                     5.verticalSpace(),
+//                     InkWell(
+//                       onTap: () {
+//                         Clipboard.setData(ClipboardData(
+//                             text: controller.appController.user.referenceId
+//                                 .toString()))
+//                             .then((_) {
+//                           showSnackBarWidget(
+//                             message: AppStrings.copied,
+//                             color: ColorManager.green,
+//                           );
+//                         });
+//                       },
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.center,
+//                         children: [
+//                           Text(
+//                             "ID : ${controller.appController.user.referenceId}",
+//                             style: Get.textTheme.headlineMedium!.copyWith(
+//                               fontSize: AppSize.s20(context),
+//                               color: ColorManager.textGrey3,
+//                             ),
+//                           ),
+//                           5.horizontalSpace(),
+//                           Container(
+//                             margin: EdgeInsets.only(bottom: 5.0),
+//                             child: const Icon(
+//                               Icons.copy,
+//                               color: ColorManager.textGrey3,
+//                               size: 20,
+//                             ),
+//                           ),
+//                           if (controller
+//                               .appController.user.badges.isNotEmpty) ...[
+//                             2.horizontalSpace(),
+//                             PrivilegeDataView(
+//                               url: controller.appController.user.badges.first,
+//                               isBadges: true,
+//                               width: 35,
+//                               height: 35,
+//                               fit: BoxFit.cover,
+//                             ),
+//                           ],
+//                         ],
+//                       ),
+//                     ),
+//                     5.verticalSpace(),
+//                     Text(
+//                       controller.appController.user.country.name,
+//                       style: Get.textTheme.titleMedium!.copyWith(
+//                           fontSize: AppSize.s18(context),
+//                           fontWeight: FontWeight.bold),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class UserCoverAndInfoWidget extends GetView<ProfileController> {
   const UserCoverAndInfoWidget({super.key});
@@ -21,7 +216,7 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => SizedBox(
+          () => SizedBox(
         width: 1.w(context),
         height: 295 + 12,
         child: Stack(
@@ -51,32 +246,32 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                       clipBehavior: Clip.none,
                       children: [
                         Obx(() => Container(
-                              width: 90,
-                              height: 90,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
+                          width: 90,
+                          height: 90,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(200),
+                              child: AppImage(
+                                withCache: false,
+                                image: controller
+                                    .appController.user.profileImg,
+                                width: 90,
+                                height: 90,
+                                isCircle: true,
+                                fit: BoxFit.cover,
                               ),
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(200),
-                                  child: AppImage(
-                                    withCache: false,
-                                    image: controller
-                                        .appController.user.profileImg,
-                                    width: 90,
-                                    height: 90,
-                                    isCircle: true,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            )),
+                            ),
+                          ),
+                        )),
                         PrivilegeDataView(
                           url: controller.appController.user.privileges.data
                               .profileFrame.file,
-                          width: 120,
-                          height: 120,
+                          width: 140,
+                          height: 140,
                         ),
                       ],
                     ),
@@ -88,11 +283,11 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                           icon: IconsAssets.verified,
                         ),
                         if(controller.appController.user.isVip == 1 )
-                        AppImage(
-                          image: controller.appController.user.privileges.categoryIcon,
-                        height: 25.0,
-                        width: 25.0,
-                      ),
+                          AppImage(
+                            image: controller.appController.user.privileges.categoryIcon,
+                            height: 25.0,
+                            width: 25.0,
+                          ),
                         5.horizontalSpace(),
                         Text(
                           controller.appController.user.name,
@@ -100,43 +295,56 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                             fontSize: AppSize.s24(context),
                             color: controller.appController.user.isVip == 1
                                 ? controller.appController.user.privileges.data
-                                        .colorfulName.value.isNotEmpty
-                                    ? controller
-                                        .appController
-                                        .user
-                                        .privileges
-                                        .data
-                                        .colorfulName
-                                        .value.toColor()
-                                    : null
+                                .colorfulName.value.isNotEmpty
+                                ? controller
+                                .appController
+                                .user
+                                .privileges
+                                .data
+                                .colorfulName
+                                .value.toColor()
+                                : null
                                 : null,
                           ),
                         ),
                       ],
                     ),
                     5.verticalSpace(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        PrivilegeDataView(
-                          url: controller.appController.user.privileges.data.badgePremium.file,
-                          width: 30,
-                          height: 30,
-                        ),
-                        5.horizontalSpace(),
-                        PrivilegeDataView(
-                          url: controller.appController.user.privileges.data.exclusiveNameCard.file,
-                          width: 70,
-                          height: 40,
-                        ),
-                      ],
-                    ),
+                    if(controller.appController.user.isVip == 1 )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          PrivilegeDataView(
+                            url: controller.appController.user.privileges.data.badgePremium.file,
+                            width: 30,
+                            height: 30,
+                          ),
+                          5.horizontalSpace(),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5.0 , vertical: 2.0),
+                            decoration: BoxDecoration(
+                                color: controller.appController.user.privileges.data.colorfulName.value.toColor(),
+                                borderRadius: BorderRadius.circular(10.0)
+                            ),
+                            child: Row(
+                              children: [
+                                Text(controller.appController.user.privileges.categoryName , style: Get.textTheme.bodySmall!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: AppSize.s15(context),
+                                )),
+                                5.horizontalSpace(),
+                                AppImage(image: controller.appController.user.privileges.categoryIcon , height: 20, width: 20,),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     5.verticalSpace(),
                     InkWell(
                       onTap: () {
                         Clipboard.setData(ClipboardData(
-                                text: controller.appController.user.referenceId
-                                    .toString()))
+                            text: controller.appController.user.referenceId
+                                .toString()))
                             .then((_) {
                           showSnackBarWidget(
                             message: AppStrings.copied,

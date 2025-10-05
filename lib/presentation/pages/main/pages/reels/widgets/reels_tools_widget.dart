@@ -94,7 +94,7 @@ class ReelsToolsWidget extends StatelessWidget {
                 ],
               ),
             ),
-            20.verticalSpace(),
+            15.verticalSpace(),
             InkWell(
               onTap: onTapLike,
               child: Icon(
@@ -188,7 +188,7 @@ class ReelsToolsWidget extends StatelessWidget {
                 ),
               ),
             ],
-            50.verticalSpace(),
+            // 50.verticalSpace(),
           ],
         ),
       ),
