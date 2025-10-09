@@ -1,6 +1,7 @@
 import 'package:better_player_plus/src/video_player/video_player.dart'
     show VideoPlayerController;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';

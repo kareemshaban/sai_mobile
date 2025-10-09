@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:new_sai/app/app_controller.dart';
 import 'package:new_sai/app/extensions.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/getx/room_controller.dart';
+import 'package:new_sai/presentation/pages/room_pages/room/widget/room_dilaog/cancel_membership_dialog.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_dilaog/fire_user_dialog.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_dilaog/invite_memper_dialog.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_dilaog/mute_user_to_all_dialog.dart';
@@ -31,7 +32,9 @@ class UserProfileBottomSheet extends GetView<RoomController> {
           bool isMuted = controller.mutedList.any(
                   (element) => element == controller.userProfile.id.toString());
           final privilege = controller.userProfile.privileges.data;
-          bool isVIPActive = !Get.find<AppController>().vipActive;
+          final user = controller.apiUsers.firstWhereOrNull(
+                (e) => e.id.toString().trim() == controller.appController.user.id.toString().trim(),
+          );
           return Container(
             width: 1.w(context),
             padding: const EdgeInsets.all(22),
@@ -299,51 +302,63 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                         ),
                       ],
                     ),
-                    if (controller.isAdmin() &&
-                        controller.userProfile.role != 'owner') ...[
-                      10.verticalSpace(),
-                      const Divider(height: 0),
-                      10.verticalSpace(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Get.back();
-                              Get.dialog(const InviteMemperDialog());
-                            },
-                            child: const Icon(
-                              Icons.person,
-                              color: ColorManager.primary,
-                              size: 22,
+                    if (controller.userProfile.role != 'owner') ...[
+                      if(user?.role == 'owner' || user?.role == 'admin')...[
+                        10.verticalSpace(),
+                        const Divider(height: 0),
+                        10.verticalSpace(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                                Get.dialog(CancelMembershipDialog(controller.userProfile.id.toString()));
+                              },
+                              child: const Icon(
+                                Icons.person_remove,
+                                color: ColorManager.primary,
+                                size: 22,
+                              ),
                             ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.back();
-                              Get.dialog(const MuteUserToAllDialog());
-                            },
-                            child: Icon(
-                              isMuted
-                                  ? Icons.mic_external_off_rounded
-                                  : Icons.mic_external_on,
-                              color: ColorManager.primary,
-                              size: 22,
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                                Get.dialog(const InviteMemperDialog());
+                              },
+                              child: const Icon(
+                                Icons.person,
+                                color: ColorManager.primary,
+                                size: 22,
+                              ),
                             ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.back();
-                              Get.dialog(const FireUserDialog());
-                            },
-                            child: const Icon(
-                              Icons.exit_to_app,
-                              color: ColorManager.primary,
-                              size: 22,
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                                Get.dialog(const MuteUserToAllDialog());
+                              },
+                              child: Icon(
+                                isMuted
+                                    ? Icons.mic_external_off_rounded
+                                    : Icons.mic_external_on,
+                                color: ColorManager.primary,
+                                size: 22,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                                Get.dialog(const FireUserDialog());
+                              },
+                              child: const Icon(
+                                Icons.exit_to_app,
+                                color: ColorManager.primary,
+                                size: 22,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ]
                     ],
                   ],
                 ),

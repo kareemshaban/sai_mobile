@@ -18,24 +18,9 @@ class CreateStoryButton extends StatelessWidget {
           'isStory': true,
         },
       ),
-      child: Column(
-        children: [
-          Container(
-            height: 55,
-            width: 55,
-            decoration: BoxDecoration(
-              color: ColorManager.lightGreyColor.withOpacity(.8),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.add,
-              color: ColorManager.primary,
-
-            ),
-          ),
-          1.verticalSpace(),
-
-        ],
+      child: const Icon(
+        Icons.add,
+        color: ColorManager.white,
       ),
     );
   }

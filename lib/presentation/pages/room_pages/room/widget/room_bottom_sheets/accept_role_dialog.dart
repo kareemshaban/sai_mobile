@@ -71,6 +71,8 @@ class AcceptRoleDialog extends GetView<RoomController> {
                         (l) => print('❌ فشل التحديث: ${l.toString()}'),
                         (r) async {
                           await controller.updateZegoUserRole(params);
+                          final user = controller.apiUsers.firstWhereOrNull(
+                                  (element) => element.id.toString() == controller.appController.user.id.toString());
                           await controller.getRoomMempers();
                           controller.room = controller.room.updateRole(params.role ?? 'guest');
                           controller.newRoom.refresh();

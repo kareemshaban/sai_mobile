@@ -37,7 +37,9 @@ class ColorManager {
   static const Color topSenderColor2 = Color(0xFFFFBC06);
   static const Color topBillionaireColor2 = Color(0xFFFD757A);
   static const Color privacyColor = Color(0xFFE8E8E8);
-
+  static const Color purpleColor = Color(0xff312a64);
+  static const Color darkPurpleColor = Color(0xff080817);
+  static const Color colorSmallFonts = Color(0xFFA0A0A0);
   static LinearGradient gradientScaffoldColor = const LinearGradient(
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
@@ -64,4 +66,5 @@ class ColorManager {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
+
 }

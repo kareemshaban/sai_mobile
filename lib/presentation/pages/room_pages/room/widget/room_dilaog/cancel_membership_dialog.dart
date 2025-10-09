@@ -8,7 +8,8 @@ import 'package:new_sai/presentation/resources/string_manger.dart';
 import 'package:new_sai/presentation/widgets/app_button.dart';
 
 class CancelMembershipDialog extends GetView<RoomController> {
-  const CancelMembershipDialog({super.key});
+  final String id ;
+  const CancelMembershipDialog(this.id, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class CancelMembershipDialog extends GetView<RoomController> {
                   child: AppButton(
                     title: AppStrings.cancel,
                     backgroundColor: ColorManager.red,
-                    onTap: controller.cancelMembership,
+                    onTap: id == '' ? controller.cancelMembershipForUsers  : controller.cancelMembership(id),
                   ),
                 ),
               ],

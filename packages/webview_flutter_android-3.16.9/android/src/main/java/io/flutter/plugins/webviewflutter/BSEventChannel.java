@@ -11,7 +11,7 @@ public class BSEventChannel implements EventChannel.StreamHandler {
     public static EventChannel channel;
 
     // Register using FlutterPluginBinding
-    public static BSEventChannel registerWithPluginBinding(FlutterPlugin.FlutterPluginBinding binding) {
+    public static BSEventChannel registerWith(FlutterPlugin.FlutterPluginBinding binding) {
         channel = new EventChannel(binding.getBinaryMessenger(), CHANNEL);
         BSEventChannel instance = new BSEventChannel();
         channel.setStreamHandler(instance);
@@ -19,7 +19,12 @@ public class BSEventChannel implements EventChannel.StreamHandler {
     }
 
     // Register using PluginRegistry.Registrar (for older embedding)
-
+    public static BSEventChannel registerWith(PluginRegistry.Registrar registrar) {
+        channel = new EventChannel(registrar.messenger(), CHANNEL);
+        BSEventChannel instance = new BSEventChannel();
+        channel.setStreamHandler(instance);
+        return instance;
+    }
 
     @Override
     public void onListen(Object arguments, EventChannel.EventSink events) {

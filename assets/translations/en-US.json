@@ -489,5 +489,7 @@
   "confirmLogout": "Are You Sure , you need to end your current session !",
   "empty": "Empty",
   "noData": "No Data To Load",
-  "roomTheme": "Room Theme"
+  "roomTheme": "Room Theme",
+  "error_message_for_vip_image": "Sending images is available for VIP members only.Upgrade to activate this feature.",
+  "request_speak": "Request Speak"
 }

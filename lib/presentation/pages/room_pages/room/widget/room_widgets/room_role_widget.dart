@@ -20,7 +20,7 @@ class RoomRoleWidget extends GetView<RoomController> {
               : () {
                   if (controller.room.role == 'member' ||
                       controller.room.role == 'admin') {
-                    Get.dialog(const CancelMembershipDialog());
+                    Get.dialog(const CancelMembershipDialog(''));
                   } else {
                     Get.dialog(const JoinAsMemberDialog());
                   }

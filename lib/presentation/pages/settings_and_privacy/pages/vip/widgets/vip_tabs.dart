@@ -57,13 +57,10 @@ class VipTabs extends GetView<VipController> {
             isScrollable: true,
             controller: controller.tabController,
             tabAlignment: TabAlignment.start,
-            indicator: const UnderlineTabIndicator(
-              borderSide: BorderSide(
-                width: 3.0,
-                color: ColorManager.primary, // اختار اللون اللي تحبه
-              ),
-              insets: EdgeInsets.symmetric(horizontal: 16.0), // المسافة من الجنب
-            ),
+            dividerColor: Colors.transparent,
+            indicatorColor: ColorManager.primary ,
+            indicatorWeight: 4.0,
+            indicatorPadding: const EdgeInsets.symmetric(horizontal: 12.0),
             tabs: List.generate(
               controller.premium.data.length,
                   (index) {

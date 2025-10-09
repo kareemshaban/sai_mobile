@@ -621,7 +621,7 @@ class RoomView extends GetView<RoomController> {
                         start: 20,
                         child: RoomMusicPlayer(),
                       ),
-                    if (controller.isPlayingGame.value) GamePageInRoom(),
+                    if (controller.isPlayingGame.value) const GamePageInRoom(),
                   ],
                 );
               }

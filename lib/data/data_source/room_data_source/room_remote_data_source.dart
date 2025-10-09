@@ -428,4 +428,11 @@ class RoomRemoteDataSourceImpl extends RoomRemoteDataSource {
     );
   }
 
+  Future<BaseMapModel<UserModel>> requestMic(int room , int micNumber) async {
+    return await _appServiceClient.performGetRequest(
+      EndPoint.requestMic(room , micNumber),
+      UserModel.fromJson,
+    );
+  }
+
 }

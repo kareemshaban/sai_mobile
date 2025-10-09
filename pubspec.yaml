@@ -98,15 +98,13 @@ dependencies:
 
 
   http: ^1.4.0
-  webview_flutter:
-    path: packages/webview_flutter-4.9.0
   wakelock_plus: ^1.3.2
   shimmer_animation: ^2.2.2
   shimmer: ^3.0.0
   emoji_picker_flutter: ^4.3.0
-dependency_overrides:
-  webview_flutter_android:
-    path: packages/webview_flutter_android-3.16.9
+  webview_flutter: ^4.13.0
+  webview_flutter_android: ^4.10.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -143,6 +141,12 @@ flutter:
     - family: NotoSansArabic
       fonts:
         - asset: assets/fonts/NotoSansArabic-Regular.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+    - family: SfProDisplay
+      fonts:
+        - asset: assets/fonts/SF-Pro-Display-Regular.otf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

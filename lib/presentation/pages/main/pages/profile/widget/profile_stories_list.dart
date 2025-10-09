@@ -18,22 +18,19 @@ class ProfileStoriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return stories.isNotEmpty ?  SizedBox(
       height: 90,
       child: ListView.separated(
         controller: scrollController,
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemBuilder: (context, index) {
-          if (isMyStory && index == 0) {
-            return const CreateStoryButton();
-          }
           return ProfileStoryItem(
-              model: stories[isMyStory ? index - 1 : index]);
+              model: stories[index]);
         },
         separatorBuilder: (context, index) => 13.5.horizontalSpace(),
-        itemCount: isMyStory ? stories.length + 1 : stories.length,
+        itemCount:stories.length,
       ),
-    );
+    ) : const SizedBox();
   }
 }

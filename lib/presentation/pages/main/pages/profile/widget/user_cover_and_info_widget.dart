@@ -218,7 +218,7 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
     return Obx(
           () => SizedBox(
         width: 1.w(context),
-        height: 295 + 12,
+        height: 280,
         child: Stack(
           children: [
             Opacity(
@@ -282,17 +282,10 @@ class UserCoverAndInfoWidget extends GetView<ProfileController> {
                         const AppIcon(
                           icon: IconsAssets.verified,
                         ),
-                        if(controller.appController.user.isVip == 1 )
-                          AppImage(
-                            image: controller.appController.user.privileges.categoryIcon,
-                            height: 25.0,
-                            width: 25.0,
-                          ),
-                        5.horizontalSpace(),
                         Text(
                           controller.appController.user.name,
                           style: Get.textTheme.titleLarge!.copyWith(
-                            fontSize: AppSize.s24(context),
+                            fontSize: AppSize.s20(context),
                             color: controller.appController.user.isVip == 1
                                 ? controller.appController.user.privileges.data
                                 .colorfulName.value.isNotEmpty

@@ -11,7 +11,7 @@ ThemeData getApplicationTheme(BuildContext context) => ThemeData(
       scaffoldBackgroundColor: ColorManager.scaffoldBackground,
       textTheme: TextTheme(
         bodyLarge: getBoldStyle(
-            color: ColorManager.white, fontSize: AppSize.s20(context)),
+            color: ColorManager.white, fontSize: AppSize.s20(context) ,),
         bodyMedium: getMediumStyle(
             color: ColorManager.white, fontSize: AppSize.s16(context)),
         bodySmall: getRegularStyle(
@@ -75,12 +75,14 @@ ThemeData getApplicationTheme(BuildContext context) => ThemeData(
         selectionColor: ColorManager.primary.withOpacity(0.5),
         selectionHandleColor: ColorManager.primary,
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: ColorManager.scaffoldBackground,
         scrolledUnderElevation: 0,
         titleSpacing: 10,
         elevation: 0,
         centerTitle: true,
+        titleTextStyle: getBoldStyle(
+            color: ColorManager.black, fontSize: AppSize.s20(context)),
       ),
       datePickerTheme: DatePickerThemeData(
         backgroundColor: ColorManager.white,

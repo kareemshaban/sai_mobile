@@ -28,8 +28,8 @@ class UserButtons extends StatelessWidget {
             children: [
               Text(AppStrings.editProfile, style: TextStyle(fontSize: AppSize.s11(context),
                   fontWeight: FontWeight.bold , color: Colors.black),),
-              SizedBox(width: 5.0,),
-              Icon(Icons.edit , color: Colors.black,),
+              const SizedBox(width: 5.0,),
+              const Icon(Icons.edit , color: Colors.black,),
             ],
           ),
         ),
@@ -44,8 +44,8 @@ class UserButtons extends StatelessWidget {
           children: [
           Text(AppStrings.shareProfile, style: TextStyle(fontSize: AppSize.s11(context),
           fontWeight: FontWeight.bold , color: Colors.black),),
-          SizedBox(width: 5.0,),
-          Icon(Icons.share , color: Colors.black,),
+          const SizedBox(width: 5.0,),
+          const Icon(Icons.share , color: Colors.black,),
           ],
           ),
           onTap: () {

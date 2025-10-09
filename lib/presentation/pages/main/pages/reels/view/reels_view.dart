@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/app_permission.dart';
 import 'package:new_sai/app/extensions.dart';
@@ -17,6 +18,12 @@ class ReelsView extends GetView<ReelsController> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
+      ));
+    });
     return Obx(
       () => controller.loadingGetReels
           ? Container(

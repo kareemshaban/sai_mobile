@@ -117,6 +117,8 @@ class EndPoint {
   static const String changePrivacy = "/user/privacy/change";
   static const String updateFcmToken = "/user/update-fcm";
   static const String appInfo = "/get-info";
+  static String requestMic(room , micNumber) => "/request-mic/$room/mic/$micNumber";
+  static String acceptRequestMic(room , requestId) => "/accept-request-mic/room/$room/$requestId";
   static String appSearch(AppSearchParams params) =>
       "/user/reels/filter/${params.filter}/${params.search}";
 

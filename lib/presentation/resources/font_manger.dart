@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'size_config.dart';
 
 class FontConstants {
-  static const String interFontFamily = 'NotoSansArabic';
+  static final String interFontFamily = Platform.isIOS ? 'SfProDisplay' : 'Poppins';
 }
 
 class FontWeightManger {

@@ -22,7 +22,7 @@ class ProfileReelsList extends StatelessWidget {
       itemCount: reels.length,
       controller: controller,
       shrinkWrap: !isScroll,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.only(top: 2),
       itemBuilder: (context, index) => ProfileReelsItem(
         model: reels[index],

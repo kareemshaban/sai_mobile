@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/extensions.dart';
@@ -28,13 +29,13 @@ class InviteMemperDialog extends GetView<RoomController> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              controller.userProfile.role=='guest'?
-              "${AppStrings.DoYouWantToSendAnInvitationToJoinTheRoom}":
-              controller.userProfile.role == 'member'
-  ? AppStrings.becomeadmin
-  : controller.userProfile.role == 'admin'
-    ? AppStrings.becomeaguest
-    : '',
+              controller.userProfile.role == 'guest'
+                  ? AppStrings.DoYouWantToSendAnInvitationToJoinTheRoom
+                  : controller.userProfile.role == 'member'
+                      ? AppStrings.becomeadmin
+                      : controller.userProfile.role == 'admin'
+                          ? AppStrings.becomeaguest
+                          : '',
               textAlign: TextAlign.center,
               style: Get.textTheme.labelLarge!.copyWith(
                 fontSize: AppSize.s18(context),
@@ -57,8 +58,10 @@ class InviteMemperDialog extends GetView<RoomController> {
                 Expanded(
                   child: AppButton(
                     title: AppStrings.update,
-                    onTap: ()async{
-                      print(controller.userProfile.role.toString());
+                    onTap: () async {
+                      if (kDebugMode) {
+                        print(controller.userProfile.role.toString());
+                      }
                       controller.sendTestMessageToUser();
                     },
                   ),

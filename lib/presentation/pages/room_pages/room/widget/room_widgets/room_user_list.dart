@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/constants.dart';
@@ -90,116 +89,168 @@ class RoomUserList extends GetView<RoomController> {
                 );
               }
 
-              final notLoaded = users.where((u) =>
-              !apiUsers.any((a) => a.id.toString().trim() == u.userID.trim()));
+              final notLoaded = users.where((u) => !apiUsers
+                  .any((a) => a.id.toString().trim() == u.userID.trim()));
               if (notLoaded.isNotEmpty) {
                 return Center(
-                  child: Row(
-                    children: [
-                      Shimmer.fromColors(
-                          baseColor: ColorManager.lightGreyColor.withOpacity(0.2),
-                          highlightColor: Colors.black,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(100.0),
-                                color: Colors.black),
-                            height: 30,
-                            width: 30,
-                          )),
-                      10.horizontalSpace(),
-                      Shimmer.fromColors(
-                          baseColor: ColorManager.lightGreyColor.withOpacity(0.2),
-                          highlightColor: Colors.black,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(100.0),
-                                color: Colors.black),
-                            height: 30,
-                            width: 30,
-                          )),
-                      10.horizontalSpace(),
-                      Shimmer.fromColors(
-                          baseColor: ColorManager.lightGreyColor.withOpacity(0.2),
-                          highlightColor: Colors.black,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(100.0),
-                                color: Colors.black),
-                            height: 30,
-                            width: 30,
-                          )),
-                    ],
-                  )
-                );
+                    child: Row(
+                  children: [
+                    Shimmer.fromColors(
+                        baseColor: ColorManager.lightGreyColor.withOpacity(0.2),
+                        highlightColor: Colors.black,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Colors.black),
+                          height: 30,
+                          width: 30,
+                        )),
+                    10.horizontalSpace(),
+                    Shimmer.fromColors(
+                        baseColor: ColorManager.lightGreyColor.withOpacity(0.2),
+                        highlightColor: Colors.black,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Colors.black),
+                          height: 30,
+                          width: 30,
+                        )),
+                    10.horizontalSpace(),
+                    Shimmer.fromColors(
+                        baseColor: ColorManager.lightGreyColor.withOpacity(0.2),
+                        highlightColor: Colors.black,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(100.0),
+                              color: Colors.black),
+                          height: 30,
+                          width: 30,
+                        )),
+                  ],
+                ));
               }
 
               return Row(
                 children: [
                   Expanded(
                     child: SizedBox(
-                      height: 22,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: users.length,
-                        itemBuilder: (context, index) {
-                          final currentUserId = users[index].userID.trim();
-                          final user = apiUsers.firstWhereOrNull(
-                                (e) => e.id.toString().trim() == currentUserId,
+                      height: 20,
+                      child: Builder(builder: (context) {
+                        final sortedUsers = [...users]..sort((a, b) {
+                          final userA = apiUsers.firstWhereOrNull(
+                                (e) => e.id.toString().trim() == a.userID.trim(),
+                          );
+                          final userB = apiUsers.firstWhereOrNull(
+                                (e) => e.id.toString().trim() == b.userID.trim(),
                           );
 
-                          if (user == null) return const SizedBox();
+                          int rank(user) {
+                            if (user == null) return 5;
+                            if (user.role == 'owner') return 1;
+                            if (user.role == 'admin') return 2;
+                            if (user.isVip == 1) return 3;
+                            return 4;
+                          }
 
-                          return InkWell(
-                            onTap: controller.loadingJoinRoom
-                                ? null
-                                : () => controller.openProfileBottomSheet(users[index].userID),
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              alignment: Alignment.center,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(52),
-                                  child: Image.network(
-                                    controller.getUserImage(users[index].userID),
-                                    errorBuilder: (context, error, stackTrace) =>
-                                    const AppImage(
-                                      image: Constants.userErrorWidget,
-                                      width: 26,
-                                      height: 26,
-                                      isCircle: true,
+                          return rank(userA).compareTo(rank(userB));
+                        });
+
+                        return ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: sortedUsers.length,
+                          itemBuilder: (context, index) {
+                            final currentUserId = sortedUsers[index].userID.trim();
+                            final user = apiUsers.firstWhereOrNull(
+                                  (e) => e.id.toString().trim() == currentUserId,
+                            );
+                            print(user!.role);
+
+                            if (user == null) return const SizedBox();
+
+                            return InkWell(
+                              key: ValueKey(currentUserId),
+                              onTap: controller.loadingJoinRoom
+                                  ? null
+                                  : () => controller.openProfileBottomSheet(
+                                sortedUsers[index].userID,
+                              ),
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                alignment: Alignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(52),
+                                    child: Image.network(
+                                      controller.getUserImage(sortedUsers[index].userID),
+                                      errorBuilder: (context, error, stackTrace) =>
+                                      const AppImage(
+                                        image: Constants.userErrorWidget,
+                                        width: 25,
+                                        height: 25,
+                                        isCircle: true,
+                                      ),
+                                      width: 25,
+                                      height: 25,
+                                      fit: BoxFit.cover,
                                     ),
-                                    width: 26,
-                                    height: 26,
-                                    fit: BoxFit.cover,
                                   ),
-                                ),
-                                if (user.isVip == 1)
-                                  PrivilegeDataView(
-                                    url: user.privileges.data.profileFrame.file,
-                                    width: 40,
-                                    height: 40,
-                                    fit: BoxFit.cover,
-                                  ),
-                                if (controller.mutedListLocally
-                                    .contains(users[index].userID) ||
-                                    controller.mutedList.contains(users[index].userID))
-                                  const PositionedDirectional(
-                                    top: -10,
-                                    end: -10,
-                                    child: Icon(
-                                      Icons.block,
-                                      color: ColorManager.red,
+
+                                  if (user.isVip == 1)
+                                    PrivilegeDataView(
+                                      url: user.privileges.data.profileFrame.file,
+                                      width: 35,
+                                      height: 35,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                              ],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) => 8.5.horizontalSpace(),
-                      ),
+
+                                  Obx((){
+                                    if (controller.mutedListLocally
+                                        .contains(sortedUsers[index].userID) ||
+                                        controller.mutedList
+                                            .contains(sortedUsers[index].userID)) {
+                                      return const PositionedDirectional(
+                                        top: -5,
+                                        end: 0,
+                                        child: Icon(
+                                          Icons.block,
+                                          color: ColorManager.red,
+                                          size: 15,
+                                        ),
+                                      );
+                                    }else{
+                                      return const SizedBox() ;
+                                    }
+                                  }),
+                                  Obx((){
+                                    if(controller.apiUsers.isNotEmpty) {
+                                      return PositionedDirectional(
+                                      bottom: user.isVip == 1 ? -5 : -2,
+                                      start:user.isVip == 1 ? 3 : -3,
+                                      child: Icon(
+                                        Icons.person,
+                                        color: user.role == 'owner'
+                                            ? Colors.red
+                                            : user.role == 'admin'
+                                            ? Colors.yellow
+                                            : Colors.grey,
+                                        size: 14,
+                                      ),
+                                    );
+                                    }else{
+                                      return const SizedBox() ;
+                                    }
+                            })
+                                ],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => 8.5.horizontalSpace(),
+                        );
+                      }),
                     ),
                   ),
                   const SizedBox(

@@ -132,7 +132,7 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware {
         binding.getApplicationContext(),
         new FlutterAssetManager.PluginBindingFlutterAssetManager(
             binding.getApplicationContext().getAssets(), binding.getFlutterAssets()));
-    bsEventChannel = BSEventChannel.registerWithPluginBinding(binding);
+    bsEventChannel = BSEventChannel.registerWith(binding);
 
   }
 

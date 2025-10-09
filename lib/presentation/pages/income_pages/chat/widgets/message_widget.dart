@@ -45,6 +45,7 @@ class MessageWidget extends StatelessWidget {
           9.horizontalSpace(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 constraints: BoxConstraints(
@@ -59,11 +60,13 @@ class MessageWidget extends StatelessWidget {
                 child: Linkify(
                   text: model.message,
                   style: Get.textTheme.titleSmall!.copyWith(
-                    fontSize: AppSize.s18(context),
+                    fontSize: AppSize.s14(context),
+                    fontWeight: FontWeightManger.medium,
                   ),
                   linkStyle: Get.textTheme.displayLarge!.copyWith(
-                    fontSize: AppSize.s18(context),
+                    fontSize: AppSize.s14(context),
                     color: ColorManager.primary,
+                    fontWeight: FontWeightManger.medium,
                   ),
                   onOpen: (link) async {
                     try {
@@ -111,11 +114,13 @@ class MessageWidget extends StatelessWidget {
                 child: Linkify(
                   text: model.message,
                   style: Get.textTheme.bodySmall!.copyWith(
-                    fontSize: AppSize.s18(context),
+                    fontSize: AppSize.s14(context),
+                    fontWeight: FontWeightManger.medium,
                   ),
                   linkStyle: Get.textTheme.titleLarge!.copyWith(
-                    fontSize: AppSize.s18(context),
+                    fontSize: AppSize.s14(context),
                     color: ColorManager.white,
+                    fontWeight: FontWeightManger.medium,
                   ),
                   onOpen: (link) async {
                     try {
@@ -141,7 +146,8 @@ class MessageWidget extends StatelessWidget {
               Text(
                 model.createdAt,
                 style: Get.textTheme.labelSmall!.copyWith(
-                  fontSize: AppSize.s10(context),
+                  fontSize: AppSize.s12(context),
+                  color: ColorManager.colorSmallFonts
                 ),
               ),
             ],

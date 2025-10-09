@@ -9,12 +9,16 @@ class UserBio extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Text(
-        controller.appController.user.profileDescription,
-        textAlign: TextAlign.center,
-        style: Get.textTheme.titleSmall!.copyWith(
-          height: 2,
-          fontSize: AppSize.s15(context),
+      () => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        child: Text(
+          controller.appController.user.profileDescription,
+          textAlign: TextAlign.center,
+          maxLines: 3,
+          style: Get.textTheme.titleSmall!.copyWith(
+            height: 1.4,
+            fontSize: AppSize.s15(context),
+          ),
         ),
       ),
     );

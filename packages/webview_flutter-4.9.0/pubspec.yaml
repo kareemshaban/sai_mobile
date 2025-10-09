@@ -5,8 +5,8 @@ issue_tracker: https://github.com/flutter/flutter/issues?q=is%3Aissue+is%3Aopen+
 version: 4.9.0
 
 environment:
-  sdk: ^3.5.0
-  flutter: ">=3.24.0"
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.16.0"
 
 flutter:
   plugin:
@@ -21,7 +21,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  webview_flutter_android: ^3.16.0
+  webview_flutter_android: ">=3.16.0 <4.0.0"
   webview_flutter_platform_interface: ^2.10.0
   webview_flutter_wkwebview: ^3.15.0
 

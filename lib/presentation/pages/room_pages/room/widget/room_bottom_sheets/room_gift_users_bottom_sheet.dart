@@ -144,6 +144,7 @@ class _RoomGiftUsersBottomSheetState extends State<RoomGiftUsersBottomSheet> {
                     itemBuilder: (context, index) {
                       final userVip = controller.apiUsers.firstWhereOrNull(
                               (element) => element.id.toString() == users[index].fromId.toString());
+                      print(userVip) ;
                       final user = users[index];
                       return InkWell(
                         onTap: () => controller

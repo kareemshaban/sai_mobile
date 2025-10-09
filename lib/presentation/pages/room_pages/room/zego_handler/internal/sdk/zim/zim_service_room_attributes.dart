@@ -110,4 +110,5 @@ extension ZIMServiceRoom on ZIMService {
     roomAttributeBatchUpdatedStreamCtrl
         .add(ZIMServiceRoomAttributeBatchUpdatedEvent(roomID, updateInfo));
   }
+
 }

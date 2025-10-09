@@ -22,9 +22,16 @@ class GiftsBottomSheet extends GetView<RoomController> {
         : Container(
             width: 1.w(context),
             height: 300,
-            padding: const EdgeInsets.all(15),
-            decoration: const BoxDecoration(
-              color: ColorManager.black,
+            padding: const EdgeInsets.only(
+                top: 15.0, right: 10.0, left: 10.0, bottom: 15.0),
+            decoration:  const BoxDecoration(
+              gradient: LinearGradient(colors: [
+                ColorManager.purpleColor ,
+                ColorManager.darkPurpleColor,
+              ],
+                begin: AlignmentDirectional.topCenter,
+                end: AlignmentDirectional.bottomCenter
+              ),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(8),
                 topLeft: Radius.circular(8),
@@ -32,28 +39,108 @@ class GiftsBottomSheet extends GetView<RoomController> {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(
-                      () => Text(
-                        controller.appController.user.goldValue
-                            .formatCurrencyWithoutSymbol,
-                        style: Get.textTheme.titleSmall!.copyWith(
-                            fontSize: AppSize.s15(context),
-                            color: Colors.white),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: ColorManager.primary),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      PopupMenuButton<ZegoUser>(
+                        color: Colors.grey.shade800, //
+
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            ...controller.users
+                                .where((element) =>
+                                    element.userID !=
+                                    controller.user.id.toString())
+                                .toList()
+                                .map(
+                                  (e) => PopupMenuItem(
+                                    value: e,
+                                    child: Text(e.userName,
+                                        style: const TextStyle(
+                                            color: Colors.white)),
+                                  ),
+                                ),
+                            PopupMenuItem(
+                              value: ZegoUser(
+                                AppStrings.micsUser,
+                                AppStrings.micsUser,
+                              ),
+                              child: Text(AppStrings.micsUser,
+                                  style: const TextStyle(color: Colors.white)),
+                            ),
+                            PopupMenuItem(
+                              value: ZegoUser(
+                                AppStrings.all,
+                                AppStrings.all,
+                              ),
+                              child: Text(AppStrings.all,
+                                  style: const TextStyle(color: Colors.white)),
+                            ),
+                          ];
+                        },
+                        onSelected: controller.onChangeGiftUser,
+                        child: Obx(
+                          () => Row(
+                            children: [
+                              12.horizontalSpace(),
+                              Text(
+                                controller.selectedUserGift.userName,
+                                style: Get.textTheme.labelMedium!.copyWith(
+                                  fontSize: AppSize.s12(context),
+                                  color: ColorManager.white,
+                                ),
+                              ),
+                              4.horizontalSpace(),
+                              const Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 20,
+                                color: ColorManager.white,
+                              ),
+                              12.horizontalSpace(),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                    3.horizontalSpace(),
-                    const AppIcon(
-                      icon: IconsAssets.coins,
-                      width: 20,
-                      height: 20,
-                    ),
-                  ],
+                      InkWell(
+                        onTap: () {
+                          controller.selectedUserGift =
+                              ZegoUser(AppStrings.all, AppStrings.all);
+                        },
+                        child: Container(
+                          height: 27,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            color: ColorManager.primary,
+                            borderRadius: BorderRadiusDirectional.only(
+                              topEnd: Radius.circular(20),
+                              bottomEnd: Radius.circular(20),
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.home_work,
+                            color: ColorManager.white,
+                            size: 20,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 10.verticalSpace(),
+                Container(
+                  color: Colors.grey.withOpacity(0.2),
+                  width: double.infinity,
+                  height: 1.0,
+                ),
+                5.verticalSpace(),
                 SizedBox(
                   height: 20,
                   child: ListView.separated(
@@ -61,17 +148,13 @@ class GiftsBottomSheet extends GetView<RoomController> {
                     itemBuilder: (context, index) => Text(
                       controller.giftsCategories[index].name,
                       style: Get.textTheme.titleSmall!.copyWith(
-                          fontSize: AppSize.s15(context), color: Colors.white),
+                          fontSize: AppSize.s16(context),
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800),
                     ),
                     separatorBuilder: (context, index) => 10.horizontalSpace(),
                     itemCount: controller.giftsCategories.length,
                   ),
-                ),
-                5.verticalSpace(),
-                Container(
-                  color: Colors.grey,
-                  width: double.infinity,
-                  height: 1.0,
                 ),
                 10.verticalSpace(),
                 Expanded(
@@ -101,105 +184,30 @@ class GiftsBottomSheet extends GetView<RoomController> {
                     itemCount: controller.gifts.length,
                   ),
                 ),
-                15.verticalSpace(),
+                5.verticalSpace(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: ColorManager.primary),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          PopupMenuButton<ZegoUser>(
-                            color: Colors.grey.shade800, //
-
-                            itemBuilder: (BuildContext context) {
-                              return [
-                                ...controller.users
-                                    .where((element) =>
-                                        element.userID !=
-                                        controller.user.id.toString())
-                                    .toList()
-                                    .map(
-                                      (e) => PopupMenuItem(
-                                        value: e,
-                                        child: Text(e.userName,
-                                            style: const TextStyle(
-                                                color: Colors.white)),
-                                      ),
-                                    ),
-                                PopupMenuItem(
-                                  value: ZegoUser(
-                                    AppStrings.micsUser,
-                                    AppStrings.micsUser,
-                                  ),
-                                  child: Text(AppStrings.micsUser,
-                                      style:
-                                          const TextStyle(color: Colors.white)),
-                                ),
-                                PopupMenuItem(
-                                  value: ZegoUser(
-                                    AppStrings.all,
-                                    AppStrings.all,
-                                  ),
-                                  child: Text(AppStrings.all,
-                                      style:
-                                          const TextStyle(color: Colors.white)),
-                                ),
-                              ];
-                            },
-                            onSelected: controller.onChangeGiftUser,
-                            child: Obx(
-                              () => Row(
-                                children: [
-                                  12.horizontalSpace(),
-                                  Text(
-                                    controller.selectedUserGift.userName,
-                                    style: Get.textTheme.labelMedium!.copyWith(
-                                      fontSize: AppSize.s12(context),
-                                      color: ColorManager.white,
-                                    ),
-                                  ),
-                                  4.horizontalSpace(),
-                                  const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    size: 20,
-                                    color: ColorManager.white,
-                                  ),
-                                  12.horizontalSpace(),
-                                ],
-                              ),
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Obx(
+                          () => Text(
+                            controller.appController.user.goldValue
+                                .formatCurrencyWithoutSymbol,
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                fontSize: AppSize.s15(context),
+                                color: Colors.yellow,
+                                fontWeight: FontWeight.w800),
                           ),
-                          InkWell(
-                            onTap: () {
-                              controller.selectedUserGift =
-                                  ZegoUser(AppStrings.all, AppStrings.all);
-                            },
-                            child: Container(
-                              height: 27,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              alignment: Alignment.center,
-                              decoration: const BoxDecoration(
-                                color: ColorManager.primary,
-                                borderRadius: BorderRadiusDirectional.only(
-                                  topEnd: Radius.circular(20),
-                                  bottomEnd: Radius.circular(20),
-                                ),
-                              ),
-                              child: const Icon(
-                                Icons.home_work,
-                                color: ColorManager.white,
-                                size: 20,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                        3.horizontalSpace(),
+                        const AppIcon(
+                          icon: IconsAssets.coins,
+                          width: 20,
+                          height: 20,
+                        ),
+                      ],
                     ),
                     Container(
                       width: 120,
@@ -256,7 +264,6 @@ class GiftsBottomSheet extends GetView<RoomController> {
                           ),
                           InkWell(
                             onTap: () {
-
                               if (controller.selectedGift.goldValue >
                                   double.tryParse(controller
                                       .appController.user.goldValue
@@ -270,7 +277,6 @@ class GiftsBottomSheet extends GetView<RoomController> {
                               } else {
                                 controller.onSendGift();
                               }
-
                             },
                             // onTap: controller.onSendGift,
                             child: Container(

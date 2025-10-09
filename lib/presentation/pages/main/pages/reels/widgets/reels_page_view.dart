@@ -26,9 +26,9 @@ class ReelsPageView extends GetView<ReelsController> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, // خلفية شريط الحالة شفافة
-        statusBarIconBrightness: Brightness.light, // أيقونات بيضاء
-        statusBarBrightness: Brightness.light, // لأجهزة iOS
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.light,
       ),
       child: Scaffold(
         body: SafeArea(

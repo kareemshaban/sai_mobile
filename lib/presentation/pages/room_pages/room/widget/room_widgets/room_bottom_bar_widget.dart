@@ -126,10 +126,13 @@ class RoomBottomBarWidget extends GetView<RoomController> {
                           else
                           InkWell(
                               onTap: controller.onPickMessageImage,
-                              child: const AppIcon(
-                                icon: IconsAssets.gallery,
-                                width: 25,
-                                height: 25,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.grey.withOpacity(0.4),
+                                child: const AppIcon(
+                                  icon: IconsAssets.gallery,
+                                  width: 25,
+                                  height: 25,
+                                ),
                               ),
                             ),
                           5.horizontalSpace(),

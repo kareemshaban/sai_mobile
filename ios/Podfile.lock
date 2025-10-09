@@ -47,6 +47,8 @@ PODS:
   - DKPhotoGallery/Resource (0.0.19):
     - SDWebImage
     - SwiftyGif
+  - emoji_picker_flutter (0.0.1):
+    - Flutter
   - FBAEMKit (17.0.2):
     - FBSDKCoreKit_Basics (= 17.0.2)
   - FBSDKCoreKit (17.0.2):
@@ -238,6 +240,7 @@ DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - better_player_plus (from `.symlinks/plugins/better_player_plus/ios`)
   - camerawesome (from `.symlinks/plugins/camerawesome/ios`)
+  - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -312,6 +315,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/better_player_plus/ios"
   camerawesome:
     :path: ".symlinks/plugins/camerawesome/ios"
+  emoji_picker_flutter:
+    :path: ".symlinks/plugins/emoji_picker_flutter/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   firebase_core:
@@ -374,69 +379,70 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/zego_zim/ios"
 
 SPEC CHECKSUMS:
-  app_links: f3e17e4ee5e357b39d8b95290a9b2c299fca71c6
-  appinio_social_share: 2bc54f484f240a8d7e4bcb3260e6f11921ad64c7
-  audio_session: 19e9480dbdd4e5f6c4543826b2e8b0e4ab6145fe
-  better_player_plus: 89f911bd69171edfe6d2ee689014355036bffdb0
+  app_links: 76b66b60cc809390ca1ad69bfd66b998d2387ac7
+  appinio_social_share: 25605b916b5a35606a7f2ba8153d0218a4c0282e
+  audio_session: 9bb7f6c970f21241b19f5a3658097ae459681ba0
+  better_player_plus: 10794c0ed1b3b4ae058939e22a6172f850a2039b
   Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
-  camerawesome: 7ad7493b41b648d2fab64b1fd5ae08299b913120
+  camerawesome: a961fa32dafc00d2f093d824311c84f849586b58
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
+  emoji_picker_flutter: ece213fc274bdddefb77d502d33080dc54e616cc
   FBAEMKit: 619f96ea65427e8afca240d5b0f4703738dfdf5c
   FBSDKCoreKit: a5f384db2e9ee84e98494fed8f983d2bd79accff
   FBSDKCoreKit_Basics: d35c775aaf243a2d731dfae7be3a74b1987285ab
   FBSDKShareKit: e7ec3bed8e82dabc04e56f3cf44ef99a1864309e
-  file_picker: b159e0c068aef54932bb15dc9fd1571818edaf49
+  file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
   Firebase: d99ac19b909cd2c548339c2241ecd0d1599ab02e
-  firebase_core: d4cf851433d9aa90e6071aea763460566c02db16
-  firebase_messaging: 1a2cef42599e0c021e5bae2272a16f824be22b79
+  firebase_core: c727a02c560a53f1f1e56e18f16515eb5753c492
+  firebase_messaging: 4158969b04b667f5435731ec9d6e453bb58b0c4c
   FirebaseCore: efb3893e5b94f32b86e331e3bd6dadf18b66568e
   FirebaseCoreInternal: 9afa45b1159304c963da48addb78275ef701c6b4
   FirebaseInstallations: 317270fec08a5d418fdbc8429282238cab3ac843
   FirebaseMessaging: 3b26e2cee503815e01c3701236b020aa9b576f09
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
-  flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
-  flutter_media_metadata: 9db7298c789a54da26e0d2f6f808fa39bfd9bcd7
+  flutter_inappwebview_ios: b89ba3482b96fb25e00c967aae065701b66e9b99
+  flutter_local_notifications: 395056b3175ba4f08480a7c5de30cd36d69827e4
+  flutter_media_metadata: ad56576cf9c9842a1b23ca68195aeb816918de9b
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
-  geocoding_ios: d7460f56e80e118d57678efe5c2cdc888739ff18
-  geolocator_apple: 66b711889fd333205763b83c9dcf0a57a28c7afd
-  get_thumbnail_video: b9a180957daed3e9179e66268db51d8798e41f65
+  geocoding_ios: bcbdaa6bddd7d3129c9bcb8acddc5d8778689768
+  geolocator_apple: ab36aa0e8b7d7a2d7639b3b4e48308394e8cef5e
+  get_thumbnail_video: 1a754d46b860dffefcc57b7290a43089cd5d7e58
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   HLSCachingReverseProxyServer: 59935e1e0244ad7f3375d75b5ef46e8eb26ab181
-  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
-  just_audio: a42c63806f16995daf5b219ae1d679deb76e6a79
+  image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
+  just_audio: 4e391f57b79cad2b0674030a00453ca5ce817eed
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   NWWebSocket: b4741420f1976e1dff4da3edad00c401e4f1d769
-  on_audio_query_ios: e5afb0d4b42cfa3e8762d8ec1953540cb4f02100
-  open_filex: 6e26e659846ec990262224a12ef1c528bb4edbe4
+  on_audio_query_ios: 28a780e2d0d85d92d500ba6e12c6c8167022b2fa
+  open_filex: 432f3cd11432da3e39f47fcc0df2b1603854eff1
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
-  package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
-  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  photo_manager: 81954a1bf804b6e882d0453b3b6bc7fad7b47d3d
+  package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+  photo_manager: 1d80ae07a89a67dfbcae95953a1e5a24af7c3e62
   PINCache: d9a87a0ff397acffe9e2f0db972ac14680441158
   PINOperation: fb563bcc9c32c26d6c78aaff967d405aa2ee74a7
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  pusher_channels_flutter: 01297e6e420e0ad61a6e5901e27bb272a6f58ec2
+  pusher_channels_flutter: 19ee24691d26965e9efca571f1620f536b9882bf
   PusherSwift: fa3d5f6587c20ad5790de87a5c9b150367b5f0f5
-  record_ios: 1bbc430ab8406174d70332f23e06a3dc751239b4
+  record_ios: fee1c924aa4879b882ebca2b4bce6011bcfc3d8b
   SDWebImage: f29024626962457f3470184232766516dee8dfea
-  share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
-  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
-  sqflite_darwin: 5a7236e3b501866c1c9befc6771dfd73ffb8702d
+  share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
+  sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
   SwiftyBeaver: ade157e4f857812e7d7f15f2e3396bb8733f8a1c
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   TweetNacl: 3abf4d1d2082b0114e7a67410e300892448951e6
-  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
-  video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
-  wakelock_plus: 76957ab028e12bfa4e66813c99e46637f367fc7e
-  webview_flutter_wkwebview: a4af96a051138e28e29f60101d094683b9f82188
-  x_overlay: b8b048db7c317a1b06eed1e6fc7ec01ae5235ef2
-  zego_express_engine: 1ebcdc2f1c642a890ac8adc3ef2d798a3fccbede
-  zego_zim: dcf385cfc4a0d974d5ddf855df41d76f3a7473ec
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
+  video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
+  wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
+  webview_flutter_wkwebview: 1821ceac936eba6f7984d89a9f3bcb4dea99ebb2
+  x_overlay: c0a24272c4dace961bbc7fcd67deb1ae47e49141
+  zego_express_engine: 1164f43c703759f55e0751377425f660d15b2904
+  zego_zim: 54ca1d71cbd91c83bb56d63126016bd4a81f2777
   ZIM-Private: 70c76400eb99981920e6e1edc7c7ebe09aba7bfe
 
 PODFILE CHECKSUM: 196606e10beda61d25946b6802541c865d94d1d0

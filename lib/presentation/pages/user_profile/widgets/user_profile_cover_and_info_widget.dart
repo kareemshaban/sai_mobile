@@ -283,13 +283,6 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                         const AppIcon(
                           icon: IconsAssets.verified,
                         ),
-                        if(controller.user.isVip == 1 )
-                          AppImage(
-                            image: controller.user.privileges.categoryIcon,
-                            height: 25.0,
-                            width: 25.0,
-                          ),
-                        5.horizontalSpace(),
                         Text(
                           controller.user.name,
                           style: Get.textTheme.titleLarge!.copyWith(

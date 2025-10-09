@@ -649,6 +649,7 @@ class AppStrings {
   static String get ok => "ok".tr();
 
   static String get raiseHandRequest => "raiseHandRequest".tr();
+  static String get requestSpeak => "request_speak".tr();
 
   static String get yourRequestToSpeakWasDenied =>
       "yourRequestToSpeakWasDenied".tr();
@@ -1032,4 +1033,5 @@ class AppStrings {
   static String get empty => "empty".tr();
   static String get noData => "noData".tr();
   static String get roomTheme => "roomTheme".tr();
+  static String get errorMessageVipImage => "error_message_for_vip_image".tr();
 }

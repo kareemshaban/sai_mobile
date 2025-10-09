@@ -23,44 +23,45 @@ class GiftItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          border: selectedGift.id == gift.id
-              ? Border.all(
-                  color: ColorManager.primary,
-                )
-              : null,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppImage(
-              image: gift.giftImg,
-              width: 38,
-              height: 45,
-              fit: BoxFit.contain,
-            ),
-            4.verticalSpace(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  gift.goldValue.formatCurrencyWithoutSymbol,
-                  style: Get.textTheme.titleSmall!.copyWith(
-                    fontSize: AppSize.s12(context),
-                      color:Colors.white
+      child: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AppImage(
+                image: gift.giftImg,
+                width: 38,
+                height: 45,
+                fit: BoxFit.contain,
+              ),
+              4.verticalSpace(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    gift.goldValue.formatCurrencyWithoutSymbol,
+                    style: Get.textTheme.titleSmall!.copyWith(
+                      fontSize: AppSize.s12(context),
+                        color:Colors.white
+                    ),
                   ),
-                ),
-                2.horizontalSpace(),
-                const AppIcon(
-                  icon: IconsAssets.coins,
-                  width: 12,
-                  height: 12,
-                ),
-              ],
+                  2.horizontalSpace(),
+                  const AppIcon(
+                    icon: IconsAssets.coins,
+                    width: 12,
+                    height: 12,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: selectedGift.id == gift.id ? ColorManager.lightGreyColor.withOpacity(0.2) : null,
+                borderRadius: BorderRadius.circular(10.0)
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

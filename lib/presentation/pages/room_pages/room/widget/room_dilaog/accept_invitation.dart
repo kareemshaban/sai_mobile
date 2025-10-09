@@ -27,7 +27,7 @@ class AcceptInvitation extends GetView<RoomController> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "${AppStrings.DoYouWantToSendAnInvitationToJoinTheRoom}",
+              AppStrings.DoYouWantToSendAnInvitationToJoinTheRoom,
               textAlign: TextAlign.center,
               style: Get.textTheme.labelLarge!.copyWith(
                 fontSize: AppSize.s18(context),

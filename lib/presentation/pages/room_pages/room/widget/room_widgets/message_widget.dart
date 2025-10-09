@@ -416,9 +416,9 @@ class MessageWidget extends GetView<RoomController> {
             child: Container(
               padding: const EdgeInsets.all(5.0),
               constraints: BoxConstraints(
-                maxWidth: .75.w(context),
+                maxWidth: .80.w(context),
               ),
-              margin: const EdgeInsets.only(bottom: 9),
+              margin: sender.isVip == 1 ? null : const EdgeInsets.only(bottom: 9),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -524,10 +524,8 @@ class MessageWidget extends GetView<RoomController> {
                                 child: Container(
                                   padding: sender.isVip == 1
                                       ? const EdgeInsetsDirectional.only(
-                                      top: 22,
-                                      end: 27,
-                                      start: 27,
-                                      bottom: 22)
+                                      end: 30,
+                                      start: 35,)
                                       : const EdgeInsets.all(5.0),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -545,6 +543,7 @@ class MessageWidget extends GetView<RoomController> {
                                     softWrap: true,
                                     style: Get.textTheme.bodySmall!.copyWith(
                                       fontSize: AppSize.s14(context),
+                                      fontWeight: FontWeightManger.medium
                                     ),
                                     linkStyle:
                                     Get.textTheme.bodyLarge!.copyWith(

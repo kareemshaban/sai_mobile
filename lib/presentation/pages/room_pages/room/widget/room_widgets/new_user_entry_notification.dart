@@ -79,7 +79,7 @@ class _NewUserEntryNotificationState extends State<NewUserEntryNotification> {
                       ),
                       Positioned.fill(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          padding: context.locale == arabicLocale ? const EdgeInsetsDirectional.only(end: 25.0) : const EdgeInsetsDirectional.only(start: 25.0),
                           child: Center(
                             child: Container(
                               constraints: BoxConstraints(maxWidth: .60.w(context)),

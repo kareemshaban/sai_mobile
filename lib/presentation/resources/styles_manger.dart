@@ -8,7 +8,9 @@ TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, Color color) {
       fontWeight: fontWeight,
       color: color,
       // height: 1,
-      fontFamily: FontConstants.interFontFamily);
+      fontFamily: FontConstants.interFontFamily,
+      letterSpacing: 0.2,
+      height: 1.45);
 }
 
 TextStyle getRegularStyle({double fontSize = 12, required Color color}) {

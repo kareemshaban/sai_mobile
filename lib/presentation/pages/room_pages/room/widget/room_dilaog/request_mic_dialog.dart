@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_sai/app/extensions.dart';
@@ -6,6 +7,7 @@ import 'package:new_sai/presentation/resources/color_manger.dart';
 import 'package:new_sai/presentation/resources/font_manger.dart';
 import 'package:new_sai/presentation/resources/string_manger.dart';
 import 'package:new_sai/presentation/widgets/app_button.dart';
+import 'package:http/http.dart' as http;
 
 class RequestMicDialog extends GetView<RoomController> {
   const RequestMicDialog({super.key});
@@ -29,6 +31,7 @@ class RequestMicDialog extends GetView<RoomController> {
               style: Get.textTheme.titleLarge!.copyWith(
                 fontSize: AppSize.s20(context),
               ),
+              textAlign: TextAlign.center,
             ),
             20.verticalSpace(),
             Row(
