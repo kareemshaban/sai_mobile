@@ -19,16 +19,7 @@ class GeneralNotificationMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (context.locale == arabicLocale) {
-      return SlideInRight(
-        duration: const Duration(milliseconds: 300),
-        child: generalNotification(context),
-      );
-    }
-    return SlideInLeft(
-      duration: const Duration(milliseconds: 300),
-      child: generalNotification(context),
-    );
+    return generalNotification(context);
   }
 
   Widget generalNotification(BuildContext context) {

@@ -75,7 +75,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                         Text(
                           controller.userProfile.name,
                           style: Get.textTheme.labelMedium!.copyWith(
-                            fontSize: AppSize.s22(context),
+                            fontSize: AppSize.s20(context),
                             fontWeight: FontWeight.bold,
                             color: controller.userProfile.isVip == 1
                                 ? privilege.colorfulName.value.toColor()
@@ -310,6 +310,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            if(user?.role == 'owner')
                             InkWell(
                               onTap: () {
                                 Get.back();
@@ -321,6 +322,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                                 size: 22,
                               ),
                             ),
+                            if(user?.role == 'owner')
                             InkWell(
                               onTap: () {
                                 Get.back();
@@ -345,6 +347,7 @@ class UserProfileBottomSheet extends GetView<RoomController> {
                                 size: 22,
                               ),
                             ),
+                            if(user?.role == 'owner')
                             InkWell(
                               onTap: () {
                                 Get.back();

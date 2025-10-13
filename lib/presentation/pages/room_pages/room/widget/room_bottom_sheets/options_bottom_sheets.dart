@@ -43,7 +43,7 @@ class OptionsBottomSheets extends GetView<RoomController> {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
-              childAspectRatio: 1.1,
+              childAspectRatio: 1,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
             ),
@@ -85,6 +85,7 @@ class OptionsBottomSheets extends GetView<RoomController> {
                     if (element.seatValue) {
                       return true;
                     }
+                    if (!element.seatValue && element.userID.isNotEmpty) return false;
                     if (!element.seatValue && element.userID.isNotEmpty) {
                       return true;
                     }

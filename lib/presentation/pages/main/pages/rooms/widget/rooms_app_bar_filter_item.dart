@@ -28,7 +28,7 @@ class RoomsAppBarFilterItem extends StatelessWidget {
           Text(
             title,
             style: Get.textTheme.titleSmall!.copyWith(
-              fontSize: AppSize.s22(context),
+              fontSize: AppSize.s20(context),
               color: color ?? (isActive ? null : ColorManager.textGrey),
             ),
           ),

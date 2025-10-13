@@ -33,26 +33,26 @@ class RaiseHandRequestBottomSheet extends GetView<RoomController> {
           20.verticalSpace(),
           Expanded(
             child: Obx(
-              () => controller.requestMicList.isEmpty
+                  () => controller.requestMicList.isEmpty
                   ? Center(
-                      child: Text(
-                        AppStrings.noDataFound,
-                        style: Get.textTheme.titleLarge!.copyWith(
-                          fontSize: AppSize.s20(context),
-                        ),
-                      ),
-                    )
+                child: Text(
+                  AppStrings.noDataFound,
+                  style: Get.textTheme.titleLarge!.copyWith(
+                    fontSize: AppSize.s20(context),
+                  ),
+                ),
+              )
                   : ListView.separated(
-                      itemBuilder: (context, index) => UserRaiseHandWidget(
-                        model: controller.requestMicList[index],
-                        onTapApprove: () => controller.approveSpeakToMic(
-                            controller.requestMicList[index].userID),
-                        onTapReject: () => controller.rejectSpeakToMic(
-                            controller.requestMicList[index].userID),
-                      ),
-                      separatorBuilder: (context, index) => 10.verticalSpace(),
-                      itemCount: controller.requestMicList.length,
-                    ),
+                itemBuilder: (context, index) => UserRaiseHandWidget(
+                  model: controller.requestMicList[index],
+                  onTapApprove: () => controller.approveSpeakToMic(
+                      controller.requestMicList[index].userID),
+                  onTapReject: () => controller.rejectSpeakToMic(
+                      controller.requestMicList[index].userID),
+                ),
+                separatorBuilder: (context, index) => 10.verticalSpace(),
+                itemCount: controller.requestMicList.length,
+              ),
             ),
           ),
         ],

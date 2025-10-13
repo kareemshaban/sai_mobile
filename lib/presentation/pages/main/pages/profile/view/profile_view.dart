@@ -32,365 +32,401 @@ class ProfileView extends GetView<ProfileController> {
     return isGuest()
         ? const GuestDilaog()
         : Scaffold(
-      body: Obx(
-            () => controller.loadingGetProfile
-            ? const Center(child: AppLoader())
-            : DefaultTabController(
-          length: 2,
-          child: PullToRefreshWidget(
-            scrollController: controller.scrollController,
-            onRefresh: () => controller.getAllInit(),
-            controller: controller.refreshController,
-            child: CustomScrollView(
-              controller: controller.scrollController,
-              slivers: [
-                SliverAppBar(
-                  backgroundColor: ColorManager.lightGreyColor,
-                  floating: true,
-                  pinned: true,
-                  snap: false,
-                  title: Row(
-                    children: [
-                      PopupMenuButton(
-                        itemBuilder: (BuildContext context) {
-                          return [
-                            PopupMenuItem(
-                              child: Row(
+            body: Obx(
+              () => controller.loadingGetProfile
+                  ? const Center(child: AppLoader())
+                  : DefaultTabController(
+                      length: 2,
+                      child: PullToRefreshWidget(
+                        scrollController: controller.scrollController,
+                        onRefresh: () => controller.getAllInit(),
+                        controller: controller.refreshController,
+                        child: CustomScrollView(
+                          controller: controller.scrollController,
+                          slivers: [
+                            SliverAppBar(
+                              backgroundColor: ColorManager.lightGreyColor,
+                              floating: true,
+                              pinned: true,
+                              snap: false,
+                              title: Row(
                                 children: [
-                                  const AppIcon(
-                                    icon: IconsAssets.jeweled,
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                  11.horizontalSpace(),
-                                  Text(
-                                    AppStrings.store,
-                                    style: Get.textTheme.titleMedium!
-                                        .copyWith(
-                                      fontSize: AppSize.s16(context),
+                                  PopupMenuButton(
+                                    itemBuilder: (BuildContext context) {
+                                      return [
+                                        PopupMenuItem(
+                                          child: Row(
+                                            children: [
+                                              const AppIcon(
+                                                icon: IconsAssets.jeweled,
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                              11.horizontalSpace(),
+                                              Text(
+                                                AppStrings.store,
+                                                style: Get
+                                                    .textTheme.titleMedium!
+                                                    .copyWith(
+                                                  fontSize:
+                                                      AppSize.s16(context),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              const Icon(
+                                                Icons.arrow_forward_ios,
+                                                color:
+                                                    ColorManager.iconGreyColor,
+                                                size: 16.0,
+                                              ),
+                                            ],
+                                          ),
+                                          onTap: () => Get.toNamed(
+                                              AppRoutes.settingsMarketRoute),
+                                        ),
+                                        PopupMenuItem(
+                                          child: Row(
+                                            children: [
+                                              const AppIcon(
+                                                icon: IconsAssets.goldCrown,
+                                                width: 20,
+                                                height: 20,
+                                                color:
+                                                    ColorManager.iconGreyColor,
+                                              ),
+                                              11.horizontalSpace(),
+                                              Text(
+                                                AppStrings.saiVip,
+                                                style: Get
+                                                    .textTheme.titleMedium!
+                                                    .copyWith(
+                                                  fontSize:
+                                                      AppSize.s16(context),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              const Icon(
+                                                Icons.arrow_forward_ios,
+                                                color:
+                                                    ColorManager.iconGreyColor,
+                                                size: 16.0,
+                                              ),
+                                            ],
+                                          ),
+                                          onTap: () =>
+                                              Get.toNamed(AppRoutes.vipRoute),
+                                        ),
+                                        if (controller.appController
+                                            .isGoldReddemeActive()) ...[
+                                          PopupMenuItem(
+                                            child: Row(
+                                              children: [
+                                                const AppIcon(
+                                                  icon: IconsAssets.wallet,
+                                                  width: 16,
+                                                  height: 16,
+                                                ),
+                                                11.horizontalSpace(),
+                                                Text(
+                                                  AppStrings.wallet,
+                                                  style: Get
+                                                      .textTheme.titleMedium!
+                                                      .copyWith(
+                                                    fontSize:
+                                                        AppSize.s16(context),
+                                                  ),
+                                                ),
+                                                const Spacer(),
+                                                const Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: ColorManager
+                                                      .iconGreyColor,
+                                                  size: 16.0,
+                                                ),
+                                              ],
+                                            ),
+                                            onTap: () => Get.toNamed(
+                                                AppRoutes.walletRoute),
+                                          ),
+                                          PopupMenuItem(
+                                            child: Row(
+                                              children: [
+                                                const AppIcon(
+                                                  icon: IconsAssets.withdraw,
+                                                  width: 16,
+                                                  height: 16,
+                                                ),
+                                                11.horizontalSpace(),
+                                                Text(
+                                                  AppStrings.withdraw,
+                                                  style: Get
+                                                      .textTheme.titleMedium!
+                                                      .copyWith(
+                                                    fontSize:
+                                                        AppSize.s16(context),
+                                                  ),
+                                                ),
+                                                const Spacer(),
+                                                const Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: ColorManager
+                                                      .iconGreyColor,
+                                                  size: 16.0,
+                                                ),
+                                              ],
+                                            ),
+                                            onTap: () => Get.toNamed(
+                                                AppRoutes.cashWithdrawalRoute),
+                                          ),
+                                        ],
+                                        PopupMenuItem(
+                                          child: Row(
+                                            children: [
+                                              const AppIcon(
+                                                icon: IconsAssets.setting,
+                                                width: 16,
+                                                height: 16,
+                                              ),
+                                              11.horizontalSpace(),
+                                              Text(
+                                                AppStrings.settingsAndPrivacy,
+                                                style: Get
+                                                    .textTheme.titleMedium!
+                                                    .copyWith(
+                                                  fontSize:
+                                                      AppSize.s16(context),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              const Icon(
+                                                Icons.arrow_forward_ios,
+                                                color:
+                                                    ColorManager.iconGreyColor,
+                                                size: 16.0,
+                                              ),
+                                            ],
+                                          ),
+                                          onTap: () => Get.toNamed(AppRoutes
+                                              .settingsAndPrivacyRoute),
+                                        ),
+                                      ];
+                                    },
+                                    position: PopupMenuPosition.under,
+                                    child: const AppIcon(
+                                      icon: IconsAssets.menu,
+                                      color: ColorManager.white,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   const Spacer(),
-                                  const Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: ColorManager.iconGreyColor,
-                                    size: 16.0,
-                                  ),
-                                ],
-                              ),
-                              onTap: () => Get.toNamed(
-                                  AppRoutes.settingsMarketRoute),
-                            ),
-                            PopupMenuItem(
-                              child: Row(
-                                children: [
-                                  const AppIcon(
-                                    icon: IconsAssets.goldCrown,
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                  11.horizontalSpace(),
-                                  Text(
-                                    AppStrings.saiVip,
-                                    style: Get.textTheme.titleMedium!
-                                        .copyWith(
-                                      fontSize: AppSize.s16(context),
-                                    ),
-                                  ),
+                                  Obx(() {
+                                    return controller.isTitleVisible.value
+                                        ? Text(
+                                            controller.appController.user.name,
+                                            style: Get.textTheme.titleLarge!
+                                                .copyWith(
+                                              fontSize: AppSize.s20(context),
+                                              color: controller.appController
+                                                          .user.isVip ==
+                                                      1
+                                                  ? controller
+                                                          .appController
+                                                          .user
+                                                          .privileges
+                                                          .data
+                                                          .colorfulName
+                                                          .value
+                                                          .isNotEmpty
+                                                      ? controller
+                                                          .appController
+                                                          .user
+                                                          .privileges
+                                                          .data
+                                                          .colorfulName
+                                                          .value
+                                                          .toColor()
+                                                      : null
+                                                  : null,
+                                            ),
+                                          )
+                                        : Container();
+                                  }),
                                   const Spacer(),
-                                  const Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: ColorManager.iconGreyColor,
-                                    size: 16.0,
-                                  ),
-                                ],
-                              ),
-                              onTap: () =>
-                                  Get.toNamed(AppRoutes.vipRoute),
-                            ),
-                            if (controller.appController
-                                .isGoldReddemeActive()) ...[
-                              PopupMenuItem(
-                                child: Row(
-                                  children: [
-                                    const AppIcon(
-                                      icon: IconsAssets.wallet,
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    11.horizontalSpace(),
-                                    Text(
-                                      AppStrings.wallet,
-                                      style: Get
-                                          .textTheme.titleMedium!
-                                          .copyWith(
-                                        fontSize:
-                                        AppSize.s16(context),
+                                  Directionality(
+                                    textDirection: TextDirection.ltr,
+                                    child: InkWell(
+                                      onTap: () => Get.toNamed(
+                                          AppRoutes.notificationsRoute),
+                                      child: Badge.count(
+                                        count: controller.notificationCount,
+                                        backgroundColor: ColorManager.red,
+                                        isLabelVisible:
+                                            controller.notificationCount != 0,
+                                        largeSize: 20,
+                                        textColor: ColorManager.white,
+                                        alignment: AlignmentDirectional.topEnd,
+                                        textStyle:
+                                            Get.textTheme.bodySmall!.copyWith(
+                                          fontSize: AppSize.s14(context),
+                                        ),
+                                        child: const Icon(
+                                          Icons.notifications,
+                                          color: ColorManager.white,
+                                          size: 28,
+                                        ),
                                       ),
                                     ),
-                                    const Spacer(),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      color:
-                                      ColorManager.iconGreyColor,
-                                      size: 16.0,
-                                    ),
-                                  ],
-                                ),
-                                onTap: () => Get.toNamed(
-                                    AppRoutes.walletRoute),
-                              ),
-                              PopupMenuItem(
-                                child: Row(
-                                  children: [
-                                    const AppIcon(
-                                      icon: IconsAssets.withdraw,
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    11.horizontalSpace(),
-                                    Text(
-                                      AppStrings.withdraw,
-                                      style: Get
-                                          .textTheme.titleMedium!
-                                          .copyWith(
-                                        fontSize:
-                                        AppSize.s16(context),
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      color:
-                                      ColorManager.iconGreyColor,
-                                      size: 16.0,
-                                    ),
-                                  ],
-                                ),
-                                onTap: () => Get.toNamed(
-                                    AppRoutes.cashWithdrawalRoute),
-                              ),
-                            ],
-                            PopupMenuItem(
-                              child: Row(
-                                children: [
-                                  const AppIcon(
-                                    icon: IconsAssets.setting,
-                                    width: 16,
-                                    height: 16,
-                                  ),
-                                  11.horizontalSpace(),
-                                  Text(
-                                    AppStrings.settingsAndPrivacy,
-                                    style: Get.textTheme.titleMedium!
-                                        .copyWith(
-                                      fontSize: AppSize.s16(context),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  const Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: ColorManager.iconGreyColor,
-                                    size: 16.0,
                                   ),
                                 ],
                               ),
-                              onTap: () => Get.toNamed(
-                                  AppRoutes.settingsAndPrivacyRoute),
                             ),
-                          ];
-                        },
-                        position: PopupMenuPosition.under,
-                        child: const AppIcon(
-                          icon: IconsAssets.menu,
-                          color: ColorManager.white,
-                          fit: BoxFit.cover,
+                            SliverAppBar(
+                              expandedHeight: (controller.userStories.isNotEmpty
+                                  ? controller.appController.user
+                                          .profileDescription.isNotEmpty
+                                      ? 530
+                                      : 495
+                                  : controller.appController.user
+                                          .profileDescription.isNotEmpty
+                                      ? 450
+                                      : 410),
+                              flexibleSpace: FlexibleSpaceBar(
+                                collapseMode: CollapseMode.pin,
+                                background: Column(
+                                  children: [
+                                    const UserCoverAndInfoWidget(),
+                                    const UserNumbersWidget(),
+                                    15.verticalSpace(),
+                                    const UserButtons(),
+                                    8.verticalSpace(),
+                                    if (controller.appController.user
+                                        .profileDescription.isNotEmpty)
+                                      const UserBio(),
+                                    8.verticalSpace(),
+                                    if (controller.userStories.isNotEmpty) ...[
+                                      if (controller.loadingUserStories)
+                                        const StoriesLoadingList()
+                                      else
+                                        ProfileStoriesList(
+                                          scrollController:
+                                              controller.userStoryController,
+                                          stories: controller.userStories,
+                                        ),
+                                    ]
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SliverAppBar(
+                              title: ProfileTabBar(),
+                              pinned: true,
+                            ),
+                            // SliverToBoxAdapter(
+                            //   child: ElevatedButton(onPressed: (){
+                            //     showSnackBarWidget(
+                            //       textColor: Colors.black,
+                            //       message:" r.message "?? "",
+                            //       color: ColorManager.green.withOpacity(0.7),
+                            //     );
+                            //   }, child: Text("test")),
+                            // ),
+                            SliverFillRemaining(
+                              child: TabBarView(
+                                controller: controller.tabController,
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: [
+                                  if (controller.loadingUserReels)
+                                    const ReelsLoadingList()
+                                  else
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                            height: const ProfileTabBar()
+                                                .preferredSize
+                                                .height),
+                                        Expanded(
+                                          child: controller.userReels.isEmpty
+                                              ? const EmptyDataWidget()
+                                              : ProfileReelsList(
+                                                  reels: controller.userReels,
+                                                  controller: controller
+                                                      .userReelsController,
+                                                  onTapReels: (index) {
+                                                    Get.toNamed(
+                                                      AppRoutes
+                                                          .usersAndSavedReelsRoute,
+                                                      arguments: {
+                                                        'title':
+                                                            AppStrings.myReels,
+                                                        'reels': controller
+                                                            .userReels,
+                                                        'initIndex': index,
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                        ),
+                                        if (controller
+                                            .loadingUserReelsPagination)
+                                          const Padding(
+                                            padding: EdgeInsets.all(20),
+                                            child: Center(
+                                              child: AppLoader(),
+                                            ),
+                                          )
+                                      ],
+                                    ),
+                                  if (controller.loadingSavedReels)
+                                    const ReelsLoadingList()
+                                  else
+                                    Column(
+                                      children: [
+                                        Expanded(
+                                          child: controller.savedReels.isEmpty
+                                              ? const EmptyDataWidget()
+                                              : ProfileReelsList(
+                                                  reels: controller.savedReels,
+                                                  controller: controller
+                                                      .savedReelsController,
+                                                  onTapReels: (index) async {
+                                                    await Get.toNamed(
+                                                      AppRoutes
+                                                          .usersAndSavedReelsRoute,
+                                                      arguments: {
+                                                        'title': AppStrings
+                                                            .savedReels,
+                                                        'reels': controller
+                                                            .savedReels,
+                                                        'initIndex': index,
+                                                      },
+                                                    );
+                                                    await controller
+                                                        .getSavedReels();
+                                                  },
+                                                ),
+                                        ),
+                                        if (controller
+                                            .loadingSavedReelsPagination)
+                                          const Padding(
+                                            padding: EdgeInsets.all(20),
+                                            child: Center(
+                                              child: AppLoader(),
+                                            ),
+                                          )
+                                      ],
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const Spacer(),
-                      Obx(() {
-                        return controller.isTitleVisible.value
-                            ?  Text(
-                          controller.appController.user.name,
-                          style: Get.textTheme.titleLarge!.copyWith(
-                            fontSize: AppSize.s24(context),
-                            color: controller.appController.user.isVip == 1
-                                ? controller.appController.user.privileges.data
-                                .colorfulName.value.isNotEmpty
-                                ? controller
-                                .appController
-                                .user
-                                .privileges
-                                .data
-                                .colorfulName
-                                .value.toColor()
-                                : null
-                                : null,
-                          ),
-                        )
-                            : Container();
-                      }),
-                      const Spacer(),
-                      Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: InkWell(
-                          onTap: () => Get.toNamed(
-                              AppRoutes.notificationsRoute),
-                          child: Badge.count(
-                            count: controller.notificationCount,
-                            backgroundColor: ColorManager.red,
-                            isLabelVisible:
-                            controller.notificationCount != 0,
-                            largeSize: 20,
-                            textColor: ColorManager.white,
-                            alignment: AlignmentDirectional.topEnd,
-                            textStyle:
-                            Get.textTheme.bodySmall!.copyWith(
-                              fontSize: AppSize.s14(context),
-                            ),
-                            child: const Icon(
-                              Icons.notifications,
-                              color: ColorManager.white,
-                              size: 28,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SliverAppBar(
-                  expandedHeight: controller.loadingUserStories ? 500 : (controller.userStories.isNotEmpty ? 550 : 500),
-                  flexibleSpace: FlexibleSpaceBar(
-                    collapseMode: CollapseMode.pin,
-                    background: Column(
-                      children: [
-                        const UserCoverAndInfoWidget(),
-                        const UserNumbersWidget(),
-                        15.verticalSpace(),
-                        const UserButtons(),
-                        8.verticalSpace(),
-                        const UserBio(),
-                        8.verticalSpace(),
-                        if (controller.loadingUserStories)
-                          const StoriesLoadingList()
-                        else
-                          ProfileStoriesList(
-                            scrollController:
-                            controller.userStoryController,
-                            stories: controller.userStories,
-                          ),
-                      ],
                     ),
-                  ),
-                ),
-                const SliverAppBar(
-                  title: ProfileTabBar() ,
-                  pinned: true,
-                ),
-                // SliverToBoxAdapter(
-                //   child: ElevatedButton(onPressed: (){
-                //     showSnackBarWidget(
-                //       textColor: Colors.black,
-                //       message:" r.message "?? "",
-                //       color: ColorManager.green.withOpacity(0.7),
-                //     );
-                //   }, child: Text("test")),
-                // ),
-                SliverFillRemaining(
-                  child: TabBarView(
-                    controller: controller.tabController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      if (controller.loadingUserReels)
-                        const ReelsLoadingList()
-                      else
-                        Column(
-                          children: [
-                            SizedBox(height: const ProfileTabBar().preferredSize.height),
-                            Expanded(
-                              child: controller.userReels.isEmpty
-                                  ? const EmptyDataWidget()
-                                  : ProfileReelsList(
-                                reels: controller.userReels,
-                                controller: controller
-                                    .userReelsController,
-                                onTapReels: (index) {
-                                  Get.toNamed(
-                                    AppRoutes
-                                        .usersAndSavedReelsRoute,
-                                    arguments: {
-                                      'title':
-                                      AppStrings.myReels,
-                                      'reels': controller
-                                          .userReels,
-                                      'initIndex': index,
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                            if (controller
-                                .loadingUserReelsPagination)
-                              const Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Center(
-                                  child: AppLoader(),
-                                ),
-                              )
-                          ],
-                        ),
-                      if (controller.loadingSavedReels)
-                        const ReelsLoadingList()
-                      else
-                        Column(
-                          children: [
-                            Expanded(
-                              child: controller.savedReels.isEmpty
-                                  ? const EmptyDataWidget()
-                                  : ProfileReelsList(
-                                reels: controller.savedReels,
-                                controller: controller
-                                    .savedReelsController,
-                                onTapReels: (index) async {
-                                  await Get.toNamed(
-                                    AppRoutes
-                                        .usersAndSavedReelsRoute,
-                                    arguments: {
-                                      'title': AppStrings
-                                          .savedReels,
-                                      'reels': controller
-                                          .savedReels,
-                                      'initIndex': index,
-                                    },
-                                  );
-                                  await controller
-                                      .getSavedReels();
-                                },
-                              ),
-                            ),
-                            if (controller
-                                .loadingSavedReelsPagination)
-                              const Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Center(
-                                  child: AppLoader(),
-                                ),
-                              )
-                          ],
-                        ),
-                    ],
-                  ),
-                ),
-              ],
             ),
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: (){},
-        child: const CreateStoryButton(),
-      ),
-    );
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              child: const CreateStoryButton(),
+            ),
+          );
   }
 }

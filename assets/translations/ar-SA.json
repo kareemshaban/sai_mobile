@@ -306,6 +306,7 @@
   "accept": "موافق",
   "userBuyAMembershipInThisRoom": "المستخدم {user} قام بشراء عضوية في هذه الغرفة",
   "userCancalHisMembership": "المستخدم {user} قام بالغاء عضويته في هذه الغرفة",
+  "userCancelMembership": "تم تحديث دور {user}، وتم تقليل صلاحياته في الغرفة.",
   "doYouWantToRequestToSpeakOnTheMicrophoneInTheRoom": "هل تريد طلب التحدث على المايك في الغرفة؟",
   "askedToSpeakOnTheMicrophone": "قام {user} بطلب التحدث على المايك",
   "reject": "رفض",

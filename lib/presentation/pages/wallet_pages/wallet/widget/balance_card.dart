@@ -38,7 +38,7 @@ class BalanceCard extends GetView<WalletController> {
               () => Text(
                 '${controller.appController.user.goldValue / 100} \$',
                 style: Get.textTheme.bodyLarge!.copyWith(
-                  fontSize: AppSize.s24(context),
+                  fontSize: AppSize.s20(context),
                 ),
               ),
             ),

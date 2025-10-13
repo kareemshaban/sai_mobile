@@ -14,7 +14,7 @@ class UserBio extends GetView<ProfileController> {
         child: Text(
           controller.appController.user.profileDescription,
           textAlign: TextAlign.center,
-          maxLines: 3,
+          maxLines: 2,
           style: Get.textTheme.titleSmall!.copyWith(
             height: 1.4,
             fontSize: AppSize.s15(context),

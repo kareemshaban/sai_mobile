@@ -41,7 +41,7 @@ class RoomMempersBottomSheet extends GetView<RoomController> {
                     Text(
                       "${AppStrings.members}(${controller.roomMempers.length})",
                       style: Get.textTheme.titleMedium!.copyWith(
-                        fontSize: AppSize.s22(context),
+                        fontSize: AppSize.s20(context),
                       ),
                     ),
                     8.verticalSpace(),

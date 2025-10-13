@@ -96,6 +96,7 @@ class RoomController extends GetxController
   UserEntity user = Get.find<AppController>().user;
   final isLoadingGams = false.obs;
   final isPlayingGame = false.obs;
+  var refreshMessagesTrigger = 0.obs;
   final appController = Get.find<AppController>();
   final cashWithdrawalController = Get.find<CashWithdrawalController>();
   final RxBool isInSettingsMode = false.obs;
@@ -828,36 +829,39 @@ class RoomController extends GetxController
               messages.clear();
             }
             if (event.updateInfo.roomAttributes.containsKey("update_role")) {
-              final data =
-                  jsonDecode(event.updateInfo.roomAttributes['data'] ?? '{}');
+              final data = jsonDecode(event.updateInfo.roomAttributes['data'] ?? '{}');
               final role = UpdateRoleParams.fromJson(data);
+
+
               if (role.userId == user.id.toString()) {
-                room = room.updateRole(
-                  room.role,
-                );
+                room = room.updateRole(role.role ?? room.role);
+                newRoom.refresh();
+
                 if (role.role == 'guest') {
                   showSnackBarWidget(
                       message:
-                          "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}");
+                      "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}");
                 }
                 if (role.role == 'member') {
                   showSnackBarWidget(
                     message:
-                        "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}",
+                    "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}",
                     color: ColorManager.green,
                   );
                 }
                 if (role.role == 'admin') {
                   showSnackBarWidget(
                     message:
-                        "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}",
+                    "${AppStrings.yourRoleHasBeenUpdatedTo}: ${getCurrentRole(role.role ?? '')}",
                     color: ColorManager.green,
                   );
                 }
-                newRoom.refresh();
               }
-              ZEGOSDKManager().zimService.deleteRoomAttributes(['update_role']);
+              await getApiUsers();
+              refreshMessagesTrigger.value++;
+              await ZEGOSDKManager().zimService.deleteRoomAttributes(['update_role']);
             }
+
             if (event.updateInfo.roomAttributes.containsKey("c")) {
               final data = event.updateInfo.roomAttributes;
               if (isOwner()) {
@@ -1069,6 +1073,10 @@ class RoomController extends GetxController
       showSnackBarWidget(message: AppStrings.unknown);
       // log(e.toString());
     }
+  }
+  
+  Future<void> refreshSenderProfile(String userId) async {
+    sender = await getSenderProfile(int.parse(userId));
   }
 
   void onExpressRoomStateChanged(ZegoRoomStateEvent event) {
@@ -1739,7 +1747,8 @@ class RoomController extends GetxController
       },
     );
     loadingGetSenderProfile = false;
-    print(sender.privileges.data.exclusiveChatBox.file);
+    print('sender.role');
+    print(sender.role);
     return sender;
   }
 
@@ -1813,10 +1822,6 @@ class RoomController extends GetxController
     );
 
     print('📡 تم إرسال تحديث الدور عبر Zego');
-
-    await getApiUsers();
-    print('apiUsers[0].role');
-    print(apiUsers[0].role);
   }
 
   kickoutUser() async {
@@ -2090,7 +2095,7 @@ class RoomController extends GetxController
         );
   }
 
-  cancelMembership(id) async {
+  cancelMembership(String id) async {
     if (loadingCancelMempership) return;
     loadingCancelMempership = true;
     Get.back();
@@ -2098,13 +2103,14 @@ class RoomController extends GetxController
     final params = UpdateRoleParams(
       chatRoomId: roomId,
       userId: id,
+      role: 'guest',
     );
 
     (await _cancelMembershipUseCase.execute(params)).fold(
           (l) {
         showSnackBarWidget(message: l.message);
       },
-          (r) {
+          (r) async {
         final user = apiUsers.firstWhereOrNull(
               (e) => e.id.toString().trim() == id,
         );
@@ -2115,11 +2121,26 @@ class RoomController extends GetxController
         }
 
         sendMessageToAdminAfterJoinOrCancelMembership(
-          AppStrings.userCancalHisMembership(user?.name ?? ''),
+          AppStrings.userCancelMembership(user?.name ?? ''),
           true,
         );
+
+        final attributes = {
+          'update_role': 'true',
+          "data": jsonEncode(params.toJson()),
+        };
+
+        await ZEGOSDKManager().zimService.setRoomAttributes(
+          attributes,
+          isForce: true,
+          isUpdateOwner: true,
+          isDeleteAfterOwnerLeft: false,
+        );
+
+        await getApiUsers();
       },
     );
+
     loadingCancelMempership = false;
   }
 
@@ -2135,9 +2156,10 @@ class RoomController extends GetxController
           (l) {
         showSnackBarWidget(message: l.message);
       },
-          (r) {
+          (r) async {
         room.role = 'guest';
         newRoom.refresh();
+        await getApiUsers();
         sendMessageToAdminAfterJoinOrCancelMembership(
           AppStrings.userCancalHisMembership(user.name),
           true,

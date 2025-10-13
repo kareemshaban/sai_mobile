@@ -22,7 +22,7 @@ class CategoryList extends GetView<StoreController> {
                   child: Text(
                     AppStrings.products,
                     style: Get.textTheme.titleMedium!.copyWith(
-                      fontSize: AppSize.s25(context),
+                      fontSize: AppSize.s20(context),
                     ),
                   ),
                 ),
@@ -45,7 +45,7 @@ class CategoryList extends GetView<StoreController> {
                     child: Text(
                       AppStrings.products,
                       style: Get.textTheme.titleMedium!.copyWith(
-                        fontSize: AppSize.s25(context),
+                        fontSize: AppSize.s20(context),
                       ),
                     ),
                   ),

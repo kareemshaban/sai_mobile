@@ -5,7 +5,6 @@ import 'package:new_sai/presentation/pages/room_pages/room/getx/room_controller.
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_bottom_sheets/leave_mic_bottom_sheet.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_bottom_sheets/take_mic_bottom_sheet.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/widget/room_bottom_sheets/unlock_mic_bottom_sheet.dart';
-import 'package:new_sai/presentation/pages/room_pages/room/widget/room_dilaog/request_mic_dialog.dart';
 import 'package:new_sai/presentation/pages/room_pages/room/zego_handler/live_audio_room_manager.dart';
 import 'package:new_sai/presentation/resources/color_manger.dart';
 import 'package:new_sai/presentation/resources/font_manger.dart';
@@ -109,8 +108,6 @@ class _SeatWidgetState extends State<SeatWidget> {
                           if (isLocked) {
                             if (controller.isAdmin()) {
                               Get.bottomSheet(UnlockMicBottomSheet(widget.index));
-                            } else {
-                              Get.bottomSheet(const RequestMicDialog());
                             }
                           } else {
                             if (isCurrentUser) {

@@ -32,7 +32,7 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
               Text(
                 AppStrings.pleaseEnterYourPhoneNumber,
                 style: Get.textTheme.titleLarge!.copyWith(
-                  fontSize: AppSize.s24(context),
+                  fontSize: AppSize.s20(context),
                 ),
               ),
               .1.h(context).verticalSpace(),

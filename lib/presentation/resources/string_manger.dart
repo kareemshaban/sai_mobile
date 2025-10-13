@@ -638,6 +638,9 @@ class AppStrings {
   static String userCancalHisMembership(String name) =>
       "userCancalHisMembership".tr(namedArgs: {'user': name});
 
+  static String userCancelMembership(String name) =>
+      "userCancelMembership".tr(namedArgs: {'user': name});
+
   static String askedToSpeakOnTheMicrophone(String name) =>
       "askedToSpeakOnTheMicrophone".tr(namedArgs: {'user': name});
 

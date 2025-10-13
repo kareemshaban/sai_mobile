@@ -261,6 +261,17 @@ class ZIMService {
     }
   }
 
+  Future<Map<String, String>> getRoomAttributes(String roomID) async {
+    try {
+      final result = await ZIM.getInstance()!.queryRoomAllAttributes(roomID);
+      debugPrint('📦 تم جلب Room Attributes بنجاح: ${result.roomAttributes}');
+      return result.roomAttributes;
+    } catch (e) {
+      debugPrint('❌ خطأ أثناء جلب Room Attributes: $e');
+      return {};
+    }
+  }
+
   void onConnectionStateChanged(
       _, ZIMConnectionState state, ZIMConnectionEvent event, Map extendedData) {
     connectionStateStreamCtrl

@@ -31,7 +31,13 @@ class AcceptRoleDialog extends GetView<RoomController> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              controller.room.role=='guest'?AppStrings.Doyouwanttobecomeamemberofthisroom:controller.room.role=='member'?AppStrings.Doyouwanttobecomeanadmininthisroom:controller.room.role=='admin'?AppStrings.Doyouwanttobecomeanaguestinthisroom:'test123',
+              controller.room.role == 'guest'
+                  ? AppStrings.Doyouwanttobecomeamemberofthisroom
+                  : controller.room.role == 'member'
+                      ? AppStrings.Doyouwanttobecomeanadmininthisroom
+                      : controller.room.role == 'admin'
+                          ? AppStrings.Doyouwanttobecomeanaguestinthisroom
+                          : 'test123',
               textAlign: TextAlign.center,
               style: Get.textTheme.labelLarge!.copyWith(
                 fontSize: AppSize.s18(context),
@@ -44,10 +50,14 @@ class AcceptRoleDialog extends GetView<RoomController> {
                   child: AppButton(
                     title: AppStrings.back,
                     backgroundColor: ColorManager.white,
-                    onTap: () async{
-                   await   controller.sendResultToUser(controller.room.ownerId.toString(),AppStrings.therequesthasbeendenied);
-                    await   controller.sendResultToUser(controller.room.ownerId.toString(),AppStrings.therequesthasbeendenied);
-                    Get.back();
+                    onTap: () async {
+                      await controller.sendResultToUser(
+                          controller.room.ownerId.toString(),
+                          AppStrings.therequesthasbeendenied);
+                      await controller.sendResultToUser(
+                          controller.room.ownerId.toString(),
+                          AppStrings.therequesthasbeendenied);
+                      Get.back();
                     },
                     textStyle: Get.textTheme.labelMedium!.copyWith(
                       fontSize: AppSize.s20(context),
@@ -60,24 +70,27 @@ class AcceptRoleDialog extends GetView<RoomController> {
                     title: AppStrings.accept,
                     onTap: () async {
                       Get.back();
-                      final nextRole = controller.getNextRole(controller.room.role, isForApi: true);
+                      final nextRole = controller
+                          .getNextRole(controller.room.role, isForApi: true);
                       final params = UpdateRoleParams(
                         chatRoomId: controller.roomId,
                         userId: controller.user.id.toString(),
                         role: nextRole,
                       );
-                      final result = await controller.updateUserRoleUseCase.execute(params);
+                      final result = await controller.updateUserRoleUseCase
+                          .execute(params);
                       result.fold(
                         (l) => print('❌ فشل التحديث: ${l.toString()}'),
                         (r) async {
                           await controller.updateZegoUserRole(params);
-                          final user = controller.apiUsers.firstWhereOrNull(
-                                  (element) => element.id.toString() == controller.appController.user.id.toString());
                           await controller.getRoomMempers();
-                          controller.room = controller.room.updateRole(params.role ?? 'guest');
+                          controller.room = controller.room
+                              .updateRole(params.role ?? 'guest');
                           controller.newRoom.refresh();
 
-                   await   controller.sendResultToUser(controller.room.ownerId.toString(),AppStrings.acceptedrequest);
+                          await controller.sendResultToUser(
+                              controller.room.ownerId.toString(),
+                              AppStrings.acceptedrequest);
                           // showSnackBarWidget(x
                           //   message:
                           //       "${AppStrings.yourRoleHasBeenUpdatedTo}: ${controller.getCurrentRole(params.role ?? '')}",

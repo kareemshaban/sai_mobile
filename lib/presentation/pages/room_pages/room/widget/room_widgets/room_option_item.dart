@@ -24,7 +24,7 @@ class RoomOptionItem extends StatelessWidget {
             color: Colors.white.withOpacity(0.6),
             size: 28,
           ),
-          SizedBox(height: 3.0,),
+          const SizedBox(height: 3.0,),
           Text(
             title,
             maxLines: 2,

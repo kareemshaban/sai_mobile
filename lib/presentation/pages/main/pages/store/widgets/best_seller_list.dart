@@ -22,7 +22,7 @@ class BestSellerList extends GetView<StoreController> {
                   child: Text(
                     AppStrings.bestSeller,
                     style: Get.textTheme.titleMedium!.copyWith(
-                      fontSize: AppSize.s25(context),
+                      fontSize: AppSize.s20(context),
                     ),
                   ),
                 ),
@@ -46,7 +46,7 @@ class BestSellerList extends GetView<StoreController> {
                     child: Text(
                       AppStrings.bestSeller,
                       style: Get.textTheme.titleMedium!.copyWith(
-                        fontSize: AppSize.s25(context),
+                        fontSize: AppSize.s20(context),
                       ),
                     ),
                   ),

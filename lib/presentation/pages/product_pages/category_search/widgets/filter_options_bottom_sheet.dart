@@ -31,7 +31,7 @@ class FilterOptionsBottomSheet extends GetView<CategorySearchController> {
                 Text(
                   AppStrings.filter,
                   style: Get.textTheme.titleLarge!.copyWith(
-                    fontSize: AppSize.s24(context),
+                    fontSize: AppSize.s20(context),
                   ),
                 ),
                 20.verticalSpace(),

@@ -305,6 +305,7 @@
   "exitGame":"Do you want exit form game ?",
   "userBuyAMembershipInThisRoom": "User {user} has purchased a membership in this room",
   "userCancalHisMembership": "User {user} has cancelled his membership in this room.",
+  "userCancelMembership": "The {user}'s role has been updated, and their permissions in the room have been reduced.",
   "doYouWantToRequestToSpeakOnTheMicrophoneInTheRoom": "Do you want to request to speak on the microphone in the room?",
   "askedToSpeakOnTheMicrophone": "{user} asked to speak on the microphone",
   "reject": "Reject",

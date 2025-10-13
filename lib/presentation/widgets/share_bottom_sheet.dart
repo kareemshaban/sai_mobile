@@ -243,7 +243,7 @@ class _ShareBottomSheetState extends State<ShareBottomSheet> {
           Text(
             AppStrings.sendTo,
             style: Get.textTheme.titleMedium!.copyWith(
-              fontSize: AppSize.s22(context),
+              fontSize: AppSize.s20(context),
             ),
           ),
           20.verticalSpace(),

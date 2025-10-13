@@ -54,7 +54,7 @@ class PrivacyBottomSheet extends StatelessWidget {
             child: Text(
               title,
               style: Get.textTheme.titleMedium!.copyWith(
-                fontSize: AppSize.s22(context),
+                fontSize: AppSize.s20(context),
               ),
             ),
           ),

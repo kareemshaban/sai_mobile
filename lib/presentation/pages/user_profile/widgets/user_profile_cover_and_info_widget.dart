@@ -286,7 +286,7 @@ class UserProfileCoverAndInfoWidget extends GetView<UserProfileController> {
                         Text(
                           controller.user.name,
                           style: Get.textTheme.titleLarge!.copyWith(
-                            fontSize: AppSize.s25(context),
+                            fontSize: AppSize.s20(context),
                             color: controller.appController.isVipActive()
                                 ? controller.user.privileges.data.colorfulName
                                 .value.isNotEmpty

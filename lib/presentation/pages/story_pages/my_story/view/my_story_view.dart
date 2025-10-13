@@ -23,8 +23,14 @@ class MyStoryView extends GetView<MyStoryController> {
             children: [
               SizedBox(
                 height: .85.h(context),
-                child: Obx(
-                  () => FlutterStoryPresenter(
+                child: Obx(() {
+                  if (controller.story.media.isEmpty) {
+                    return const Center(
+                      child: SizedBox(),
+                    );
+                  }
+
+                  return FlutterStoryPresenter(
                     flutterStoryController: controller.storyController,
                     restartOnCompleted: false,
                     onCompleted: () async {
@@ -38,13 +44,12 @@ class MyStoryView extends GetView<MyStoryController> {
                     storyViewIndicatorConfig: StoryViewIndicatorConfig(
                       backgroundCompletedColor: ColorManager.white,
                       activeColor: ColorManager.white,
-                      backgroundDisabledColor:
-                          ColorManager.white.withOpacity(.1),
+                      backgroundDisabledColor: ColorManager.white.withOpacity(.1),
                     ),
                     onStoryChanged: controller.onChangedStoryIndex,
                     items: List.generate(
                       controller.story.media.length,
-                      (index) {
+                          (index) {
                         final item = controller.story.media[index];
                         if (item.type == 'image') {
                           return StoryItem(
@@ -72,7 +77,6 @@ class MyStoryView extends GetView<MyStoryController> {
                             url: item.url,
                             storyItemType: StoryItemType.video,
                             storyItemSource: StoryItemSource.network,
-                            // isMuteByDefault: controller.story.music.isNotEmpty,
                             errorWidget: const StoryErrorWidget(),
                             duration: const Duration(seconds: 30),
                             videoConfig: const StoryViewVideoConfig(
@@ -89,8 +93,8 @@ class MyStoryView extends GetView<MyStoryController> {
                         }
                       },
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
               const Align(
                 alignment: Alignment.bottomCenter,
